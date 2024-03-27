@@ -77,6 +77,4 @@ class FollowController extends Controller
         $user->followers()->detach(auth()->id());
         return back();
     }
-
-
 }

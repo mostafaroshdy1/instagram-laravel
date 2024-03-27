@@ -9,7 +9,8 @@
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/socialite": "^5.12",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "laravel/ui": "^4.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.12",

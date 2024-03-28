@@ -20,18 +20,25 @@
                 </div>
 
             </div>
-            <form action="" method="post">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
                 <div>
-                    <input type="email" name="email" id="emai" placeholder="email address">
+                    <input type="email" name="email" id="emai" placeholder="email address"
+                        :value="old('email')" required autofocus autocomplete="username">
+                    <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                 </div>
                 <div>
-                    <input type="text" name="name" id="name" placeholder="Full Name">
+                    <input type="text" name="name" id="name" placeholder="Full Name" :value="old('name')"
+                        required autocomplete="name">
+                    <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
                 </div>
+                <!-- <div> -->
+                <!--     <input type="text" name="username" id="username" placeholder="Username"> -->
+                <!-- </div> -->
                 <div>
-                    <input type="text" name="username" id="username" placeholder="Username">
-                </div>
-                <div>
-                    <input type="password" name="password" id="password" placeholder="password">
+                    <input type="password" name="password" id="password" placeholder="password" required
+                        autocomplete="new-password">
+                    <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                 </div>
                 <div class="info">
                     <p>
@@ -44,17 +51,15 @@
                     </p>
                 </div>
 
-            </form>
-            <a href="./home.html">
-                <button class="log_btn">
+                <button type="submit" class="log_btn">
                     Sign Up
                 </button>
-            </a>
+            </form>
         </div>
         <div class="sing-in border_insc">
             <p>
                 Have an account?
-                <a href="{{'/'}}">Log in</a>
+                <a href="{{ '/' }}">Log in</a>
             </p>
         </div>
         @include('landingPage.phone-app-icons')

@@ -10,20 +10,21 @@
                 <div class="logo">
                     <img src="./images/logo.png" alt="Instagram logo">
                 </div>
-                <form>
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div>
-                        <input type="email" name="email" id="emai" placeholder="e-mail">
+                        <input type="email" name="email" id="emai" placeholder="e-mail" required autofocus
+                            autocomplete="username">
+                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                     </div>
                     <div>
                         <input type="password" name="password" id="password" placeholder="password">
+                        <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                     </div>
-
-                </form>
-                <a href="./home.html">
-                    <button class="log_btn">
+                    <button type="submit" class="log_btn">
                         Log in
                     </button>
-                </a>
+                </form>
                 <div class="other-ways">
                     <div class="seperator">
                         <span class="ligne"></span>

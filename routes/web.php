@@ -1,12 +1,18 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get(
     '/', function () {
         // return view('welcome');
-        return view('landingPage.login');
+        $isLoggedin = Auth::check();
+        if ($isLoggedin) {
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('login');
+        }
     }
 );
 

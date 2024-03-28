@@ -38,7 +38,9 @@ class UserProfileController extends Controller
     {
         $user = User::findOrFail($id);
         // dd($user->name);
-        return view('user.profile.show',['user' => $user]);
+        $followers = $user->followers()->get();
+        $followings = $user->followings()->get();
+        return view('user.profile.show',['user' => $user, 'followers' => $followers, 'followings' => $followings]);
     }
 
     /**

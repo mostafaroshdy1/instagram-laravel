@@ -1,5 +1,6 @@
 @extends('landingPage.landing-page')
 @section('title', 'Instagram')
+
 @section('content')
 
     <div class="login">
@@ -9,34 +10,20 @@
                 <div class="logo">
                     <img src="./images/logo.png" alt="Instagram logo">
                 </div>
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-
+                <form>
                     <div>
-                        <input type="email" name="email" id="email" placeholder="Email" required autofocus
-                            autocomplete="username">
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <input type="email" name="email" id="emai" placeholder="e-mail">
                     </div>
                     <div>
-                        <input type="password" name="password" id="password" placeholder="password" required
-                            autocomplete="current-password">
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        <input type="password" name="password" id="password" placeholder="password">
                     </div>
 
-                    <div class="flex items-center justify-end mt-4">
-                        @if (Route::has('password.request'))
-                            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                href="{{ route('password.request') }}">
-                                {{ __('Forgot your password?') }}
-                            </a>
-                        @endif
-
-                        <button type="submit" class="log_btn">
-                            {{ __('Log in') }}
-                        </button>
-                    </div>
                 </form>
-
+                <a href="./home.html">
+                    <button class="log_btn">
+                        Log in
+                    </button>
+                </a>
                 <div class="other-ways">
                     <div class="seperator">
                         <span class="ligne"></span>
@@ -50,13 +37,12 @@
                         </a>
                     </div>
                     <div class="forget-password">
-                        <a href="{{ route('password.request') }}">
+                        <a href="#">
                             Forgot password?
                         </a>
                     </div>
                 </div>
             </div>
-
             <div class="sing-up border_insc">
                 <p>
                     Don't have an account?

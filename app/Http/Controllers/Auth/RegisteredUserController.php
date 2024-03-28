@@ -20,6 +20,7 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         return view('auth.register');
+        //return view('landingPage.signup');
     }
 
     /**
@@ -42,16 +43,19 @@ class RegisteredUserController extends Controller
             ],
         ]);
 
-        $user = User::create([
-            'full_name' => $request->full_name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = User::create(
+            [
+                'full_name' => $request->full_name,
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]
+        );
 
         event(new Registered($user));
 
         Auth::login($user);
+
 
         return redirect(route('dashboard', absolute: false));
     }

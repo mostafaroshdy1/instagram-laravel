@@ -12,7 +12,7 @@ Route::get(
         return view('auth.login');
         // return view('landingPage.login');
     }
-);
+)->middleware(Authenticate::class);
 
 Route::get(
     '/dashboard',

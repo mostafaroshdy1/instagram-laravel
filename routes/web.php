@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,8 +10,10 @@ Auth::routes(['verify' => true]);
 Route::get(
     '/',
     function () {
-        return view('auth.login');
+        // return view('auth.login');
         // return view('landingPage.login');
+        // If user is register return the welcome view unitl TODO: the home page
+        return view('welcome');
     }
 )->middleware(Authenticate::class);
 

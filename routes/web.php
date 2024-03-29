@@ -2,22 +2,37 @@
 
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes(['verify' => true]);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get(
+    '/',
+    function () {
+        // return view('auth.login');
+        // return view('landingPage.login');
+        // If user is register return the welcome view unitl TODO: the home page
+        return view('welcome');
+    }
+)->middleware(Authenticate::class);
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get(
+    '/dashboard',
+    function () {
+        return view('dashboard');
+    }
+)->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(
+    function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    }
+);
 
 require __DIR__ . '/auth.php';
 
@@ -51,6 +66,8 @@ Route::post('/unfollow/{user}', [FollowController::class,'unfollow'])->name('unf
 // user profile
 Route::get('/users/{id}/profile',[UserProfileController::class,'show'])->name('user.profile.show');
 
-Route::fallback(function () {
-    return "Route not found";
-});
+Route::fallback(
+    function () {
+        return "Route not found";
+    }
+);

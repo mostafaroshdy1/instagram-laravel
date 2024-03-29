@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Auth\Middleware\Authenticate;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,7 +36,7 @@ Route::middleware('auth')->group(
 
 require __DIR__ . '/auth.php';
 
-
+/*
 // posts
 Route::get('/posts');
 Route::get('/posts/create');
@@ -57,6 +59,12 @@ Route::delete('/posts/{id}/comments/{id}/likes'); // modify the number of likes 
 // users
 Route::post('/users/{id}/followers'); // create followers table needed
 Route::delete('/users/{id}/followers');
+*/
+
+Route::post('/follow/{user}', [FollowController::class,'follow'])->name('follow');
+Route::post('/unfollow/{user}', [FollowController::class,'unfollow'])->name('unfollow');
+// user profile
+Route::get('/users/{id}/profile',[UserProfileController::class,'show'])->name('user.profile.show');
 
 Route::fallback(
     function () {

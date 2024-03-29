@@ -482,9 +482,11 @@
                                         <img src="{{ asset('homePage/images/show_more.png') }}" alt="show more">
                                     </div>
                                 </div>
-                                <div class="image">
-                                    <img src="${post_data[i][3]}">
-                                </div>
+                                @foreach ($post->images as $img)
+                                    <div class="image">
+                                        <img src="{{ $img->url }}">
+                                    </div>
+                                @endforeach
                                 <div class="desc">
                                     <div class="icons">
                                         <div class="icon_left d-flex">
@@ -812,11 +814,26 @@
                         <button class="btn btn-primary btn_upload">
                             select from your computer
                             <form id="upload-form">
-                                <input class="input_select" type="file" id="image-upload" name="image-upload">
+                                <input multiple class="input_select" type="file" id="image-upload"
+                                    name="image-upload">
                             </form>
                         </button>
-                        <div id="image-container" class="hide_img">
+                        <div id="image-container" class="hide_img carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <!-- Placeholder for images -->
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#image-container"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#image-container"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
+
                         <div id="image_description" class="hide_img">
                             <div class="img_p"></div>
                             <div class="description">

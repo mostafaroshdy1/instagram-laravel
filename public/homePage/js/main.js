@@ -540,24 +540,46 @@ const img_container = document.querySelector("#image-container");
 form.addEventListener('change', handleSubmit);
 
 let img_url;
+let imageFileList;
 //add the image post
 function handleSubmit(event) {
   event.preventDefault();
   if (img_container.classList.contains('hide_img')) {
     img_container.classList.remove('hide_img');
-    const imageFile = document.getElementById('image-upload').files[0];
-    const imageURL = URL.createObjectURL(imageFile);
-    const image = document.createElement('img');
-    image.src = imageURL;
-    img_url = imageURL;
-    const imageContainer = document.getElementById('image-container');
-    imageContainer.appendChild(image);
+    const files = document.getElementById('image-upload').files;
+    const carouselInner = document.querySelector('#image-container .carousel-inner');
+    carouselInner.innerHTML = ''; // Clear previous images
+    imageFileList = files;
+    // Loop through each selected file
+    for (let i = 0; i < files.length; i++) {
+      const imageFile = files[i];
+      const imageURL = URL.createObjectURL(imageFile);
+
+      // Create carousel item div
+      const carouselItem = document.createElement('div');
+      carouselItem.classList.add('carousel-item');
+      if (i === 0) {
+        carouselItem.classList.add('active'); // Add 'active' class to first item
+      }
+
+      // Create image element and append to carousel item
+      const image = document.createElement('img');
+      image.src = imageURL;
+      image.classList.add('d-block', 'w-100');
+      carouselItem.appendChild(image);
+
+      // Append carousel item to carousel inner
+      carouselInner.appendChild(carouselItem);
+    }
+
     const next_btn_post = document.querySelector(".next_btn_post");
     const title_create = document.querySelector(".title_create");
     next_btn_post.innerHTML = 'Next';
     title_create.innerHTML = 'Crop';
   }
 }
+
+
 
 /////button submit
 const next_btn_post = document.querySelector(".next_btn_post");
@@ -607,17 +629,27 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 async function addPost() {
   try {
     const postCaption = document.querySelectorAll('.emojionearea-editor')[1].innerText;
-    const postData = {
-      body: postCaption
-    };
+
+    // Convert FileList to array
+    const imageFileArray = Array.from(imageFileList);
+
+    const formData = new FormData();
+    formData.append('body', postCaption);
+
+    // Append each file from the array to the FormData object
+    imageFileArray.forEach(file => {
+      formData.append('img[]', file);
+    });
+
+    // Logging for debugging
+    console.log('FormData:', formData);
 
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': csrfToken // Include CSRF token in the headers
+        'X-CSRF-TOKEN': csrfToken // Assuming csrfToken is defined elsewhere
       },
-      body: JSON.stringify(postData)
+      body: formData
     };
 
     const response = await fetch('/posts', requestOptions);
@@ -632,4 +664,3 @@ async function addPost() {
     console.error('Error adding post:', error);
   }
 }
-

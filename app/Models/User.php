@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use app\Models\Post;
+use app\Models\Comment;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
@@ -61,5 +62,15 @@ class User extends Authenticatable
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+
+    public function likedComments()
+    {
+        return $this->belongsToMany(Comment::class, 'likes', 'user_id', 'comment_id');
     }
 }

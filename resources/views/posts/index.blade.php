@@ -491,25 +491,17 @@
                                     <div class="icons">
                                         <div class="icon_left d-flex">
                                             <div class="like">
-                                                <svg class="not_loved" style="color:white" aria-label="Like"
-                                                    class="x1lliihq x1n2onr6 xyb1xck" fill="currentColor"
-                                                    height="24" role="img" viewBox="0 0 24 24"
-                                                    width="24">
-                                                    <title>Like</title>
-                                                    <path
-                                                        d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z">
-                                                    </path>
-                                                </svg></span>
-                                                <svg class="loved" style="color:red" aria-label="Like"
-                                                    class="x1lliihq x1n2onr6 xyb1xck" fill="red" height="24"
-                                                    role="img" viewBox="0 0 24 24" width="24">
-                                                    <title>Like</title>
-                                                    <path
-                                                        d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z">
-                                                    </path>
+                                            <form id="likeForm" method="POST" action="{{ route('posts.toggleLike', $post->id) }}" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH') {{-- Use PATCH method to toggle like/unlike --}}
+                                                {{-- Like button --}}
+                                                <button type="submit" style="background: none; border: none; cursor: pointer;">
+                                                <svg class="not_loved" aria-label="Like" fill="<?php echo $post->likes->contains('user_id', auth()->id()) ? 'red' : 'white'; ?>" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                                <title><?php echo $post->likes->contains('user_id', auth()->id()) ? 'Unlike' : 'Like'; ?></title>
+                                                <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
                                                 </svg>
-                                                </span>
-
+                                                </button>
+                                            </form>
                                             </div>
                                             <div class="chat">
                                                 <button type="button" class="btn p-0 m-0" data-bs-toggle="modal"
@@ -551,22 +543,182 @@
                                         </div>
                                     </div>
                                     <div class="liked">
-                                        <a class="bold text-white" href="#">${number 'later'} likes</a>
+                                        <a class="bold text-white" href="#">{{$post->likes_count}} likes</a>
                                     </div>
                                     <div class="post_desc">
                                         <p>
-                                            <a class=" text-white" href="#">{{ $post->body }}</a>
+                                            <a class="text-white" href="#">{{ $post->body }}</a>
+                                        </p>
+                                        <div class="comments-section" data-post-id="{{ $post->id }}">
+                                            {{-- posts comments --}}
+                                            @foreach ($post->comments()->take(3)->get() as $comment)
+                                            <div class="comment d-flex justify-content-between align-items-center">
+                                                <p>
+                                                    <strong class="text-white">{{ $comment->user->name }}</strong>
+                                                    <span class="text-white">{{ $comment->comment }}</span>
+                                                </p>
+                                                <div class="like">
+                                                    @if ($comment->likes->contains(auth()->id()))
+                                                        <form action="{{ route('comments.unlike', $comment) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-link"><img class="not-loved" src="{{asset('homePage/images/heart.png')}}" alt="heart image" srcset=""></button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('comments.like', $comment) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-link"><img class="loved bg-body-emphasis" src="{{asset('homePage/images/love.png')}}" alt="" srcset=""></button>
+                                                        </form>
+                                                    @endif
+                                                    <span class="text-white">{{ $comment->likes()->count() }} Likes</span>
+                                                </div>
+                                            </div>
+                                            @endforeach
 
-                                        </p>
-                                        <p><a class="gray" href="#">View all ${post_data[i][6]} comments</a>
-                                        </p>
-                                        <input type="text" placeholder="Add a comments...">
+                                            @if ($post->comments()->count() > 3)
+                                            <div class="view-all-comments" data-bs-toggle="modal" data-bs-target="#commentsModal" data-post-id="{{ $post->id }}">
+                                                <a href="#" class="gray">View all {{ $post->comments()->count() }} comments</a>
+                                            </div>
+                                            @endif
+
+                                            {{-- comments modal --}}
+                                            <div class="modal fade" id="commentsModal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="commentsModalLabel">All Comments</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="comments-list">
+                                                                {{-- modal comments --}}
+                                                                @foreach ($post->comments as $comment)
+                                                                <div class="comment d-flex justify-content-between align-items-center">
+                                                                    <p>
+                                                                        <strong>{{ $comment->user->name }}</strong>
+                                                                        <span>{{ $comment->comment }}</span>
+                                                                    </p>
+                                                                    <div class="like">
+                                                                        @if ($comment->likes->contains(auth()->id()))
+                                                                            <form action="{{ route('comments.unlike', $comment) }}" method="POST">
+                                                                                @csrf
+                                                                                <button type="submit" class="btn btn-link"><img class="not-loved" src="{{asset('homePage/images/heart.png')}}" alt="heart image" srcset=""></button>
+                                                                            </form>
+                                                                        @else
+                                                                            <form action="{{ route('comments.like', $comment) }}" method="POST">
+                                                                                @csrf
+                                                                                <button type="submit" class="btn btn-link"><img class="loved" src="{{asset('homePage/images/love2.png')}}" alt="" srcset=""></button>
+                                                                            </form>
+                                                                        @endif
+                                                                        <span>{{ $comment->likes()->count() }} Likes</span>
+                                                                    </div>
+                                                                </div>
+                                                                @endforeach
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form action="{{ route('comments.store') }}" method="POST">
+                                            @csrf
+                                            <div class="comment">
+                                                <input type="text" name="comment" placeholder="Add a comment...">
+                                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                <button type="submit" class="btn">Post</button>
+                                            </div>
+                                        </form>
                                     </div>
+
                                 </div>
                             </div>
+                            {{-- add new comment modal --}}
+                            <div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="comments">
+                                            @foreach ($post->comments as $comment)
+                                            <div class="comment mb-3">
+                                                <div class="d-flex">
+                                                    <div class="img">
+                                                        <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="Profile Image">
+                                                    </div>
+                                                    <div class="content">
+                                                        <div class="person">
+                                                            <h4>{{ $comment->user->name }}</h4>
+                                                            <span>{{ $comment->created_at->diffForHumans() }}</span>
+                                                        </div>
+                                                        <p class="lead">{{ $comment->comment }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="like">
+                                                    @if ($comment->likes->contains(auth()->id()))
+                                                        <form action="{{ route('comments.unlike', $comment) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-link"><img class="not-loved" src="{{asset('homePage/images/heart.png')}}" alt="heart image" srcset=""></button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('comments.like', $comment) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-link"><img class="loved" src="{{asset('homePage/images/love2.png')}}" alt="" srcset=""></button>
+                                                        </form>
+                                                    @endif
+                                                    <span class="fs-7">{{ $comment->likes()->count() }} Likes</span>
+                                                </div>
+                                            </div>
+                                            <!-- Responses -->
+                                            {{-- <div class="responses">
+                                                @foreach ($comment->responses as $response)
+                                                <div class="response comment">
+                                                    <div class="d-flex">
+                                                        <div class="img">
+                                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="Profile Image">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="person">
+                                                                <h4>{{ $response->user->name }}</h4>
+                                                                <span>{{ $response->created_at->diffForHumans() }}</span>
+                                                            </div>
+                                                            <p>{{ $response->comment }}</p>
+                                                            <!-- Add replay and translation buttons if needed -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="like">
+                                                        <!-- You can add like functionality here if needed -->
+                                                        <img class="not_loved" src="{{ asset('homePage/images/love.png') }}" alt="Not Loved">
+                                                        <img class="loved" src="{{ asset('homePage/images/heart.png') }}" alt="Loved">
+                                                        <p>{{ $response->likes()->count() }}</p>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div> --}}
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <form action="{{ route('comments.store') }}" method="post">
+                                            @csrf
+                                            <div class="input-group">
+                                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" class="img-fluid" alt="Profile Image">
+                                                <input type="text" id="emoji_comment" name="comment" class="form-control" placeholder="Add a comment...">
+                                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                <button type="submit" class="btn">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         @endforeach
-
-
                     </div>
 
                 </div>
@@ -706,93 +858,6 @@
         </div>
 
         <!-- Modal for add messages-->
-        <div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="comments">
-                            <div class="comment">
-                                <div class="d-flex">
-                                    <div class="img">
-                                        <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                    </div>
-                                    <div class="content">
-                                        <div class="person">
-                                            <h4>namePerson</h4>
-                                            <span>3j</span>
-                                        </div>
-                                        <p>Wow amzing shot</p>
-                                        <div class="replay">
-                                            <button class="replay">replay</button>
-                                            <button class="translation">see translation</button>
-                                        </div>
-                                        <div class="answers">
-                                            <button class="see_comment">
-                                                <span class="hide_com">Hide all responses</span>
-                                                <span class="show_c"> <span class="line"></span> See the <span> 1
-                                                    </span> answers</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="like">
-                                    <img class="not_loved" src="{{ asset('homePage/images/love.png') }}"
-                                        alt="">
-                                    <img class="loved" src="{{ asset('homePage/images/heart.png') }}"
-                                        alt="">
-                                    <p> 55</p>
-                                </div>
-                            </div>
-                            <div class="responses">
-                                <div class="response comment">
-                                    <div class="d-flex">
-                                        <div class="img">
-                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                        </div>
-                                        <div class="content">
-                                            <div class="person">
-                                                <h4>namePerson</h4>
-                                                <span>3j</span>
-                                            </div>
-                                            <p>Wow amzing shot</p>
-                                            <div class="replay">
-                                                <button>replay</button>
-                                                <button>see translation</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="like">
-                                        <img class="not_loved" src="{{ asset('homePage/images/love.png') }}"
-                                            alt="">
-                                        <img class="loved" src="{{ asset('homePage/images/heart.png') }}"
-                                            alt="">
-                                        <p> 55</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <form method="post">
-                            <div class="input">
-                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                <input type="text" id="emoji_comment" placeholder="Add a comment..." />
-                            </div>
-                            <!-- <div class="emogi">
-                                <img src="{{ asset('homePage/images/emogi.png') }}" alt="">
-                            </div> -->
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!--Create model-->
         <div class="modal fade" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -809,7 +874,7 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img class="up_load" src="{{ asset('homePage/images/upload.png') }}" alt="upload">
+                        <img class="up_load" src="{{ asset('/homePage/images/upload.png') }}" alt="upload">
                         <p>Drag photos and videos here</p>
                         <button class="btn btn-primary btn_upload">
                             select from your computer
@@ -833,7 +898,6 @@
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
-
                         <div id="image_description" class="hide_img">
                             <div class="img_p"></div>
                             <div class="description">

@@ -105,4 +105,17 @@ class PostController extends Controller
     {
         //
     }
+    public function toggleLike(Post $post, Request $request)
+    {
+        if ($post->likes->contains('user_id', auth()->id())) {
+            $post->likes()->where('user_id', auth()->id())->delete();
+            $post->decrement('likes_count');
+        } else {
+            $post->likes()->create([
+                'user_id' => auth()->id()
+            ]);
+            $post->increment('likes_count');
+        }
+        return redirect()->back();
+    }
 }

@@ -628,7 +628,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 // Function to add a new post
 async function addPost() {
   try {
-    const postCaption = document.querySelectorAll('.emojionearea-editor')[1].innerText;
+    const postCaption = document.querySelector('.postCaption').value;
     console.log(postCaption);
 
     // Convert FileList to array

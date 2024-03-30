@@ -83,16 +83,13 @@ class CommentController extends Controller
 
     public function like(Comment $comment)
     {
-        $postId = $comment->post->id;
-        $comment->likes()->attach(auth()->id(), ['post_id' => $postId]);
+        $comment->likes()->attach(auth()->id());
         return redirect()->back();
     }
 
     public function unlike(Comment $comment)
     {
-        $postId = $comment->post->id;
-        $comment->likes()->detach(auth()->id(), ['post_id' => $postId]);
+        $comment->likes()->detach(auth()->id());
         return redirect()->back();
     }
-
 }

@@ -54,7 +54,6 @@ Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('un
 Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
 
 
-
 Route::fallback(function () {
     return "Route not found";
 });

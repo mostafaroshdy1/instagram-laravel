@@ -1,0 +1,14 @@
+body{
+    background-color: black;
+}
+
+i,.clickable{
+    cursor: pointer;
+}
+
+.profile-picture {
+    width: 150px; /* Adjust the width as needed */
+    height: 150px; /* Adjust the height as needed */
+    object-fit: cover; /* Ensure the image fills the container without distortion */
+
+}

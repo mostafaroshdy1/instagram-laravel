@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -32,11 +33,20 @@ Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-/*
+
+
 // comments
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch');
+
+
+
+/*
+
 Route::get('/posts/{id}/comments'); // show all comments for specific post
 Route::post('/posts/{id}/comments'); // adds comment to post
 Route::delete('/posts/{id}/comments/{id}'); // delete a comment
+
 
 // comments reactions
 Route::get('/posts/{id}/comments/{id}/likes');

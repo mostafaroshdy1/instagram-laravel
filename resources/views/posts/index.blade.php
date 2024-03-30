@@ -555,18 +555,167 @@
                                     </div>
                                     <div class="post_desc">
                                         <p>
-                                            <a class=" text-white" href="#">{{ $post->body }}</a>
+                                            <a class="text-white" href="#">{{ $post->body }}</a>
+                                        </p>
+                                        <div class="comments-section" data-post-id="{{ $post->id }}">
+                                            @foreach ($post->comments()->take(3)->get() as $comment)
+                                            <div class="comment d-flex align-items-center justify-content-between">
+                                                <div class="comment-content ">
+                                                    <p class="text-white" >
+                                                        <strong class="text-white">{{ $comment->user->name }}</strong>
+                                                        <span class="text-white">{{ $comment->comment }}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="like">
+                                                    <img class="not-loved w-25" src="{{ asset('homePage/images/love.png') }}" alt="Not Loved">
+                                                    <img class="loved w-25" src="{{ asset('homePage/images/heart.png') }}" alt="Loved">
+                                                    <p>55</p>
+                                                </div>
+                                            </div>
+                                            @endforeach
 
-                                        </p>
-                                        <p><a class="gray" href="#">View all ${post_data[i][6]} comments</a>
-                                        </p>
-                                        <input type="text" placeholder="Add a comments...">
+                                            @if ($post->comments()->count() > 3)
+                                            <div class="view-all-comments" data-bs-toggle="modal" data-bs-target="#commentsModal" data-post-id="{{ $post->id }}">
+                                                <a href="#" class="gray">View all {{ $post->comments()->count() }} comments</a>
+                                            </div>
+                                            @endif
+
+                                            {{-- comments modal --}}
+                                            <div class="modal fade" id="commentsModal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="commentsModalLabel">All Comments</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="comments-list">
+                                                                @foreach ($post->comments as $comment)
+                                                                <div class="comment d-flex align-items-center justify-content-between">
+                                                                    <div class="comment-content ">
+                                                                        <p class="text-white" >
+                                                                            <strong class="text-white">{{ $comment->user->name }}</strong>
+                                                                            <span class="text-white">{{ $comment->comment }}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="like">
+                                                                        <img class="not-loved w-25 bg-dark" src="{{ asset('homePage/images/love.png') }}" alt="Not Loved">
+                                                                        <img class="loved w-25" src="{{ asset('homePage/images/heart.png') }}" alt="Loved">
+                                                                        <p>55</p>
+                                                                    </div>
+                                                                </div>
+                                                                @endforeach
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form action="{{ route('comments.store') }}" method="POST">
+                                            @csrf
+                                            <div class="comment">
+                                                <input type="text" name="comment" placeholder="Add a comment...">
+                                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                <button type="submit" class="btn">Post</button>
+                                            </div>
+                                        </form>
                                     </div>
+
                                 </div>
                             </div>
+                            {{-- add new comment modal --}}
+                            <div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="comments">
+                                            <div class="comment">
+                                                <div class="d-flex">
+                                                    <div class="img">
+                                                        <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                                    </div>
+                                                    <div class="content">
+                                                        <div class="person">
+                                                            <h4>namePerson</h4>
+                                                            <span>3j</span>
+                                                        </div>
+                                                        <p>Wow amzing shot</p>
+                                                        <div class="replay">
+                                                            <button class="replay">replay</button>
+                                                            <button class="translation">see translation</button>
+                                                        </div>
+                                                        <div class="answers">
+                                                            <button class="see_comment">
+                                                                <span class="hide_com">Hide all responses</span>
+                                                                <span class="show_c"> <span class="line"></span> See the <span> 1
+                                                                    </span> answers</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="like">
+                                                    <img class="not_loved" src="{{ asset('homePage/images/love.png') }}"
+                                                        alt="">
+                                                    <img class="loved" src="{{ asset('homePage/images/heart.png') }}"
+                                                        alt="">
+                                                    <p> 55</p>
+                                                </div>
+                                            </div>
+                                            <div class="responses">
+                                                <div class="response comment">
+                                                    <div class="d-flex">
+                                                        <div class="img">
+                                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="person">
+                                                                <h4>namePerson</h4>
+                                                                <span>3j</span>
+                                                            </div>
+                                                            <p>Wow amzing shot</p>
+                                                            <div class="replay">
+                                                                <button>replay</button>
+                                                                <button>see translation</button>
+                                                            </div>
+                
+                                                        </div>
+                                                    </div>
+                                                    <div class="like">
+                                                        <img class="not_loved" src="{{ asset('homePage/images/love.png') }}"
+                                                            alt="">
+                                                        <img class="loved" src="{{ asset('homePage/images/heart.png') }}"
+                                                            alt="">
+                                                        <p> 55</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form  action="{{ route('comments.store') }}" method="post">
+                                            @csrf
+                                            <div class="input">
+                                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                                <input type="text" id="emoji_comment" name="comment" placeholder="Add a comment..." />
+                                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                            </div>
+                                            <input type="submit" value="Add">
+                                            <!-- <div class="emogi">
+                                                <img src="{{ asset('homePage/images/emogi.png') }}" alt="">
+                                            </div> -->
+                                        </form>
+                                    </div>        
+                                </div>
+                            </div>
+                        </div>
                         @endforeach
-
-
                     </div>
 
                 </div>
@@ -706,94 +855,7 @@
         </div>
 
         <!-- Modal for add messages-->
-        <div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="comments">
-                            <div class="comment">
-                                <div class="d-flex">
-                                    <div class="img">
-                                        <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                    </div>
-                                    <div class="content">
-                                        <div class="person">
-                                            <h4>namePerson</h4>
-                                            <span>3j</span>
-                                        </div>
-                                        <p>Wow amzing shot</p>
-                                        <div class="replay">
-                                            <button class="replay">replay</button>
-                                            <button class="translation">see translation</button>
-                                        </div>
-                                        <div class="answers">
-                                            <button class="see_comment">
-                                                <span class="hide_com">Hide all responses</span>
-                                                <span class="show_c"> <span class="line"></span> See the <span> 1
-                                                    </span> answers</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="like">
-                                    <img class="not_loved" src="{{ asset('homePage/images/love.png') }}"
-                                        alt="">
-                                    <img class="loved" src="{{ asset('homePage/images/heart.png') }}"
-                                        alt="">
-                                    <p> 55</p>
-                                </div>
-                            </div>
-                            <div class="responses">
-                                <div class="response comment">
-                                    <div class="d-flex">
-                                        <div class="img">
-                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                        </div>
-                                        <div class="content">
-                                            <div class="person">
-                                                <h4>namePerson</h4>
-                                                <span>3j</span>
-                                            </div>
-                                            <p>Wow amzing shot</p>
-                                            <div class="replay">
-                                                <button>replay</button>
-                                                <button>see translation</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="like">
-                                        <img class="not_loved" src="{{ asset('homePage/images/love.png') }}"
-                                            alt="">
-                                        <img class="loved" src="{{ asset('homePage/images/heart.png') }}"
-                                            alt="">
-                                        <p> 55</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <form method="post">
-                            <div class="input">
-                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                <input type="text" id="emoji_comment" placeholder="Add a comment..." />
-                            </div>
-                            <!-- <div class="emogi">
-                                <img src="{{ asset('homePage/images/emogi.png') }}" alt="">
-                            </div> -->
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+     
         <!--Create model-->
         <div class="modal fade" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -833,7 +895,6 @@
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
-
                         <div id="image_description" class="hide_img">
                             <div class="img_p"></div>
                             <div class="description">

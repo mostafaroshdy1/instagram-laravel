@@ -11,6 +11,12 @@ body {
   background-color: rgb(255, 255, 255);
 }
 
+.not-loved,
+.loved{
+    width:20px !important;
+}
+
+
 .hide {
   display: none;
 }

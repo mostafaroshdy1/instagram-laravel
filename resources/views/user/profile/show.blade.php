@@ -46,8 +46,14 @@
                     </p>
                     <div class="general_info">
                         <p><span>5</span> posts</p>
-                        <p><span>{{$user->followers()->count()}}</span> followers</p>
-                        <p><span>{{$user->followings()->count()}}</span> following</p>
+                        <p data-bs-toggle="modal" data-bs-target="#followersModal" id="followers">
+                            <span>{{$user->followers()->count()}}</span> 
+                            followers
+                        </p>
+                        <p data-bs-toggle="modal" data-bs-target="#followingsModal" id="followings">
+                            <span>{{$user->followings()->count()}}</span> 
+                            following
+                        </p>
                     </div>
                     <p class="nick_name">{{$user->name}}</p>
                     <p class="desc">

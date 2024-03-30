@@ -30,119 +30,115 @@
 
 @endif
 {{--  --}}
-<div class="container">
-    {{-- Profile Info --}}
-    <div class="row pt-5 pb-5">
-        <div class="col-2"></div>
-        <div class="col-3 text-white d-flex align-items-center justify-content-center profile-img ">
-            <img src="{{asset('homePage/images/profile_img.jpg')}}" alt="Profile Picture" class="profile-picture rounded-circle">
-        </div>
-        <div class="col">
-            <div class="row">
-                <div class="col-3 text-white fs-5 d-flex align-items-center">
-                    <p class="pt-1">{{ $user->name }}</p>
+<div class="profile_container">
+    <div class="profile_info">
+        <div class="cart">
+                <div class="img">
+                    <img src="{{asset('homePage/images/profile_img.jpg')}}" alt="">
                 </div>
-                <div class="col-3 text-white d-flex align-items-center">
-                    <button class="btn btn-secondary btn-md">Edit profile</button>
-                </div>
-                <div class="col-3 text-white d-flex align-items-center">
-                    <i class="material-icons rounded-icon fs-4 ">settings</i>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3 text-white py-2 d-flex align-items-center">
-                    <p>503 Posts</p>
-                </div>
-                <div class="col-3 text-white py-2 d-flex align-items-center">
-                    <p class="clickable">{{$user->followers()->count()}} followers</p>
-                </div>
-                <div class="col-3 text-white py-2 d-flex align-items-center">
-                    <p class="clickable">{{$user->followings()->count()}} following</p>    
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-9 text-white py-2 d-flex align-items-center">{{ $user->name }}</div>
-            </div>
-            <div class="row">
-                <div class="col-9 text-white py-2 d-flex align-items-center">
-                    <p>
-                        {{-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. --}}
-                        This is a dummy caption
+                <div class="info">
+                    <p class="name">
+                        Zineb_essoussi
+                        <button class="edit_profile">
+                            Edit profile 
+                        </button>
+                    </p>
+                    <div class="general_info">
+                        <p><span>1</span> post</p>
+                        <p><span>177</span> followers</p>
+                        <p><span>137</span> following</p>
+                    </div>
+                    <p class="nick_name">Zin Ess</p>
+                    <p class="desc">
+                        I'am an engineering student <br>
+                        ENSAO
                     </p>
                 </div>
-            </div>
         </div>
-        <div class="col-2"></div>
     </div>
-    {{-- Menu Section --}}
-    <div class="row border-top text-white">
-        <div class="col-4"></div>
-        <div class="col-4">
-            <div class="row">
-                <div class="col-3 py-3 d-flex align-items-center clickable">
-                    <div class="row">
-                        <div class="col-1">
-                            <i class="material-icons">grid_on</i>
-                        </div>
-                        <div class="col-1">
-                            <p>POSTS</p>
-                        </div>
+    <hr>
+    <div class="posts_profile">
+        <ul class="nav-pills w-100 d-flex justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item mx-2" role="presentation">
+                <button class="nav-link text-white active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                    <svg aria-label="" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12">
+                        <title></title>
+                        <rect fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3"></rect>
+                        <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="9.015" x2="9.015" y1="3" y2="21"></line>
+                        <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="14.985" x2="14.985" y1="3" y2="21"></line>
+                        <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="21" x2="3" y1="9.015" y2="9.015"></line>
+                        <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="21" x2="3" y1="14.985" y2="14.985"></line>
+                    </svg>
+                    <span class="ps-1">POSTS</span>
+                </button>
+            </li>
+            <li class="nav-item mx-2" role="presentation">
+              <button class="nav-link text-white" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                <svg aria-label="" class="x1lliihq x1n2onr6 x1roi4f4" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12">
+                    <title></title>
+                    <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                </svg>                
+                <span class="ps-1">SAVED</span>
+              </button>
+            </li>
+            <li class="nav-item mx-2" role="presentation">
+              <button class="nav-link text-white" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
+                <svg aria-label="" class="x1lliihq x1n2onr6 x1roi4f4" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12">
+                    <title></title>
+                    <path d="M10.201 3.797 12 1.997l1.799 1.8a1.59 1.59 0 0 0 1.124.465h5.259A1.818 1.818 0 0 1 22 6.08v14.104a1.818 1.818 0 0 1-1.818 1.818H3.818A1.818 1.818 0 0 1 2 20.184V6.08a1.818 1.818 0 0 1 1.818-1.818h5.26a1.59 1.59 0 0 0 1.123-.465Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    <path d="M18.598 22.002V21.4a3.949 3.949 0 0 0-3.948-3.949H9.495A3.949 3.949 0 0 0 5.546 21.4v.603" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    <circle cx="12.072" cy="11.075" fill="none" r="3.556" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                </svg>                
+                <span class="ps-1">TAGGED</span>
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                <div id="posts_sec" class="post">
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/Jqh3rHv/img1.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/2ZxBFVp/img2.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/5vQt677/img3.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/pJ8thst/account13.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/j8L7FPY/account10.jpg" alt="">
                     </div>
                 </div>
-                <div class="col py-3 d-flex align-items-center"></div>
-                <div class="col-3 py-3 d-flex align-items-center clickable">
-                    <div class="row">
-                        <div class="col-1">
-                            <i class="material-icons">bookmark_border</i>
-                        </div>
-                        <div class="col-1">
-                            <p>SAVED</p>
-                        </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                <div id="saved_sec" class="post">
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/6WvdZS9/account12.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/pJ8thst/account13.jpg" alt="">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+                <div id="tagged" class="post">
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/Zhc5hHp/account4.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/SPTNbJL/account5.jpg" alt="">
                     </div>
                 </div>
-                <div class="col py-3 d-flex align-items-center"></div>
-                <div class="col-3 py-3 d-flex align-items-center clickable">
-                    <div class="row">
-                        <div class="col-1">
-                            <i class="material-icons">assignment_ind</i>
-                        </div>
-                        <div class="col-1">
-                            <p>TAGGED</p>
-                        </div>
-                    </div>
-                </div>                                
             </div>
-        </div>
-        <div class="col-4"></div>
-    </div>
-    {{-- Profile Posts --}}
-    <div class="row">
-        <div class="col-4">
-            <img src="https://via.placeholder.com/600x600" class="img-fluid pb-3" alt="Post">
-        </div>
-        <div class="col-4">
-            <img src="https://via.placeholder.com/600x600" class="img-fluid pb-3" alt="Post">
-        </div>
-        <div class="col-4">
-            <img src="https://via.placeholder.com/600x600" class="img-fluid pb-3" alt="Post">
-        </div>
-        <div class="col-4">
-            <img src="https://via.placeholder.com/600x600" class="img-fluid pb-3" alt="Post">
-        </div>
-        <div class="col-4">
-            <img src="https://via.placeholder.com/600x600" class="img-fluid pb-3" alt="Post">
-        </div>
-        <div class="col-4">
-            <img src="https://via.placeholder.com/600x600" class="img-fluid pb-3" alt="Post">
-        </div>
-        <div class="col-4">
-            <img src="https://via.placeholder.com/600x600" class="img-fluid pb-3" alt="Post">
-        </div>
-        <div class="col-4">
-            <img src="https://via.placeholder.com/600x600" class="img-fluid pb-3" alt="Post">
-        </div>
+            
+          </div>
     </div>
 </div>
+
 
    <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">

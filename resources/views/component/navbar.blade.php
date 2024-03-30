@@ -146,8 +146,7 @@
                 <div class="btn-group dropup">
                     <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
-
-                        <i class="material-icons-outlined" style="color: white">menu</i>
+                        <img src="{{ asset('homePage/images/menu.png') }}">
                         <span class="d-none d-lg-block text-white fw-semibold">More</span>
                     </button>
                     <ul class="dropdown-menu">

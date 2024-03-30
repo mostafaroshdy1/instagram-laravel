@@ -31,7 +31,8 @@ Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edi
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
-
+//likes
+Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike');
 /*
 // comments
 Route::get('/posts/{id}/comments'); // show all comments for specific post

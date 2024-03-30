@@ -34,12 +34,12 @@ Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
 
-
 // comments
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch');
 
-
+//likes
+Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike');
 
 /*
 

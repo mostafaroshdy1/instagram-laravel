@@ -146,8 +146,11 @@
                 <div class="btn-group dropup">
                     <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <img src="{{ asset('homePage/images/menu.png') }}">
-                        <span class="d-none d-lg-block text-white fw-semibold">More</span>
+                        <svg style="color: white" aria-label="Settings" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                            <title>Settings</title><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="3" x2="21" y1="4" y2="4"></line>
+                            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="3" x2="21" y1="12" y2="12"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="3" x2="21" y1="20" y2="20"></line>
+                        </svg>
+                        <span class="d-none d-lg-block text-white fw-semibold ps-2">More</span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">

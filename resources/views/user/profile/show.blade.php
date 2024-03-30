@@ -27,7 +27,8 @@
         </form>
     @endif
     
-
+<p>Number of followers: {{$user->followers()->count()}}</p>
+<p>Number of followings: {{$user->followings()->count()}}</p>
 @endif
 {{--  --}}
 <div class="profile_container">
@@ -38,20 +39,20 @@
                 </div>
                 <div class="info">
                     <p class="name">
-                        Zineb_essoussi
+                        ganzury._
                         <button class="edit_profile">
                             Edit profile 
                         </button>
                     </p>
                     <div class="general_info">
-                        <p><span>1</span> post</p>
-                        <p><span>177</span> followers</p>
-                        <p><span>137</span> following</p>
+                        <p><span>5</span> posts</p>
+                        <p><span>{{$user->followers()->count()}}</span> followers</p>
+                        <p><span>{{$user->followings()->count()}}</span> following</p>
                     </div>
-                    <p class="nick_name">Zin Ess</p>
+                    <p class="nick_name">{{$user->name}}</p>
                     <p class="desc">
-                        I'am an engineering student <br>
-                        ENSAO
+                        This is A Test Bio <br>
+                        Information Technology Institute ITI
                     </p>
                 </div>
         </div>

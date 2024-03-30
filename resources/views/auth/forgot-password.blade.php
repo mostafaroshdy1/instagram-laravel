@@ -9,7 +9,7 @@
                     <h5 class="fs-5 fw-bold">Trouble logging in?</h5>
                 </div>
                 <div class="mb-4 text-sm text-gray-600 text-center leading-snug">
-                    {{ __("Enter your email, phone, or username and we'll send you a link to get back into your account.") }}
+                    {{ __("Enter your email and we'll send you a link to get back into your account.") }}
                 </div>
 
                 <!-- Session Status -->
@@ -21,7 +21,7 @@
                     <!-- Email Address -->
                     <div>
                         <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
-                            placeholder="Email, Phone, or Username" :value="old('email')" required autofocus />
+                            placeholder="Email" :value="old('email')" required autofocus />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 

@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-9 text-white py-2 d-flex align-items-center">Ziad Elganzory</div>
+                <div class="col-9 text-white py-2 d-flex align-items-center">{{ $user->name }}</div>
             </div>
             <div class="row">
                 <div class="col-9 text-white py-2 d-flex align-items-center">

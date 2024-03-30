@@ -10,14 +10,14 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('homePage/sass/profile.css')}}">
         {{-- Uncomment To Show Navbar --}}
-        <link rel="stylesheet" href="{{ asset('homePage/sass/nav.css') }}">
+        <link rel="stylesheet" href="{{ asset('homePage/sass/main.css') }}">
     </head>
 
-    <body>
+    <body class="bg-black">
         <div class="container-fluid">
             <div class="row vh-100">
                 {{-- Nav Bar --}}
-                <div class="col-2 text-white border-end">
+                <div class="col-2 text-white">
                     {{-- Uncomment to Show Navbar --}}
                     @include('component/navbar')
                 </div>

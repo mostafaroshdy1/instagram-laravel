@@ -29,8 +29,8 @@ class Post extends Model
         return $this->hasMany(Comment::class, 'post_id', 'id');
     }
 
-    
-    
+
+
     public function likes()
     {
         return $this->hasMany(Like::class);
@@ -38,5 +38,10 @@ class Post extends Model
     public function likers()
     {
         return $this->hasManyThrough(User::class, Like::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'saved_posts')->withTimestamps();
     }
 }

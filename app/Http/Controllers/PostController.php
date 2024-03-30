@@ -118,4 +118,20 @@ class PostController extends Controller
         }
         return redirect()->back();
     }
+
+    public function save(Request $request)
+    {
+        $user = auth()->user();
+        // dd($request->post_id);
+        $postId=$request->post_id;
+
+        if ($user->savePosts()->where('post_id', $postId)->exists()) {
+            $user->savePosts()->detach($postId);
+            return redirect()->back()->with('warning', 'Post already saved. It has been removed from saved posts.');
+        }
+
+        $user->savePosts()->attach($request->post_id);
+        return redirect()->back()->with('success', 'Post saved successfully!');
+
+    }
 }

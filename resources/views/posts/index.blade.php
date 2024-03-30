@@ -964,7 +964,7 @@
                                     </div>
                                 </div>
                                 <form>
-                                    <textarea type="text postCaption" id="emoji_create" placeholder="Write a caption"></textarea>
+                                    <textarea class="postCaption" type="text " id="emoji_create" placeholder="Write a caption"></textarea>
                                 </form>
                             </div>
                         </div>

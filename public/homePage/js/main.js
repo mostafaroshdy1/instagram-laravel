@@ -665,3 +665,8 @@ async function addPost() {
     console.error('Error adding post:', error);
   }
 }
+
+
+$(document).ready(function () {
+    $('.alert').fadeIn().delay(2000).fadeOut();
+});

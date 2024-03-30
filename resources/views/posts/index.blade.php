@@ -25,6 +25,24 @@
 </head>
 
 <body class="bg-black">
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('warning'))
+    <div class="alert alert-warning">
+        {{ session('warning') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 
     <div class="post_page ">
         <!--***** nav menu start ****** -->
@@ -543,11 +561,19 @@
                                                 </button>
                                             </div>
                                         </div>
+                                        <form action="{{route('posts.save-post')}}" method="post">
+                                        @csrf
                                         <div class="save not_saved">
-                                            <img class="hide saved"
-                                                src="{{ asset('homePage/images/save_black.png') }}">
-                                            <img class="not_saved" src="{{ 'homePage/images/save-instagram.png' }}">
-                                        </div>
+                                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                <button type="submit" class="btn">
+                                                    {{-- <img class="hide saved"
+                                                        src="{{ asset('homePage/images/save_black.png') }}"> --}}
+                                                        {{-- <img class="not_saved" src="{{ 'homePage/images/save-instagram.png' }}"> --}}
+                                                        <img class="not_saved" src="{{ 'homePage/images/bookmark.png' }}">
+                                                </button>
+
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="liked">
                                         <a class="bold text-white" href="#">{{ $post->likes_count }} likes</a>

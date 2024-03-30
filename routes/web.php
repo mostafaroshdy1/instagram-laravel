@@ -46,17 +46,12 @@ Route::post('/comments/{comment}/unlike', [CommentController::class, 'unlike'])-
 //likes
 Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike');
 
+
+// saved posts
+Route::post('/posts/save-post',[PostController::class,'save'])->name('posts.save-post');
+
+
 /*
-
-Route::get('/posts/{id}/comments'); // show all comments for specific post
-Route::post('/posts/{id}/comments'); // adds comment to post
-Route::delete('/posts/{id}/comments/{id}'); // delete a comment
-
-
-// comments reactions
-Route::get('/posts/{id}/comments/{id}/likes');
-Route::post('/posts/{id}/comments/{id}/likes'); // modify the number of likes to a specific comment (one to many relationship with users)
-Route::delete('/posts/{id}/comments/{id}/likes'); // modify the number of likes to a specific comment (one to many relationship with users)
 
 // users
 Route::post('/users/{id}/followers'); // create followers table needed

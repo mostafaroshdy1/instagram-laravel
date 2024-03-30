@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -31,13 +32,26 @@ Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edi
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+
+// comments
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch');
+
+// comment reaction
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
+Route::post('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike');
+
+
 //likes
 Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike');
+
 /*
-// comments
+
 Route::get('/posts/{id}/comments'); // show all comments for specific post
 Route::post('/posts/{id}/comments'); // adds comment to post
 Route::delete('/posts/{id}/comments/{id}'); // delete a comment
+
 
 // comments reactions
 Route::get('/posts/{id}/comments/{id}/likes');

@@ -550,18 +550,26 @@
                                             <a class="text-white" href="#">{{ $post->body }}</a>
                                         </p>
                                         <div class="comments-section" data-post-id="{{ $post->id }}">
+                                            {{-- posts comments --}}
                                             @foreach ($post->comments()->take(3)->get() as $comment)
-                                            <div class="comment d-flex align-items-center justify-content-between">
-                                                <div class="comment-content ">
-                                                    <p class="text-white" >
-                                                        <strong class="text-white">{{ $comment->user->name }}</strong>
-                                                        <span class="text-white">{{ $comment->comment }}</span>
-                                                    </p>
-                                                </div>
+                                            <div class="comment d-flex justify-content-between align-items-center">
+                                                <p>
+                                                    <strong class="text-white">{{ $comment->user->name }}</strong>
+                                                    <span class="text-white">{{ $comment->comment }}</span>
+                                                </p>
                                                 <div class="like">
-                                                    <img class="not-loved w-25" src="{{ asset('homePage/images/love.png') }}" alt="Not Loved">
-                                                    <img class="loved w-25" src="{{ asset('homePage/images/heart.png') }}" alt="Loved">
-                                                    <p>55</p>
+                                                    @if ($comment->likes->contains(auth()->id()))
+                                                        <form action="{{ route('comments.unlike', $comment) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-link"><img class="not-loved" src="{{asset('homePage/images/heart.png')}}" alt="heart image" srcset=""></button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('comments.like', $comment) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-link"><img class="loved bg-body-emphasis" src="{{asset('homePage/images/love.png')}}" alt="" srcset=""></button>
+                                                        </form>
+                                                    @endif
+                                                    <span class="text-white">{{ $comment->likes()->count() }} Likes</span>
                                                 </div>
                                             </div>
                                             @endforeach
@@ -582,23 +590,31 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="comments-list">
+                                                                {{-- modal comments --}}
                                                                 @foreach ($post->comments as $comment)
-                                                                <div class="comment d-flex align-items-center justify-content-between">
-                                                                    <div class="comment-content ">
-                                                                        <p class="text-white" >
-                                                                            <strong class="text-white">{{ $comment->user->name }}</strong>
-                                                                            <span class="text-white">{{ $comment->comment }}</span>
-                                                                        </p>
-                                                                    </div>
+                                                                <div class="comment d-flex justify-content-between align-items-center">
+                                                                    <p>
+                                                                        <strong>{{ $comment->user->name }}</strong>
+                                                                        <span>{{ $comment->comment }}</span>
+                                                                    </p>
                                                                     <div class="like">
-                                                                        <img class="not-loved w-25 bg-dark" src="{{ asset('homePage/images/love.png') }}" alt="Not Loved">
-                                                                        <img class="loved w-25" src="{{ asset('homePage/images/heart.png') }}" alt="Loved">
-                                                                        <p>55</p>
+                                                                        @if ($comment->likes->contains(auth()->id()))
+                                                                            <form action="{{ route('comments.unlike', $comment) }}" method="POST">
+                                                                                @csrf
+                                                                                <button type="submit" class="btn btn-link"><img class="not-loved" src="{{asset('homePage/images/heart.png')}}" alt="heart image" srcset=""></button>
+                                                                            </form>
+                                                                        @else
+                                                                            <form action="{{ route('comments.like', $comment) }}" method="POST">
+                                                                                @csrf
+                                                                                <button type="submit" class="btn btn-link"><img class="loved" src="{{asset('homePage/images/love2.png')}}" alt="" srcset=""></button>
+                                                                            </form>
+                                                                        @endif
+                                                                        <span>{{ $comment->likes()->count() }} Likes</span>
                                                                     </div>
                                                                 </div>
                                                                 @endforeach
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -628,82 +644,77 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="comments">
-                                            <div class="comment">
+                                            @foreach ($post->comments as $comment)
+                                            <div class="comment mb-3">
                                                 <div class="d-flex">
                                                     <div class="img">
-                                                        <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                                        <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="Profile Image">
                                                     </div>
                                                     <div class="content">
                                                         <div class="person">
-                                                            <h4>namePerson</h4>
-                                                            <span>3j</span>
+                                                            <h4>{{ $comment->user->name }}</h4>
+                                                            <span>{{ $comment->created_at->diffForHumans() }}</span>
                                                         </div>
-                                                        <p>Wow amzing shot</p>
-                                                        <div class="replay">
-                                                            <button class="replay">replay</button>
-                                                            <button class="translation">see translation</button>
-                                                        </div>
-                                                        <div class="answers">
-                                                            <button class="see_comment">
-                                                                <span class="hide_com">Hide all responses</span>
-                                                                <span class="show_c"> <span class="line"></span> See the <span> 1
-                                                                    </span> answers</span>
-                                                            </button>
-                                                        </div>
+                                                        <p class="lead">{{ $comment->comment }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="like">
-                                                    <img class="not_loved" src="{{ asset('homePage/images/love.png') }}"
-                                                        alt="">
-                                                    <img class="loved" src="{{ asset('homePage/images/heart.png') }}"
-                                                        alt="">
-                                                    <p> 55</p>
+                                                    @if ($comment->likes->contains(auth()->id()))
+                                                        <form action="{{ route('comments.unlike', $comment) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-link"><img class="not-loved" src="{{asset('homePage/images/heart.png')}}" alt="heart image" srcset=""></button>
+                                                        </form>
+                                                    @else
+                                                        <form action="{{ route('comments.like', $comment) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-link"><img class="loved" src="{{asset('homePage/images/love2.png')}}" alt="" srcset=""></button>
+                                                        </form>
+                                                    @endif
+                                                    <span class="fs-7">{{ $comment->likes()->count() }} Likes</span>
                                                 </div>
                                             </div>
-                                            <div class="responses">
+                                            <!-- Responses -->
+                                            {{-- <div class="responses">
+                                                @foreach ($comment->responses as $response)
                                                 <div class="response comment">
                                                     <div class="d-flex">
                                                         <div class="img">
-                                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="Profile Image">
                                                         </div>
                                                         <div class="content">
                                                             <div class="person">
-                                                                <h4>namePerson</h4>
-                                                                <span>3j</span>
+                                                                <h4>{{ $response->user->name }}</h4>
+                                                                <span>{{ $response->created_at->diffForHumans() }}</span>
                                                             </div>
-                                                            <p>Wow amzing shot</p>
-                                                            <div class="replay">
-                                                                <button>replay</button>
-                                                                <button>see translation</button>
-                                                            </div>
-                
+                                                            <p>{{ $response->comment }}</p>
+                                                            <!-- Add replay and translation buttons if needed -->
                                                         </div>
                                                     </div>
                                                     <div class="like">
-                                                        <img class="not_loved" src="{{ asset('homePage/images/love.png') }}"
-                                                            alt="">
-                                                        <img class="loved" src="{{ asset('homePage/images/heart.png') }}"
-                                                            alt="">
-                                                        <p> 55</p>
+                                                        <!-- You can add like functionality here if needed -->
+                                                        <img class="not_loved" src="{{ asset('homePage/images/love.png') }}" alt="Not Loved">
+                                                        <img class="loved" src="{{ asset('homePage/images/heart.png') }}" alt="Loved">
+                                                        <p>{{ $response->likes()->count() }}</p>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                @endforeach
+                                            </div> --}}
+                                            @endforeach
                                         </div>
                                     </div>
+
                                     <div class="modal-footer">
-                                        <form  action="{{ route('comments.store') }}" method="post">
+                                        <form action="{{ route('comments.store') }}" method="post">
                                             @csrf
-                                            <div class="input">
-                                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                                <input type="text" id="emoji_comment" name="comment" placeholder="Add a comment..." />
+                                            <div class="input-group">
+                                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" class="img-fluid" alt="Profile Image">
+                                                <input type="text" id="emoji_comment" name="comment" class="form-control" placeholder="Add a comment...">
                                                 <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                <button type="submit" class="btn">Add</button>
                                             </div>
-                                            <input type="submit" value="Add">
-                                            <!-- <div class="emogi">
-                                                <img src="{{ asset('homePage/images/emogi.png') }}" alt="">
-                                            </div> -->
                                         </form>
-                                    </div>        
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -847,7 +858,7 @@
         </div>
 
         <!-- Modal for add messages-->
-     
+
         <!--Create model-->
         <div class="modal fade" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -863,7 +874,7 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img class="up_load" src="{{ asset('homePage/images/upload.png') }}" alt="upload">
+                        <img class="up_load" src="{{ asset('/homePage/images/upload.png') }}" alt="upload">
                         <p>Drag photos and videos here</p>
                         <button class="btn btn-primary btn_upload">
                             select from your computer

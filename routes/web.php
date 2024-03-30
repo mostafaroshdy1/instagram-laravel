@@ -38,6 +38,11 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.de
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch');
 
+// comment reaction
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
+Route::post('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike');
+
+
 //likes
 Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike');
 

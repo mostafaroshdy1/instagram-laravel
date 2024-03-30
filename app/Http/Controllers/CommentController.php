@@ -53,9 +53,7 @@ class CommentController extends Controller
      */
     public function show(Post $post)
     {
-        $comments = $post->comments()->paginate(10); // Adjust the pagination as per your requirement
-
-        return view('comments.index', compact('comments', 'post'));
+        //
     }
 
     /**
@@ -82,11 +80,19 @@ class CommentController extends Controller
         //
     }
 
-    public function fetchComments($id)
-    {
-        $post = Post::findOrFail($id);
-        $comments = $post->comments()->get(); 
 
-        return response()->json($comments);
+    public function like(Comment $comment)
+    {
+        $postId = $comment->post->id;
+        $comment->likes()->attach(auth()->id(), ['post_id' => $postId]);
+        return redirect()->back();
     }
+
+    public function unlike(Comment $comment)
+    {
+        $postId = $comment->post->id;
+        $comment->likes()->detach(auth()->id(), ['post_id' => $postId]);
+        return redirect()->back();
+    }
+
 }

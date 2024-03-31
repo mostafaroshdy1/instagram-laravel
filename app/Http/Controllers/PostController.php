@@ -6,6 +6,8 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Image;
+use App\Models\User;
+use App\Models\Video;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,12 +38,10 @@ class PostController extends Controller
     public function store(Request $request)
     {
         try {
-            // Validation and image upload can be added here
-
-            // Check if image files exist in the request
-            $imgFiles = $request->file('img');
-            if (!$imgFiles) {
-                return response()->json(['error' => 'No image files received'], 400);
+            // Check if files exist in the request
+            $files = $request->file('files');
+            if (!$files) {
+                return response()->json(['error' => 'No files received'], 400);
             }
 
             // Create a new post and save it to the database
@@ -50,18 +50,34 @@ class PostController extends Controller
             $post->user_id = Auth::id();
             $post->save();
 
-            // Save the post ID to use when saving images
+            // Save the post ID to use when saving images or videos
             $postId = $post->id;
 
-            // Upload each image to Cloudinary (assuming you're using Cloudinary)
-            foreach ($imgFiles as $imgFile) {
-                $image = new Image();
-
-                // Upload each image to Cloudinary
-                $uploadedFileUrl = Cloudinary::upload($imgFile->getRealPath())->getSecurePath();
-                $image->url = $uploadedFileUrl;
-                $image->post_id = $postId;
-                $image->save();
+            foreach ($files as $file) {
+                if ($file->getClientOriginalExtension() === 'mp4' || $file->getClientOriginalExtension() === 'mov' || $file->getClientOriginalExtension() === 'avi' || $file->getClientOriginalExtension() === 'mkv') {
+                    // Handle video file
+                    $video = new Video();
+                    $uploadedFileUrl = Cloudinary::upload($file->getRealPath(), [
+                        "resource_type" => "video",
+                        "folder" => "videos",
+                        "transformation" => [
+                            "width" => 640,
+                            "height" => 480,
+                            "crop" => "fill",
+                            "format" => "mp4"
+                        ]
+                    ])->getSecurePath();
+                    $video->url = $uploadedFileUrl;
+                    $video->post_id = $postId;
+                    $video->save();
+                } else {
+                    // Handle image file
+                    $image = new Image();
+                    $uploadedFileUrl = Cloudinary::upload($file->getRealPath())->getSecurePath();
+                    $image->url = $uploadedFileUrl;
+                    $image->post_id = $postId;
+                    $image->save();
+                }
             }
 
             return response()->json(['message' => 'Post created successfully'], 200);
@@ -69,6 +85,7 @@ class PostController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
 
 
@@ -117,5 +134,20 @@ class PostController extends Controller
             $post->increment('likes_count');
         }
         return redirect()->back();
+    }
+
+    public function save(Request $request)
+    {
+        $user = auth()->user();
+        $user = User::find($user->id);
+        $postId = $request->post_id;
+
+        if ($user->savePosts()->where('post_id', $postId)->exists()) {
+            $user->savePosts()->detach($postId);
+            return redirect()->back()->with('warning', 'Post already saved. It has been removed from saved posts.');
+        }
+
+        $user->savePosts()->attach($request->post_id);
+        return redirect()->back()->with('success', 'Post saved successfully!');
     }
 }

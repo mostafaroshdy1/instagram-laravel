@@ -25,6 +25,24 @@
 </head>
 
 <body class="bg-black">
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('warning'))
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
 
     <div class="post_page ">
         <!--***** nav menu start ****** -->
@@ -482,11 +500,24 @@
                                         <img src="{{ asset('homePage/images/show_more.png') }}" alt="show more">
                                     </div>
                                 </div>
-                                @foreach ($post->images as $img)
-                                    <div class="image">
-                                        <img src="{{ $img->url }}">
-                                    </div>
-                                @endforeach
+                                @if ($post->images->isEmpty())
+                                    @foreach ($post->videos as $video)
+                                        <div class="video">
+                                            <!-- Display video player here using the video URL -->
+                                            <video controls>
+                                                <source src="{{ $video->url }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    @foreach ($post->images as $img)
+                                        <div class="image">
+                                            <img src="{{ $img->url }}">
+                                        </div>
+                                    @endforeach
+                                @endif
+
                                 <div class="desc">
                                     <div class="icons">
                                         <div class="icon_left d-flex">
@@ -543,11 +574,20 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="save not_saved">
-                                            <img class="hide saved"
-                                                src="{{ asset('homePage/images/save_black.png') }}">
-                                            <img class="not_saved" src="{{ 'homePage/images/save-instagram.png' }}">
-                                        </div>
+                                        <form action="{{ route('posts.save-post') }}" method="post">
+                                            @csrf
+                                            <div class="save not_saved">
+                                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                <button type="submit" class="btn">
+                                                    {{-- <img class="hide saved"
+                                                        src="{{ asset('homePage/images/save_black.png') }}"> --}}
+                                                    {{-- <img class="not_saved" src="{{ 'homePage/images/save-instagram.png' }}"> --}}
+                                                    <img class="not_saved"
+                                                        src="{{ asset('homePage/images/bookmark.png') }}">
+                                                </button>
+
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="liked">
                                     <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal" id="likers">{{ $post->likes_count }} likes</a>

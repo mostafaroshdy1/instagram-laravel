@@ -456,7 +456,6 @@ love_icons.forEach(function (icon) {
     let not_loved = icon.children[0];
     let loved = icon.children[1];
     icon.classList.toggle("love");
-    not_loved.classList.toggle("hide_img");
     loved.classList.toggle("display");
   })
 });
@@ -667,7 +666,8 @@ async function addPost() {
   //likers modal 
 
   document.addEventListener("DOMContentLoaded", function() {
-   console.log('likersss'+document.getElementById('likers'));
+    const postId = this.closest('form').dataset.postId;
+   console.log('likersss'+document.getElementById(`likers-${postId}`));
    document.getElementById('likers').addEventListener('click', function () {
        $('#likersModal').modal('show');
    });
@@ -682,3 +682,29 @@ async function addPost() {
 $(document).ready(function () {
   $('.alert').fadeIn().delay(2000).fadeOut();
 });
+
+
+
+
+    document.querySelectorAll('.likeButton').forEach(button => {
+        button.addEventListener('click', function () {
+            event.preventDefault();
+            const postId = this.closest('form').dataset.postId;
+            fetch(`/posts/toggleLike/${postId}`, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`likers-${postId}`).innerText = data.likes_count + ' likes';
+                const svg = document.querySelector(`#svg-${postId}`);
+                svg.setAttribute('fill', data.isLiked ? 'red' : 'white');
+                const title = data.isLiked ? 'Unlike' : 'Like';
+                svg.querySelector('title').textContent = title;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+

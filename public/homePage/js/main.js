@@ -385,48 +385,48 @@ window.addEventListener("scroll", function () {
 });
 
 //play && pause && mute video
-let video_container = document.querySelectorAll(".video");
-video_container.forEach(function (item) {
-  let video = item.children[0];
-  //if the user click on the video pause it
-  let button_play = item.children[1].children[1];
-  item.addEventListener("click", function () {
-    if (button_play.classList.contains("opac_1")) {
-      video.play();
-    } else {
-      video.pause();
-    }
-    button_play.classList.toggle("opac_1");
-  });
-  //if the user click the mute btn make the video mute
-  let mute_btn = item.children[1].children[0];
-  let volum_up = mute_btn.children[0];
-  let volum_mute = mute_btn.children[1];
-  mute_btn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    if (!video.muted) {
-      video.muted = true;
-      volum_up.classList.add("hide_img");
-      volum_mute.classList.add("display");
-    } else {
-      video.muted = false;
-      volum_up.classList.remove("hide_img");
-      volum_mute.classList.remove("display");
-    }
-  });
-  //change the text follow ==> following and the opposite
-  let follow = item.children[1].children[2].children[0].children[2];
-  follow.addEventListener("click", function (e) {
-    e.stopPropagation();
-    follow.classList.toggle("following");
-    if (follow.classList.contains("following")) {
-      follow.innerHTML = "Following";
-    } else {
-      follow.innerHTML = "Follow";
-    }
+// let video_container = document.querySelectorAll(".video");
+// video_container.forEach(function (item) {
+//   let video = item.children[0];
+//   //if the user click on the video pause it
+//   let button_play = item.children[1].children[1];
+//   item.addEventListener("click", function () {
+//     if (button_play.classList.contains("opac_1")) {
+//       video.play();
+//     } else {
+//       video.pause();
+//     }
+//     button_play.classList.toggle("opac_1");
+//   });
+//   //if the user click the mute btn make the video mute
+//   let mute_btn = item.children[1].children[0];
+//   let volum_up = mute_btn.children[0];
+//   let volum_mute = mute_btn.children[1];
+//   mute_btn.addEventListener("click", function (e) {
+//     e.stopPropagation();
+//     if (!video.muted) {
+//       video.muted = true;
+//       volum_up.classList.add("hide_img");
+//       volum_mute.classList.add("display");
+//     } else {
+//       video.muted = false;
+//       volum_up.classList.remove("hide_img");
+//       volum_mute.classList.remove("display");
+//     }
+//   });
+//   //change the text follow ==> following and the opposite
+//   let follow = item.children[1].children[2].children[0].children[2];
+//   follow.addEventListener("click", function (e) {
+//     e.stopPropagation();
+//     follow.classList.toggle("following");
+//     if (follow.classList.contains("following")) {
+//       follow.innerHTML = "Following";
+//     } else {
+//       follow.innerHTML = "Follow";
+//     }
 
-  });
-});
+//   });
+// });
 
 /**************************search+notif-section **************************/
 //search section notif
@@ -540,7 +540,7 @@ const img_container = document.querySelector("#image-container");
 form.addEventListener('change', handleSubmit);
 
 let img_url;
-let imageFileList;
+let filesUpload;
 //add the image post
 function handleSubmit(event) {
   event.preventDefault();
@@ -549,7 +549,7 @@ function handleSubmit(event) {
     const files = document.getElementById('image-upload').files;
     const carouselInner = document.querySelector('#image-container .carousel-inner');
     carouselInner.innerHTML = ''; // Clear previous images
-    imageFileList = files;
+    filesUpload = files;
     // Loop through each selected file
     for (let i = 0; i < files.length; i++) {
       const imageFile = files[i];
@@ -632,14 +632,14 @@ async function addPost() {
     console.log(postCaption);
 
     // Convert FileList to array
-    const imageFileArray = Array.from(imageFileList);
+    const imageFileArray = Array.from(filesUpload);
 
     const formData = new FormData();
     formData.append('body', postCaption);
 
     // Append each file from the array to the FormData object
     imageFileArray.forEach(file => {
-      formData.append('img[]', file);
+      formData.append('files[]', file);
     });
 
     // Logging for debugging
@@ -655,9 +655,9 @@ async function addPost() {
 
     const response = await fetch('/posts', requestOptions);
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+    // if (!response.ok) {
+    //   throw new Error('Network response was not ok');
+    // }
 
     const data = await response.json();
     console.log('Post added successfully:', data);
@@ -668,5 +668,5 @@ async function addPost() {
 
 
 $(document).ready(function () {
-    $('.alert').fadeIn().delay(2000).fadeOut();
+  $('.alert').fadeIn().delay(2000).fadeOut();
 });

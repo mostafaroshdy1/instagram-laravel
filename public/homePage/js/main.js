@@ -664,6 +664,18 @@ async function addPost() {
   } catch (error) {
     console.error('Error adding post:', error);
   }
+  //likers modal 
+
+  document.addEventListener("DOMContentLoaded", function() {
+   console.log('likersss'+document.getElementById('likers'));
+   document.getElementById('likers').addEventListener('click', function () {
+       $('#likersModal').modal('show');
+   });
+   console.log(document.getElementById('likersClose'));
+   document.getElementById("likersClose").addEventListener('click', function () {
+       $('#likersModal').modal('hide');
+   });
+   });
 }
 
 

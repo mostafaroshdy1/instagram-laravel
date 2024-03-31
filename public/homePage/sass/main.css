@@ -1795,3 +1795,42 @@ button.log_btn:hover {
 .sign_up .content .download div img {
   height: 40px;
 }/*# sourceMappingURL=main.css.map */
+
+.font-weight-bold {
+  font-size: 3em; 
+}
+
+.btn-lg {
+  font-size: 1.5em; 
+  padding: 0.5rem 1rem; 
+  margin-right: 1.2rem;
+}
+
+
+
+.ml-2 {
+  margin-left: 1.2rem; 
+}
+
+
+@media (max-width: 768px) {
+  .font-weight-bold {
+      font-size: 1.5em; 
+  }
+
+  .btn-lg {
+      font-size: 1.5em; 
+      padding: 0.4rem 0.8rem;
+  }
+
+  .ml-2 {
+      margin-left: 0.5rem; 
+  }
+}
+
+.unfollow:hover{
+  background-color: rgb(33 37 41) !important;
+  cursor: pointer;
+}
+
+

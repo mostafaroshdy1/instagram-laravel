@@ -41,7 +41,7 @@ class Post extends Model
     }
     public function likers()
     {
-        return $this->hasManyThrough(User::class, Like::class);
+        return $this->hasManyThrough(User::class, Like::class, 'post_id', 'id', 'id', 'user_id');
     }
 
     public function users()

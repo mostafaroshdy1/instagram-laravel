@@ -25,7 +25,7 @@
 </head>
 
 <body class="bg-black">
-    @if (session('success'))
+    {{-- @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
@@ -41,7 +41,13 @@
         <div class="alert alert-danger">
             {{ session('error') }}
         </div>
-    @endif
+    @endif --}}
+
+
+    <div id="successAlert" class="alert successAlert d-none">
+    </div>
+    <div id="warningAlert" class="alert warningAlert d-none">
+    </div>
 
 
     <div class="post_page ">
@@ -574,20 +580,18 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <form action="{{ route('posts.save-post') }}" method="post">
+                                        <form class="savePostForm" action="{{ route('posts.save-post') }}" method="post">
                                             @csrf
                                             <div class="save not_saved">
                                                 <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                                <button type="submit" class="btn">
-                                                    {{-- <img class="hide saved"
-                                                        src="{{ asset('homePage/images/save_black.png') }}"> --}}
-                                                    {{-- <img class="not_saved" src="{{ 'homePage/images/save-instagram.png' }}"> --}}
-                                                    <img class="not_saved"
-                                                        src="{{ asset('homePage/images/bookmark.png') }}">
+                                                <button type="button" class="savePostButton btn" data-post-id="{{ $post->id }}">
+                                                    <img src="{{ asset('homePage/images/bookmark.png') }}">
                                                 </button>
-
                                             </div>
                                         </form>
+
+
+
                                     </div>
                                     <div class="liked">
                                     <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal" id="likers">{{ $post->likes_count }} likes</a>

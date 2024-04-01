@@ -81,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function savePosts()
     {
         return $this->belongsToMany(Post::class, 'saved_posts')->withTimestamps();
-
+    }
 
     /**
      * Send the password reset notification.
@@ -92,9 +92,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
-
     }
 }
-
-
-

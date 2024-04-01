@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Jobs\SendEmailJob;
@@ -32,7 +33,8 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $request->validate(
+            [
             'full_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -43,7 +45,8 @@ class RegisteredUserController extends Controller
                 'min:8',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
             ],
-        ]);
+            ]
+        );
 
         $user = User::create(
             [
@@ -58,7 +61,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        SendEmailJob::dispatch($user);
+        // SendEmailJob::dispatch($user);
 
         return redirect(route('dashboard', absolute: false));
     }

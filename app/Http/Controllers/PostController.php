@@ -127,14 +127,24 @@ class PostController extends Controller
         if ($post->likes->contains('user_id', auth()->id())) {
             $post->likes()->where('user_id', auth()->id())->delete();
             $post->decrement('likes_count');
+            $isLiked = false;
+            $likers = $post->likers;
         } else {
             $post->likes()->create([
                 'user_id' => auth()->id()
             ]);
             $post->increment('likes_count');
+            $isLiked = true;
+            $likers = $post->likers;
         }
-        return redirect()->back();
+        
+        return response()->json([
+            'likes_count' => $post->likes_count,
+            'isLiked' => $isLiked,
+            'likers' => $likers
+        ]);
     }
+    
 
     public function save(Request $request)
 {

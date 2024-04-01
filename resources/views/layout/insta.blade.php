@@ -11,15 +11,23 @@
         <link rel="stylesheet" href="{{asset('homePage/owlcarousel/owl.carousel.min.css')}}.">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css">
         <link rel="stylesheet" href="{{ asset('homePage/sass/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('homePage/sass/profile.css') }}">
     </head>
 
     <body class="bg-black text-white">
         <div class="post_page">
             {{-- NavBar --}}
-
             @include('component.navbar')
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
 
-            @yield('content')
+
+
     
             <!--Create model-->
             <div class="modal fade" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

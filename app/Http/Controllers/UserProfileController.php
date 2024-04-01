@@ -48,7 +48,8 @@ class UserProfileController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user =User::findOrFail($id);
+        return view('user.profile.edit',['user'=>$user]);
     }
 
     /**

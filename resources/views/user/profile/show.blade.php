@@ -40,9 +40,11 @@
                 <div class="info">
                     <p class="name">
                         ganzury._
-                        <button class="edit_profile">
-                            Edit profile 
-                        </button>
+                        <a href="{{route('user.profile.edit',$user)}}">
+                            <button class="edit_profile">
+                                Edit profile 
+                            </button>
+                        </a>
                     </p>
                     <div class="general_info">
                         <p><span>{{$user->posts()->count()}}</span> posts</p>

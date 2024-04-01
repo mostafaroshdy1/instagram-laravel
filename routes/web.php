@@ -52,6 +52,9 @@ Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 // user profile
 Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
+Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');
+Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store');
+Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update');
 
 
 Route::fallback(function () {

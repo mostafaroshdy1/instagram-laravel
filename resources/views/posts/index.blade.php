@@ -586,7 +586,7 @@
                                         </form>
                                     </div>
                                     <div class="liked">
-                                    <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal" id="likers-{{$post->id}}">{{ $post->likes_count }} likes</a>
+                                    <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal" id="likers-{{$post->id}}" >{{ $post->likes_count }} likes</a>
                                     </div>
                                     <div class="modal fade" id="likersModal" tabindex="-1" aria-labelledby="likersModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
@@ -604,30 +604,7 @@
                                                                     <span class="font-weight-bold" style="font-size: 1.6em;">{{ $liker->name }}</span>
                                                                 </div>
                                                             </div>
-                                                            @if(auth()->user()->isNot($liker))
-                                                            @if(auth()->user()->followings && auth()->user()->followings->contains($liker))
-                                                            <form method="POST" action="{{ route('unfollow', $liker) }}">
-                                                                @csrf
-                                                                <div class="d-flex flex-row align-items-center mt-2 ">
-                                                                    <button type="submit" class="btn  btn-lg bg-secondary  text-white unfollow">Unfollow</button>
-                                                                </div>
-                                                            </form>
-                                                            @elseif($liker->followings && $liker->followings->contains(auth()->user()))
-                                                            <form method="POST" action="{{ route('follow', $liker) }}">
-                                                                @csrf
-                                                                <div class="d-flex flex-row align-items-center mt-2">
-                                                                    <button type="submit" class="btn btn-primary btn-lg ">Follow Back</button>
-                                                                </div>
-                                                            </form>
-                                                            @else
-                                                            <form method="POST" action="{{ route('follow', $liker) }}">
-                                                                @csrf
-                                                                <div class="d-flex flex-row align-items-center mt-2">
-                                                                    <button type="submit" class="btn btn-primary btn-lg ">Follow</button>
-                                                                </div>
-                                                            </form>
-                                                            @endif
-                                                            @endif
+                                                        
                                                         </div>
                                                         @endforeach
                                                     </div>

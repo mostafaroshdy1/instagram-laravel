@@ -147,17 +147,18 @@ class PostController extends Controller
     
 
     public function save(Request $request)
-    {
-        $user = auth()->user();
-        $user = User::find($user->id);
-        $postId = $request->post_id;
+{
+    $user = auth()->user();
+    $user = User::find($user->id);
+    $postId = $request->post_id;
 
-        if ($user->savePosts()->where('post_id', $postId)->exists()) {
-            $user->savePosts()->detach($postId);
-            return redirect()->back()->with('warning', 'Post already saved. It has been removed from saved posts.');
-        }
-
-        $user->savePosts()->attach($request->post_id);
-        return redirect()->back()->with('success', 'Post saved successfully!');
+    if ($user->savePosts()->where('post_id', $postId)->exists()) {
+        $user->savePosts()->detach($postId);
+        return response()->json(['warning' => 'Post already saved. It has been removed from saved posts.'], 200);
     }
+
+    $user->savePosts()->attach($request->post_id);
+    return response()->json(['success' => 'Post saved successfully!'], 200);
+}
+
 }

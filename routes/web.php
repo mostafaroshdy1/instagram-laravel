@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\UserProfileController;
@@ -36,35 +38,47 @@ Route::middleware('auth')->group(
 
 require __DIR__ . '/auth.php';
 
-/*
+
 // posts
-Route::get('/posts');
-Route::get('/posts/create');
-Route::get('/posts/{id}');
-Route::get('/posts/{id}/edit');
-Route::post('/posts');
-Route::put('/posts/{id}');
-Route::delete('/posts/{id}');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
 
 // comments
-Route::get('/posts/{id}/comments'); // show all comments for specific post
-Route::post('/posts/{id}/comments'); // adds comment to post
-Route::delete('/posts/{id}/comments/{id}'); // delete a comment
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch');
 
-// comments reactions
-Route::get('/posts/{id}/comments/{id}/likes');
-Route::post('/posts/{id}/comments/{id}/likes'); // modify the number of likes to a specific comment (one to many relationship with users)
-Route::delete('/posts/{id}/comments/{id}/likes'); // modify the number of likes to a specific comment (one to many relationship with users)
+// comment reaction
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
+Route::delete('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike');
+
+
+//likes
+Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike');
+
+
+// saved posts
+Route::post('/posts/save-post',[PostController::class,'save'])->name('posts.save-post');
+
+
+/*
 
 // users
 Route::post('/users/{id}/followers'); // create followers table needed
 Route::delete('/users/{id}/followers');
 */
 
-Route::post('/follow/{user}', [FollowController::class,'follow'])->name('follow');
-Route::post('/unfollow/{user}', [FollowController::class,'unfollow'])->name('unfollow');
+Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
+Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 // user profile
+
 Route::get('/users/{id}/profile', [UserProfileController::class,'show'])->name('user.profile.show');
+
 
 Route::fallback(
     function () {

@@ -790,3 +790,92 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    var commentForms = document.querySelectorAll('.comment-form');
+
+    commentForms.forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(form);
+            var postId = form.dataset.postId;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action, true);
+            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        console.log('Response:', response);
+                        console.log('Response:', response.likes_count); 
+                        var commentInput = form.querySelector('.comment-input');
+
+                        var commentsSection = document.querySelector('.comments-section[data-post-id="' + postId + '"]');
+                        if (commentsSection) {
+                            var newComment = document.createElement('div');
+                            newComment.classList.add('comment', 'd-flex', 'justify-content-between', 'align-items-center');
+                            newComment.innerHTML = `
+                                <p>
+                                    <strong class="text-white">${response.user.name}</strong>
+                                    <span class="text-white">${response.comment}</span>
+                                </p>
+                                <div class="like" data-comment-id="${response.comment_id}">
+
+                                </div>
+                            `;
+
+                            commentsSection.prepend(newComment);
+                            commentInput.value = '';
+                        } else {
+                            console.error('Comments section not found for post ID:', postId);
+                        }
+                    } else {
+                        console.error(xhr.responseText);
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+    });
+});
+
+
+    async function toggleLike(commentId) {
+        const isLiked = document.querySelector(`.like[data-comment-id="${commentId}"] .like-button`).classList.contains('liked');
+        const method = isLiked ? 'DELETE' : 'POST';
+        const url = isLiked ? `/comments/${commentId}/unlike` : `/comments/${commentId}/like`;
+
+        try {
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to toggle like.');
+            }
+
+            const responseData = await response.json();
+            updateLikeStatus(commentId, responseData.liked, responseData.likes_count);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    function updateLikeStatus(commentId, isLiked, likeCount) {
+        const likeButton = document.querySelector(`.like[data-comment-id="${commentId}"] .like-button`);
+        likeButton.classList.toggle('liked', isLiked);
+
+        const likeCountElement = document.querySelector(`.like[data-comment-id="${commentId}"] .like-count`);
+        likeCountElement.textContent = likeCount + ' Likes';
+
+        const likeImage = document.querySelector(`.like[data-comment-id="${commentId}"] .like-button img`);
+        likeImage.src = isLiked ? heartImageUrl : loveImageUrl;
+    }
+
+
+

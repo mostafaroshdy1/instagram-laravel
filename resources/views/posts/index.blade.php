@@ -549,7 +549,7 @@
                                             </div>
                                             <div class="chat">
                                                 <button type="button" class="btn p-0 m-0" data-bs-toggle="modal"
-                                                    data-bs-target="#message_modal">
+                                                data-bs-target="#message_modal_{{ $post->id }}">
                                                     <svg class="ms-3 m-0 p-0" style="color: white"
                                                         aria-label="Comment" class="x1lliihq x1n2onr6 x5n08af"
                                                         fill="currentColor" height="24" role="img"
@@ -655,106 +655,92 @@
                                                         <strong class="text-white">{{ $comment->user->name }}</strong>
                                                         <span class="text-white">{{ $comment->comment }}</span>
                                                     </p>
-                                                    <div class="like">
+                                                    <div class="like" data-comment-id="{{ $comment->id }}">
                                                         @if ($comment->likes->contains(auth()->id()))
-                                                            <form action="{{ route('comments.unlike', $comment) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-link"><img
-                                                                        class="not-loved"
-                                                                        src="{{ asset('homePage/images/heart.png') }}"
-                                                                        alt="heart image" srcset=""></button>
-                                                            </form>
+                                                            <button class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
+                                                                <img class="not-loved" src="{{ asset('homePage/images/heart.png') }}" alt="heart image">
+                                                            </button>
                                                         @else
-                                                            <form action="{{ route('comments.like', $comment) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-link"><img
-                                                                        class=" bg-body-emphasis"
-                                                                        src="{{ asset('homePage/images/love.png') }}"
-                                                                        alt="" srcset=""></button>
-                                                            </form>
+                                                            <button class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
+                                                                <img class="loved" src="{{ asset('homePage/images/love.png') }}" alt="love image">
+                                                            </button>
                                                         @endif
-                                                        <span class="text-white">{{ $comment->likes()->count() }}
-                                                            Likes</span>
+                                                        <span class="text-white like-count">{{ $comment->likes()->count() }} Likes</span>
+
+                                                        <script>
+                                                              heartImageUrl = "{{ asset('homePage/images/heart.png') }}";
+                                                              loveImageUrl = "{{ asset('homePage/images/love.png') }}";
+                                                        </script>
                                                     </div>
+
+
+
+
+
                                                 </div>
                                             @endforeach
 
                                             @if ($post->comments()->count() > 3)
                                                 <div class="view-all-comments" data-bs-toggle="modal"
-                                                    data-bs-target="#commentsModal"
+                                                    data-bs-target="#commentsModal-{{ $post->id }}"
                                                     data-post-id="{{ $post->id }}">
                                                     <a href="#" class="gray">View all
                                                         {{ $post->comments()->count() }} comments</a>
                                                 </div>
                                             @endif
 
-                                            {{-- comments modal --}}
-                                            <div class="modal fade" id="commentsModal" tabindex="-1"
-                                                aria-labelledby="commentsModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="commentsModalLabel">All
-                                                                Comments</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="comments-list">
-                                                                {{-- modal comments --}}
-                                                                @foreach ($post->comments as $comment)
-                                                                    <div
-                                                                        class="comment d-flex justify-content-between align-items-center">
-                                                                        <p>
-                                                                            <strong>{{ $comment->user->name }}</strong>
-                                                                            <span>{{ $comment->comment }}</span>
-                                                                        </p>
-                                                                        <div class="like">
-                                                                            @if ($comment->likes->contains(auth()->id()))
-                                                                                <form
-                                                                                    action="{{ route('comments.unlike', $comment) }}"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-link"><img
-                                                                                            class="not-loved"
-                                                                                            src="{{ asset('homePage/images/heart.png') }}"
-                                                                                            alt="heart image"
-                                                                                            srcset=""></button>
-                                                                                </form>
-                                                                            @else
-                                                                                <form
-                                                                                    action="{{ route('comments.like', $comment) }}"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-link"><img
-                                                                                            class="loved"
-                                                                                            src="{{ asset('homePage/images/love2.png') }}"
-                                                                                            alt=""
-                                                                                            srcset=""></button>
-                                                                                </form>
-                                                                            @endif
-                                                                            <span>{{ $comment->likes()->count() }}
-                                                                                Likes</span>
-                                                                        </div>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
+                                        {{-- comments modal view allllll --}}
+                                        <div class="modal fade" id="commentsModal-{{ $post->id }}" tabindex="-1"
+                                            aria-labelledby="commentsModalLabel-{{ $post->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="commentsModalLabel-{{ $post->id }}">All Comments</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="comments-list">
+                                                            {{-- modal comments --}}
+                                                            @foreach ($post->comments as $comment)
+                                                                <div
+                                                                    class="comment d-flex justify-content-between align-items-center">
+                                                                    <p>
+                                                                        <strong>{{ $comment->user->name }}</strong>
+                                                                        <span>{{ $comment->comment }}</span>
+                                                                    </p>
+                                                                    <div class="like" data-comment-id="{{ $comment->id }}">
+                                                                        @if ($comment->likes->contains(auth()->id()))
+                                                                            <button class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
+                                                                                <img class="not-loved" src="{{ asset('homePage/images/heart.png') }}" alt="heart image">
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
+                                                                                <img class="loved" src="{{ asset('homePage/images/love.png') }}" alt="love image">
+                                                                            </button>
+                                                                        @endif
+                                                                        <span class=" like-count">{{ $comment->likes()->count() }} Likes</span>
 
+                                                                        <script>
+                                                                             heartImageUrl = "{{ asset('homePage/images/heart.png') }}";
+                                                                             loveImageUrl = "{{ asset('homePage/images/love2.png') }}";
+                                                                        </script>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <form action="{{ route('comments.store') }}" method="POST">
+
+                                        </div>
+                                        <form action="{{ route('comments.store') }}" method="POST" class="comment-form" data-post-id="{{ $post->id }}">
                                             @csrf
                                             <div class="comment">
-                                                <input type="text" name="comment" placeholder="Add a comment...">
+                                                <input type="text" name="comment" class="comment-input" placeholder="Add a comment...">
                                                 <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                                <button type="submit" class="btn">Post</button>
+                                                <button type="submit" class="btn submit-comment" data-post-id="{{ $post->id }}">Post</button>
                                             </div>
                                         </form>
                                     </div>
@@ -762,12 +748,12 @@
                                 </div>
                             </div>
                             {{-- add new comment modal --}}
-                            <div class="modal fade" id="message_modal" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="message_modal_{{ $post->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel_{{ $post->id }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel_{{ $post->id }}">Comments</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -788,76 +774,50 @@
                                                                 <p class="lead">{{ $comment->comment }}</p>
                                                             </div>
                                                         </div>
-                                                        <div class="like">
+                                                        <div class="like" data-comment-id="{{ $comment->id }}">
                                                             @if ($comment->likes->contains(auth()->id()))
-                                                                <form
-                                                                    action="{{ route('comments.unlike', $comment) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    <button type="submit" class="btn btn-link"><img
-                                                                            class="not-loved"
-                                                                            src="{{ asset('homePage/images/heart.png') }}"
-                                                                            alt="heart image" srcset=""></button>
-                                                                </form>
+                                                                <button class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
+                                                                    <img class="not-loved" src="{{ asset('homePage/images/heart.png') }}" alt="heart image">
+                                                                </button>
                                                             @else
-                                                                <form action="{{ route('comments.like', $comment) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    <button type="submit" class="btn btn-link"><img
-                                                                            class="loved"
-                                                                            src="{{ asset('homePage/images/love2.png') }}"
-                                                                            alt="" srcset=""></button>
-                                                                </form>
+                                                                <button class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
+                                                                    <img class="loved" src="{{ asset('homePage/images/love.png') }}" alt="love image">
+                                                                </button>
                                                             @endif
-                                                            <span class="fs-7">{{ $comment->likes()->count() }}
-                                                                Likes</span>
+                                                            <span class="like-count">{{ $comment->likes()->count() }} Likes</span>
+
+                                                            <script>
+                                                                 heartImageUrl = "{{ asset('homePage/images/heart.png') }}";
+                                                                 loveImageUrl = "{{ asset('homePage/images/love.png') }}";
+                                                            </script>
                                                         </div>
                                                     </div>
-                                                    <!-- Responses -->
-                                                    {{-- <div class="responses">
-                                                @foreach ($comment->responses as $response)
-                                                <div class="response comment">
-                                                    <div class="d-flex">
-                                                        <div class="img">
-                                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="Profile Image">
-                                                        </div>
-                                                        <div class="content">
-                                                            <div class="person">
-                                                                <h4>{{ $response->user->name }}</h4>
-                                                                <span>{{ $response->created_at->diffForHumans() }}</span>
-                                                            </div>
-                                                            <p>{{ $response->comment }}</p>
-                                                            <!-- Add replay and translation buttons if needed -->
-                                                        </div>
-                                                    </div>
-                                                    <div class="like">
-                                                        <!-- You can add like functionality here if needed -->
-                                                        <img class="not_loved" src="{{ asset('homePage/images/love.png') }}" alt="Not Loved">
-                                                        <img class="loved" src="{{ asset('homePage/images/heart.png') }}" alt="Loved">
-                                                        <p>{{ $response->likes()->count() }}</p>
-                                                    </div>
-                                                </div>
-                                                @endforeach
-                                            </div> --}}
                                                 @endforeach
                                             </div>
                                         </div>
-
                                         <div class="modal-footer">
-                                            <form action="{{ route('comments.store') }}" method="post">
+
+                                            <form action="{{ route('comments.store') }}" method="POST" class="comment-form" data-post-id="{{ $post->id }}">
                                                 @csrf
                                                 <div class="input-group">
                                                     <img src="{{ asset('homePage/images/profile_img.jpg') }}"
                                                         class="img-fluid" alt="Profile Image">
+                                                    <input type="text" name="comment" class="comment-input form-control" placeholder="Add a comment...">
+                                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                    <button type="submit" class="btn submit-comment" data-post-id="{{ $post->id }}">Post</button>
+                                                </div>
+                                            </form>
+                                            {{-- <form action="{{ route('comments.store') }}" method="post">
+                                                @csrf
+                                                <div class="input-group">
                                                     <input type="text" id="emoji_comment" name="comment"
                                                         class="form-control" placeholder="Add a comment...">
                                                     <input type="hidden" name="post_id"
                                                         value="{{ $post->id }}">
                                                     <button type="submit" class="btn">Add</button>
                                                 </div>
-                                            </form>
+                                            </form> --}}
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

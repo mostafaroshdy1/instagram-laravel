@@ -13,7 +13,7 @@ body {
 
 .not-loved,
 .loved{
-    width:20px !important;
+    width:20px!important;
 }
 
 .input-group img{
@@ -51,10 +51,6 @@ body {
 
 .display {
   display: flex !important;
-}
-
-.hide_img {
-  display: none !important;
 }
 
 ul {

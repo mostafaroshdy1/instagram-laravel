@@ -40,7 +40,7 @@ Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])-
 
 // comment reaction
 Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
-Route::post('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike');
+Route::delete('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike');
 
 
 //likes

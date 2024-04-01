@@ -583,8 +583,8 @@
                                         <form class="savePostForm" action="{{ route('posts.save-post') }}" method="post">
                                             @csrf
                                             <div class="save not_saved">
-                                                <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                                <button type="button" class="savePostButton btn" data-post-id="{{ $post->id }}">
+                                                <input id="hiddenInput" type="hidden" name="post_id" value="{{ $post->id }}">
+                                                <button id="saveBtn" type="button" class="savePostButton btn" data-post-id="{{ $post->id }}">
                                                     <img src="{{ asset('homePage/images/bookmark.png') }}">
                                                 </button>
                                             </div>
@@ -657,11 +657,11 @@
                                                     </p>
                                                     <div class="like" data-comment-id="{{ $comment->id }}">
                                                         @if ($comment->likes->contains(auth()->id()))
-                                                            <button class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
+                                                            <button id="likeBtn" class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
                                                                 <img class="not-loved" src="{{ asset('homePage/images/heart.png') }}" alt="heart image">
                                                             </button>
                                                         @else
-                                                            <button class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
+                                                            <button id="likeBtn" class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
                                                                 <img class="loved" src="{{ asset('homePage/images/love.png') }}" alt="love image">
                                                             </button>
                                                         @endif
@@ -711,11 +711,11 @@
                                                                     </p>
                                                                     <div class="like" data-comment-id="{{ $comment->id }}">
                                                                         @if ($comment->likes->contains(auth()->id()))
-                                                                            <button class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
+                                                                            <button id="likeBtn" class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
                                                                                 <img class="not-loved" src="{{ asset('homePage/images/heart.png') }}" alt="heart image">
                                                                             </button>
                                                                         @else
-                                                                            <button class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
+                                                                            <button id="likeBtn" class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
                                                                                 <img class="loved" src="{{ asset('homePage/images/love.png') }}" alt="love image">
                                                                             </button>
                                                                         @endif
@@ -776,11 +776,11 @@
                                                         </div>
                                                         <div class="like" data-comment-id="{{ $comment->id }}">
                                                             @if ($comment->likes->contains(auth()->id()))
-                                                                <button class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
+                                                                <button id="likeBtn" class="btn btn-link like-button liked" onclick="toggleLike({{ $comment->id }})">
                                                                     <img class="not-loved" src="{{ asset('homePage/images/heart.png') }}" alt="heart image">
                                                                 </button>
                                                             @else
-                                                                <button class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
+                                                                <button id="likeBtn" class="btn btn-link like-button" onclick="toggleLike({{ $comment->id }})">
                                                                     <img class="loved" src="{{ asset('homePage/images/love.png') }}" alt="love image">
                                                                 </button>
                                                             @endif

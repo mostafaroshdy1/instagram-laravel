@@ -49,6 +49,14 @@ body {
   display: none;
 }
 
+.hide{
+    display: none;
+}
+
+.hide_img {
+    display: none !important;
+  }
+
 .display {
   display: flex !important;
 }

@@ -731,6 +731,8 @@ async function addPost() {
 document.addEventListener("DOMContentLoaded", () => {
     const successAlert = document.getElementById("successAlert");
     const warningAlert = document.getElementById("warningAlert");
+    const hiddenInput = document.getElementById("hiddenInput");
+    const saveBtn = document.getElementById("saveBtn");
 
     document.body.addEventListener("click", (event) => {
         const saveButton = event.target.closest(".savePostButton");
@@ -740,6 +742,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (form) {
                 const formData = new FormData(form);
+
+                hiddenInput.classList.remove("hide");
+                hiddenInput.classList.remove("hide_img");
+                saveBtn.classList.remove("hide");
+                saveBtn.classList.remove("hide_img");
 
                 const xhr = new XMLHttpRequest();
                 xhr.open("POST", form.getAttribute("action"), true);
@@ -789,32 +796,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    var commentForms = document.querySelectorAll(".comment-form");
 
-document.addEventListener('DOMContentLoaded', function () {
-    var commentForms = document.querySelectorAll('.comment-form');
-
-    commentForms.forEach(function(form) {
-        form.addEventListener('submit', function(event) {
+    commentForms.forEach(function (form) {
+        form.addEventListener("submit", function (event) {
             event.preventDefault();
 
             var formData = new FormData(form);
             var postId = form.dataset.postId;
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', form.action, true);
-            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+            xhr.open("POST", form.action, true);
+            xhr.setRequestHeader("X-CSRF-TOKEN", "{{ csrf_token() }}");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         var response = JSON.parse(xhr.responseText);
-                        console.log('Response:', response);
-                        console.log('Response:', response.likes_count); 
-                        var commentInput = form.querySelector('.comment-input');
+                        console.log("Response:", response);
+                        console.log("Response:", response.likes_count);
+                        var commentInput = form.querySelector(".comment-input");
 
-                        var commentsSection = document.querySelector('.comments-section[data-post-id="' + postId + '"]');
+                        var commentsSection = document.querySelector(
+                            '.comments-section[data-post-id="' + postId + '"]'
+                        );
                         if (commentsSection) {
-                            var newComment = document.createElement('div');
-                            newComment.classList.add('comment', 'd-flex', 'justify-content-between', 'align-items-center');
+                            var newComment = document.createElement("div");
+                            newComment.classList.add(
+                                "comment",
+                                "d-flex",
+                                "justify-content-between",
+                                "align-items-center"
+                            );
                             newComment.innerHTML = `
                                 <p>
                                     <strong class="text-white">${response.user.name}</strong>
@@ -826,9 +839,12 @@ document.addEventListener('DOMContentLoaded', function () {
                             `;
 
                             commentsSection.prepend(newComment);
-                            commentInput.value = '';
+                            commentInput.value = "";
                         } else {
-                            console.error('Comments section not found for post ID:', postId);
+                            console.error(
+                                "Comments section not found for post ID:",
+                                postId
+                            );
                         }
                     } else {
                         console.error(xhr.responseText);
@@ -840,42 +856,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+async function toggleLike(commentId) {
+    const isLiked = document
+        .querySelector(`.like[data-comment-id="${commentId}"] .like-button`)
+        .classList.contains("liked");
+    const method = isLiked ? "DELETE" : "POST";
+    const url = isLiked
+        ? `/comments/${commentId}/unlike`
+        : `/comments/${commentId}/like`;
+    var likeBtn = document.getElementById("likeBtn");
 
-    async function toggleLike(commentId) {
-        const isLiked = document.querySelector(`.like[data-comment-id="${commentId}"] .like-button`).classList.contains('liked');
-        const method = isLiked ? 'DELETE' : 'POST';
-        const url = isLiked ? `/comments/${commentId}/unlike` : `/comments/${commentId}/like`;
+    likeBtn.classList.remove("hide_img");
 
-        try {
-            const response = await fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            });
+    try {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+            },
+        });
 
-            if (!response.ok) {
-                throw new Error('Failed to toggle like.');
-            }
-
-            const responseData = await response.json();
-            updateLikeStatus(commentId, responseData.liked, responseData.likes_count);
-        } catch (error) {
-            console.error('Error:', error);
+        if (!response.ok) {
+            throw new Error("Failed to toggle like.");
         }
+
+        const responseData = await response.json();
+        updateLikeStatus(
+            commentId,
+            responseData.liked,
+            responseData.likes_count
+        );
+    } catch (error) {
+        console.error("Error:", error);
     }
+}
 
-    function updateLikeStatus(commentId, isLiked, likeCount) {
-        const likeButton = document.querySelector(`.like[data-comment-id="${commentId}"] .like-button`);
-        likeButton.classList.toggle('liked', isLiked);
+function updateLikeStatus(commentId, isLiked, likeCount) {
+    const likeButton = document.querySelector(
+        `.like[data-comment-id="${commentId}"] .like-button`
+    );
+    likeButton.classList.toggle("liked", isLiked);
+    likeButton.classList.remove("hide_img");
 
-        const likeCountElement = document.querySelector(`.like[data-comment-id="${commentId}"] .like-count`);
-        likeCountElement.textContent = likeCount + ' Likes';
+    const likeCountElement = document.querySelector(
+        `.like[data-comment-id="${commentId}"] .like-count`
+    );
+    likeCountElement.textContent = likeCount + " Likes";
 
-        const likeImage = document.querySelector(`.like[data-comment-id="${commentId}"] .like-button img`);
-        likeImage.src = isLiked ? heartImageUrl : loveImageUrl;
-    }
-
-
-
+    const likeImage = document.querySelector(
+        `.like[data-comment-id="${commentId}"] .like-button img`
+    );
+    likeImage.src = isLiked ? heartImageUrl : loveImageUrl;
+}

@@ -494,15 +494,15 @@ notification_icon.forEach((notif) => {
 //change the icon when the user click on it
 
 //love btn
-let love_icons = document.querySelectorAll(".like");
-love_icons.forEach(function (icon) {
-  icon.addEventListener("click", function () {
-    let not_loved = icon.children[0];
-    let loved = icon.children[1];
-    icon.classList.toggle("love");
-    loved.classList.toggle("display");
-  })
-});
+// let love_icons = document.querySelectorAll(".like");
+// love_icons.forEach(function (icon) {
+//   icon.addEventListener("click", function () {
+//     let not_loved = icon.children[0];
+//     let loved = icon.children[1];
+//     icon.classList.toggle("love");
+//     loved.classList.toggle("display");
+//   })
+// });
 
 //save btn
 let save_icon = document.querySelectorAll(".save");
@@ -767,7 +767,7 @@ $(document).ready(function () {
                   <div class="d-flex flex-row align-items-center">
                       <img class="rounded-circle" src="${imagePath}"  width="55" />
                       <div class="d-flex flex-column align-items-start ml-2">
-                          <span class="font-weight-bold" style="font-size: 1.6em;">${liker.name}</span>
+                          <span class="font-weight-bold" style="font-size: 1.6em;">${liker.full_name}</span>
                       </div>
                   </div>
               </div>
@@ -885,11 +885,20 @@ document.addEventListener("DOMContentLoaded", function () {
                             );
                             newComment.innerHTML = `
                                 <p>
-                                    <strong class="text-white">${response.user.name}</strong>
+                                    <strong class="text-white">${response.user.full_name}</strong>
                                     <span class="text-white">${response.comment}</span>
                                 </p>
-                                <div class="like" data-comment-id="${response.comment_id}">
-
+                                <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
+                                <button id="likeBtn"
+                                class="btn btn-link like-button"
+                                onclick="toggleLike(${response.comment_id})">
+                                <img class="not-loved"
+                                    src="http://localhost:8000/homePage/images/love.png"
+                                    alt="heart image">
+                                    </button>
+                                    <span
+                                        class="text-white like-count">0 Likes
+                                    </span>
                                 </div>
                             `;
 
@@ -919,9 +928,7 @@ async function toggleLike(commentId) {
     const url = isLiked
         ? `/comments/${commentId}/unlike`
         : `/comments/${commentId}/like`;
-    var likeBtn = document.getElementById("likeBtn");
 
-    likeBtn.classList.remove("hide_img");
 
     try {
         const response = await fetch(url, {

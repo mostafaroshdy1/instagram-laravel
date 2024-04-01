@@ -51,7 +51,8 @@ class CommentController extends Controller
         return response()->json([
             'user' => $user,
             'comment' => $comment->comment,
-    ]);
+            'comment_id' => $comment->id,
+        ]);
     }
 
 
@@ -90,23 +91,22 @@ class CommentController extends Controller
 
 
     public function like(Comment $comment)
-{
-    $comment->likes()->attach(auth()->id());
+    {
+        $comment->likes()->attach(auth()->id());
 
-    $isLiked = true;
-    $likeCount = $comment->likes()->count();
+        $isLiked = true;
+        $likeCount = $comment->likes()->count();
 
-    return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
-}
+        return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
+    }
 
-public function unlike(Comment $comment)
-{
-    $comment->likes()->detach(auth()->id());
+    public function unlike(Comment $comment)
+    {
+        $comment->likes()->detach(auth()->id());
 
-    $isLiked = false;
-    $likeCount = $comment->likes()->count();
+        $isLiked = false;
+        $likeCount = $comment->likes()->count();
 
-    return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
-}
-
+        return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
+    }
 }

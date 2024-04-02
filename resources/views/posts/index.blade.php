@@ -590,58 +590,79 @@
                                         </form>
                                     </div>
                                     <div class="liked">
-                                    <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal" id="likers">{{ $post->likes_count }} likes</a>
+                                        <a class="bold text-white" data-bs-toggle="modal"
+                                            data-bs-target="#likersModal" id="likers">{{ $post->likes_count }}
+                                            likes</a>
                                     </div>
-                                    <div class="modal fade" id="likersModal" tabindex="-1" aria-labelledby="likersModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-                                                <div class="modal-content bg-dark text-white">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="likersModalLabel">Likes</h1>
-                                                        <i class="btn-close fa-2x fa-solid fa-xmark text-white" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true" id="likersClose"></i>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        @foreach ($post->likers as $liker)
-                                                        <div class="d-flex flex-row justify-content-between align-items-center mb-4">
+                                    <div class="modal fade" id="likersModal" tabindex="-1"
+                                        aria-labelledby="likersModalLabel" aria-hidden="true">
+                                        <div
+                                            class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                                            <div class="modal-content bg-dark text-white">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="likersModalLabel">Likes</h1>
+                                                    <i class="btn-close fa-2x fa-solid fa-xmark text-white"
+                                                        data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"
+                                                        id="likersClose"></i>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @foreach ($post->likers as $liker)
+                                                        <div
+                                                            class="d-flex flex-row justify-content-between align-items-center mb-4">
                                                             <div class="d-flex flex-row align-items-center">
-                                                                <img class="rounded-circle" src="{{ asset('homePage/images/profile_img.jpg') }}" width="55" />
+                                                                <img class="rounded-circle"
+                                                                    src="{{ asset('homePage/images/profile_img.jpg') }}"
+                                                                    width="55" />
                                                                 <div class="d-flex flex-column align-items-start ml-2">
-                                                                    <span class="font-weight-bold" style="font-size: 1.6em;">{{ $liker->name }}</span>
+                                                                    <span class="font-weight-bold"
+                                                                        style="font-size: 1.6em;">{{ $liker->name }}</span>
                                                                 </div>
                                                             </div>
-                                                            @if(auth()->user()->isNot($liker))
-                                                            @if(auth()->user()->followings && auth()->user()->followings->contains($liker))
-                                                            <form method="POST" action="{{ route('unfollow', $liker) }}">
-                                                                @csrf
-                                                                <div class="d-flex flex-row align-items-center mt-2 ">
-                                                                    <button type="submit" class="btn  btn-lg bg-secondary  text-white unfollow">Unfollow</button>
-                                                                </div>
-                                                            </form>
-                                                            @elseif($liker->followings && $liker->followings->contains(auth()->user()))
-                                                            <form method="POST" action="{{ route('follow', $liker) }}">
-                                                                @csrf
-                                                                <div class="d-flex flex-row align-items-center mt-2">
-                                                                    <button type="submit" class="btn btn-primary btn-lg ">Follow Back</button>
-                                                                </div>
-                                                            </form>
-                                                            @else
-                                                            <form method="POST" action="{{ route('follow', $liker) }}">
-                                                                @csrf
-                                                                <div class="d-flex flex-row align-items-center mt-2">
-                                                                    <button type="submit" class="btn btn-primary btn-lg ">Follow</button>
-                                                                </div>
-                                                            </form>
-                                                            @endif
+                                                            @if (auth()->user()->isNot($liker))
+                                                                @if (auth()->user()->followings && auth()->user()->followings->contains($liker))
+                                                                    <form method="POST"
+                                                                        action="{{ route('unfollow', $liker) }}">
+                                                                        @csrf
+                                                                        <div
+                                                                            class="d-flex flex-row align-items-center mt-2 ">
+                                                                            <button type="submit"
+                                                                                class="btn  btn-lg bg-secondary  text-white unfollow">Unfollow</button>
+                                                                        </div>
+                                                                    </form>
+                                                                @elseif($liker->followings && $liker->followings->contains(auth()->user()))
+                                                                    <form method="POST"
+                                                                        action="{{ route('follow', $liker) }}">
+                                                                        @csrf
+                                                                        <div
+                                                                            class="d-flex flex-row align-items-center mt-2">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary btn-lg ">Follow
+                                                                                Back</button>
+                                                                        </div>
+                                                                    </form>
+                                                                @else
+                                                                    <form method="POST"
+                                                                        action="{{ route('follow', $liker) }}">
+                                                                        @csrf
+                                                                        <div
+                                                                            class="d-flex flex-row align-items-center mt-2">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary btn-lg ">Follow</button>
+                                                                        </div>
+                                                                    </form>
+                                                                @endif
                                                             @endif
                                                         </div>
-                                                        @endforeach
-                                                    </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
                                     <div class="post_desc">
                                         <p>
-                                            <a class="text-white" href="#">{{ $post->body }}</a>
+                                        <p class="text-white" id = "post-body">{{ $post->body }}
+                                        </p>
                                         </p>
                                         <div class="comments-section" data-post-id="{{ $post->id }}">
                                             {{-- posts comments --}}
@@ -956,7 +977,8 @@
                                 <div class="person">
                                     <div class="d-flex">
                                         <div class="img">
-                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                            <img src="{{ asset('homePage/images/profile_img.jpg') }}"
+                                                alt="">
                                         </div>
                                         <div class="content">
                                             <div class="person">
@@ -1078,6 +1100,8 @@
     <script src="{{ asset('homePage/js/carousel.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
     <script src="{{ asset('homePage/js/main.js') }}"></script>
+    <script src="{{ asset('tags/js/script.js') }}"></script>
+
 </body>
 
 </html>

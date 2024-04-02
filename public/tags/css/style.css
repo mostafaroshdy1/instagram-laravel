@@ -1,0 +1,22 @@
+.header-text {
+    color: #ffffff; /* White color */
+}
+
+/* CSS for same-sized image containers */
+.post .item {
+    height: 400px; /* Set a fixed height for the image container */
+    overflow: hidden; /* Hide any overflow to keep images within container */
+}
+
+.post .item img {
+    object-fit: cover; /* Maintain aspect ratio and cover entire container */
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.post-separator {
+    border-top: 1px solid #ddd;
+    margin: 25px auto;
+    width: 60%;
+}

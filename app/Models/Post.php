@@ -23,6 +23,7 @@ class Post extends Model
     {
         return $this->hasMany(Image::class, 'post_id', 'id');
     }
+
     public function videos(): HasMany
     {
         return $this->hasMany(Video::class, 'post_id', 'id');
@@ -33,12 +34,11 @@ class Post extends Model
         return $this->hasMany(Comment::class, 'post_id', 'id');
     }
 
-
-
     public function likes()
     {
         return $this->hasMany(Like::class);
     }
+
     public function likers()
     {
         return $this->hasManyThrough(User::class, Like::class, 'post_id', 'id', 'id', 'user_id');
@@ -47,5 +47,10 @@ class Post extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'saved_posts')->withTimestamps();
+    }
+
+    public function hashtags()
+    {
+        return $this->belongsToMany(Hashtag::class, 'post_hashtag', 'post_id', 'hashtag_id');
     }
 }

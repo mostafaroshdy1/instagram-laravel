@@ -11,6 +11,8 @@ use App\Models\Video;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Hashtag;
+use Illuminate\Support\Facades\DB;
 
 
 class PostController extends Controller
@@ -53,6 +55,23 @@ class PostController extends Controller
             // Save the post ID to use when saving images or videos
             $postId = $post->id;
 
+            $hashtags = [];
+
+            preg_match_all('/#\w+/', $post->body, $matches);
+            $hashtags = $matches[0];
+
+            foreach ($hashtags as $hashtag) {
+                $hashtag = ltrim($hashtag, '#');
+                $tag = Hashtag::where('name', '=', $hashtag)->first();
+                if ($tag === null) {
+                    $tag = new Hashtag();
+                    $tag->name = $hashtag;
+                    $tag->timestamps = now();
+                    $tag->save();
+                }
+                $post->hashtags()->attach($tag->id);
+            }
+
             foreach ($files as $file) {
                 if ($file->getClientOriginalExtension() === 'mp4' || $file->getClientOriginalExtension() === 'mov' || $file->getClientOriginalExtension() === 'avi' || $file->getClientOriginalExtension() === 'mkv') {
                     // Handle video file
@@ -79,16 +98,11 @@ class PostController extends Controller
                     $image->save();
                 }
             }
-
             return response()->json(['message' => 'Post created successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
-
-
-
 
 
     /**

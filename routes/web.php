@@ -6,7 +6,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Hashtag;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HashtagsController;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
@@ -63,21 +65,21 @@ Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])-
 
 
 // saved posts
-Route::post('/posts/save-post',[PostController::class,'save'])->name('posts.save-post');
+Route::post('/posts/save-post', [PostController::class, 'save'])->name('posts.save-post');
 
+// hashtags
+Route::get('/hashtags/{hashtag}', [HashtagsController::class, 'showPosts'])->name('hashtags.showPosts');
 
-/*
 
 // users
 Route::post('/users/{id}/followers'); // create followers table needed
 Route::delete('/users/{id}/followers');
-*/
 
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 // user profile
 
-Route::get('/users/{id}/profile', [UserProfileController::class,'show'])->name('user.profile.show');
+Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
 
 
 Route::fallback(

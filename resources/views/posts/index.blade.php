@@ -636,7 +636,8 @@
 
                                     <div class="post_desc">
                                         <p>
-                                            <a class="text-white" href="#">{{ $post->body }}</a>
+                                        <p class="text-white" id = "post-body">{{ $post->body }}
+                                        </p>
                                         </p>
                                         <div class="comments-section" data-post-id="{{ $post->id }}">
                                             {{-- posts comments --}}
@@ -1060,6 +1061,8 @@
     <script src="{{ asset('homePage/js/carousel.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
     <script src="{{ asset('homePage/js/main.js') }}"></script>
+    <script src="{{ asset('tags/js/script.js') }}"></script>
+
 </body>
 
 </html>

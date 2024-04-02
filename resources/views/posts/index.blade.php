@@ -668,11 +668,6 @@
                                                         <span
                                                             class="text-white like-count">{{ $comment->likes()->count() }}
                                                             Likes</span>
-
-                                                        <script>
-                                                            heartImageUrl = "{{ asset('homePage/images/heart.png') }}";
-                                                            loveImageUrl = "{{ asset('homePage/images/love.png') }}";
-                                                        </script>
                                                     </div>
 
                                                 </div>
@@ -688,14 +683,15 @@
                                             @endif
 
                                             {{-- comments modal view allllll --}}
-                                            <div class="modal fade" id="commentsModal-{{ $post->id }}"
+                                            <div class="modal fade bg-black" id="commentsModal-{{ $post->id }}"
                                                 tabindex="-1"
                                                 aria-labelledby="commentsModalLabel-{{ $post->id }}"
-                                                aria-hidden="true">
+                                                aria-hidden="true"
+                                                >
                                                 <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
+                                                    <div class="modal-content bg-dark">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title"
+                                                            <h5 class="modal-title text-white"
                                                                 id="commentsModalLabel-{{ $post->id }}">All
                                                                 Comments</h5>
                                                             <button type="button" class="btn-close"
@@ -706,7 +702,7 @@
                                                                 {{-- modal comments --}}
                                                                 @foreach ($post->comments as $comment)
                                                                     <div
-                                                                        class="comment d-flex justify-content-between align-items-center">
+                                                                        class="comment text-white d-flex justify-content-between align-items-center">
                                                                         <p>
                                                                             <strong>{{ $comment->user->full_name }}</strong>
                                                                             <span>{{ $comment->comment }}</span>
@@ -714,30 +710,24 @@
                                                                         <div class="like"
                                                                             data-comment-id="{{ $comment->id }}">
                                                                             @if ($comment->likes->contains(auth()->id()))
-                                                                                <button id="likeBtn"
-                                                                                    class="btn btn-link like-button liked"
-                                                                                    onclick="toggleLike({{ $comment->id }})">
-                                                                                    <img class="not-loved"
-                                                                                        src="http://localhost:8000/homePage/images/heart.png"
-                                                                                        alt="heart image">
-                                                                                </button>
-                                                                            @else
-                                                                                <button id="likeBtn"
-                                                                                    class="btn btn-link like-button"
-                                                                                    onclick="toggleLike({{ $comment->id }})">
-                                                                                    <img class="loved"
-                                                                                        src="http://localhost:8000/homePage/images/love.png"
-                                                                                        alt="love image">
-                                                                                </button>
-                                                                            @endif
+                                                                            <button id="likeBtn"
+                                                                                class="btn btn-link like-button liked"
+                                                                                onclick="toggleLike({{ $comment->id }})">
+                                                                                <img class="not-loved"
+                                                                                    src="{{ asset('homePage/images/heart.png') }}"
+                                                                                    alt="heart image">
+                                                                            </button>
+                                                                        @else
+                                                                            <button id="likeBtn" class="btn btn-link like-button"
+                                                                                onclick="toggleLike({{ $comment->id }})">
+                                                                                <img class="loved"
+                                                                                    src="http://localhost:8000/homePage/images/love.png"
+                                                                                    alt="love image">
+                                                                            </button>
+                                                                        @endif
                                                                             <span
-                                                                                class=" like-count">{{ $comment->likes()->count() }}
+                                                                                class=" like-count text-white">{{ $comment->likes()->count() }}
                                                                                 Likes</span>
-
-                                                                            <script>
-                                                                                heartImageUrl = "{{ asset('homePage/images/heart.png') }}";
-                                                                                loveImageUrl = "{{ asset('homePage/images/love2.png') }}";
-                                                                            </script>
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
@@ -812,11 +802,6 @@
                                                             <span class="like-count">
                                                                 {{-- {{ $comment->likes()->count() }} Likes --}}
                                                             </span>
-
-                                                            <script>
-                                                                heartImageUrl = "{{ asset('homePage/images/heart.png') }}";
-                                                                loveImageUrl = "{{ asset('homePage/images/love.png') }}";
-                                                            </script>
                                                         </div>
                                                     </div>
                                                 @endforeach

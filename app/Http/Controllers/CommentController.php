@@ -40,10 +40,19 @@ class CommentController extends Controller
         $comment->comment = $request->comment;
         $comment->user_id = auth()->user()->id;
         $comment->post_id = $request->post_id;
+
         // dd($post->body);
         $comment->save();
 
-        return redirect()->back()->with('success', 'Comment added successfully');
+        // return redirect()->back()->with('success', 'Comment added successfully');
+
+        $user = $comment->user;
+
+        return response()->json([
+            'user' => $user,
+            'comment' => $comment->comment,
+            'comment_id' => $comment->id,
+        ]);
     }
 
 
@@ -84,12 +93,20 @@ class CommentController extends Controller
     public function like(Comment $comment)
     {
         $comment->likes()->attach(auth()->id());
-        return redirect()->back();
+
+        $isLiked = true;
+        $likeCount = $comment->likes()->count();
+
+        return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
     }
 
     public function unlike(Comment $comment)
     {
         $comment->likes()->detach(auth()->id());
-        return redirect()->back();
+
+        $isLiked = false;
+        $likeCount = $comment->likes()->count();
+
+        return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
     }
 }

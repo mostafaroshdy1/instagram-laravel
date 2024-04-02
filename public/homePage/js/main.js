@@ -1,19 +1,58 @@
-
 /***************Post**************************/
 const posts = document.querySelector(".posts");
 const post_data = [
-  ['https://i.ibb.co/3S1hjKR/account1.jpg', 'zineb', 45, 'https://i.ibb.co/Jqh3rHv/img1.jpg', 150, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ', 2],
-  ['https://i.ibb.co/8x4Hqdw/account2.jpg', 'ikram', 15, 'https://i.ibb.co/2ZxBFVp/img2.jpg', 150, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ', 2],
-  ['https://i.ibb.co/CWbynB2/account3-1.jpg', 'amina', 5, 'https://i.ibb.co/5vQt677/img3.jpg', 350, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ', 2],
-  ['https://i.ibb.co/19R19st/account4.jpg', 'amal', 15, 'https://i.ibb.co/FVVxR6x/img.jpg', 150, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ', 2],
-  ['https://i.ibb.co/x68ZFKP/account6.jpg', 'amine', 15, 'https://i.ibb.co/r7xBR56/img5.jpg', 150, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ', 2],
-]
+    [
+        "https://i.ibb.co/3S1hjKR/account1.jpg",
+        "zineb",
+        45,
+        "https://i.ibb.co/Jqh3rHv/img1.jpg",
+        150,
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
+        2,
+    ],
+    [
+        "https://i.ibb.co/8x4Hqdw/account2.jpg",
+        "ikram",
+        15,
+        "https://i.ibb.co/2ZxBFVp/img2.jpg",
+        150,
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
+        2,
+    ],
+    [
+        "https://i.ibb.co/CWbynB2/account3-1.jpg",
+        "amina",
+        5,
+        "https://i.ibb.co/5vQt677/img3.jpg",
+        350,
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
+        2,
+    ],
+    [
+        "https://i.ibb.co/19R19st/account4.jpg",
+        "amal",
+        15,
+        "https://i.ibb.co/FVVxR6x/img.jpg",
+        150,
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
+        2,
+    ],
+    [
+        "https://i.ibb.co/x68ZFKP/account6.jpg",
+        "amine",
+        15,
+        "https://i.ibb.co/r7xBR56/img5.jpg",
+        150,
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
+        2,
+    ],
+];
 
 if (posts)
-  for (var i = 0; i < post_data.length; i++) {
-    const post_div = document.createElement('div')
-    post_div.classList.add("post");
-    post_div.innerHTML = `
+    for (var i = 0; i < post_data.length; i++) {
+        const post_div = document.createElement("div");
+        post_div.classList.add("post");
+        post_div.innerHTML = `
     <div class="info">
       <div class="person">
           <img src="${post_data[i][0]}">
@@ -66,34 +105,34 @@ if (posts)
       </div>
     </div>
       `;
-    posts.appendChild(post_div);
-  }
+        posts.appendChild(post_div);
+    }
 
 /***************explore**********/
 const explore_date = [
-  ['https://i.ibb.co/Jqh3rHv/img1.jpg', 1500, 400],
-  ['https://i.ibb.co/2ZxBFVp/img2.jpg', 400, 200],
-  ['https://i.ibb.co/5vQt677/img3.jpg', 700, 20],
-  ['https://i.ibb.co/FVVxR6x/img.jpg', 150, 80],
-  ['https://i.ibb.co/CWbynB2/account3-1.jpg', 10, 5],
-  ['https://i.ibb.co/z41bG1y/img6.jpg', 100, 57],
-  ['https://i.ibb.co/vkXPdxN/account7.jpg', 100, 57],
-  ['https://i.ibb.co/7R0Vzp3/account8.jpg', 100, 57],
-  ['https://i.ibb.co/gvrfhjL/account9.jpg', 100, 57],
-  ['https://i.ibb.co/j8L7FPY/account10.jpg', 100, 57],
-  ['https://i.ibb.co/JcXRPht/account11.jpg', 100, 57],
-  ['https://i.ibb.co/6WvdZS9/account12.jpg', 100, 57],
-  ['https://i.ibb.co/pJ8thst/account13.jpg', 100, 57],
-  ['https://i.ibb.co/4M3W996/account14.jpg', 100, 57],
-  ['https://i.ibb.co/3S1hjKR/account1.jpg', 100, 57],
-]
-const explores = document.querySelector('.explore_container');
+    ["https://i.ibb.co/Jqh3rHv/img1.jpg", 1500, 400],
+    ["https://i.ibb.co/2ZxBFVp/img2.jpg", 400, 200],
+    ["https://i.ibb.co/5vQt677/img3.jpg", 700, 20],
+    ["https://i.ibb.co/FVVxR6x/img.jpg", 150, 80],
+    ["https://i.ibb.co/CWbynB2/account3-1.jpg", 10, 5],
+    ["https://i.ibb.co/z41bG1y/img6.jpg", 100, 57],
+    ["https://i.ibb.co/vkXPdxN/account7.jpg", 100, 57],
+    ["https://i.ibb.co/7R0Vzp3/account8.jpg", 100, 57],
+    ["https://i.ibb.co/gvrfhjL/account9.jpg", 100, 57],
+    ["https://i.ibb.co/j8L7FPY/account10.jpg", 100, 57],
+    ["https://i.ibb.co/JcXRPht/account11.jpg", 100, 57],
+    ["https://i.ibb.co/6WvdZS9/account12.jpg", 100, 57],
+    ["https://i.ibb.co/pJ8thst/account13.jpg", 100, 57],
+    ["https://i.ibb.co/4M3W996/account14.jpg", 100, 57],
+    ["https://i.ibb.co/3S1hjKR/account1.jpg", 100, 57],
+];
+const explores = document.querySelector(".explore_container");
 
 if (explores)
-  for (var i = 0; i < explore_date.length; i++) {
-    const explore_1_div = document.createElement('div')
-    explore_1_div.classList.add("items_4")
-    explore_1_div.innerHTML = `
+    for (var i = 0; i < explore_date.length; i++) {
+        const explore_1_div = document.createElement("div");
+        explore_1_div.classList.add("items_4");
+        explore_1_div.innerHTML = `
   <div class="item">
       <img class="img-fluid" src="${explore_date[i][0]}" >
       <div class="bg"
@@ -156,11 +195,11 @@ if (explores)
   </div>
 </div>
   `;
-    explores.appendChild(explore_1_div);
+        explores.appendChild(explore_1_div);
 
-    const explore_2_div = document.createElement('div');
-    explore_2_div.classList.add("item1");
-    explore_2_div.innerHTML = `
+        const explore_2_div = document.createElement("div");
+        explore_2_div.classList.add("item1");
+        explore_2_div.innerHTML = `
   <div class="item">
   <img class="img-fluid" src="${explore_date[i][0]}" >
   <div class="bg"
@@ -177,60 +216,62 @@ if (explores)
   </div>
 </div>
   `;
-    explores.appendChild(explore_2_div);
-  }
+        explores.appendChild(explore_2_div);
+    }
 
 /*****************Reels********************/
 const reels_data = [
-  ['./video/video1.mp4',
-    './images/profile_img.jpg',
-    'zineb',
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...',
-    'nameOfMusic',
-    'casablanca',
-    '55.9K',
-    '555',
-  ],
-  ['./video/video2.mp4',
-    'https://i.ibb.co/3S1hjKR/account1.jpg',
-    'ikram',
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...',
-    'nameOfMusic',
-    'oujda',
-    '35.9K',
-    '75',
-  ],
-  ['./video/video3.mp4',
-    'https://i.ibb.co/8x4Hqdw/account2.jpg',
-    'oumnia',
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...',
-    'nameOfMusic',
-    'rabat',
-    '10.5K',
-    '155',
-  ],
-  ['./video/video4.mp4',
-    'https://i.ibb.co/CWbynB2/account3-1.jpg',
-    'Safae',
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...',
-    'nameOfMusic',
-    'Nador',
-    '705.9K',
-    '750',
-  ],
-
-
-]
+    [
+        "./video/video1.mp4",
+        "./images/profile_img.jpg",
+        "zineb",
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...",
+        "nameOfMusic",
+        "casablanca",
+        "55.9K",
+        "555",
+    ],
+    [
+        "./video/video2.mp4",
+        "https://i.ibb.co/3S1hjKR/account1.jpg",
+        "ikram",
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...",
+        "nameOfMusic",
+        "oujda",
+        "35.9K",
+        "75",
+    ],
+    [
+        "./video/video3.mp4",
+        "https://i.ibb.co/8x4Hqdw/account2.jpg",
+        "oumnia",
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...",
+        "nameOfMusic",
+        "rabat",
+        "10.5K",
+        "155",
+    ],
+    [
+        "./video/video4.mp4",
+        "https://i.ibb.co/CWbynB2/account3-1.jpg",
+        "Safae",
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.Officiis...",
+        "nameOfMusic",
+        "Nador",
+        "705.9K",
+        "750",
+    ],
+];
 const reels_container = document.querySelector(".reels");
 
 if (reels_container)
-  for (let i = 0; i < reels_data.length; i++) {
-    console.log(i)
-    const reel_div = document.createElement('div');
-    reel_div.classList.add("reel");
-    if (i == 0) {
-      reel_div.setAttribute("id", 'video_play');
-      reel_div.innerHTML = `<div class="video">
+    for (let i = 0; i < reels_data.length; i++) {
+        console.log(i);
+        const reel_div = document.createElement("div");
+        reel_div.classList.add("reel");
+        if (i == 0) {
+            reel_div.setAttribute("id", "video_play");
+            reel_div.innerHTML = `<div class="video">
     <video src="${reels_data[i][0]}" autoplay loop>
     </video>
     <div class="content">
@@ -295,8 +336,8 @@ if (reels_container)
         <img src="${reels_data[i][1]}" >
     </div>
 </div>`;
-    } else {
-      reel_div.innerHTML = `<div class="video">
+        } else {
+            reel_div.innerHTML = `<div class="video">
       <video src="${reels_data[i][0]}" loop>
       </video>
       <div class="content">
@@ -361,27 +402,32 @@ if (reels_container)
           <img src="${reels_data[i][1]}" >
       </div>
   </div>`;
-    }
+        }
 
-    reels_container.appendChild(reel_div);
-  }
+        reels_container.appendChild(reel_div);
+    }
 
 /**************************video**************************/
 //play video onscroll
 const videos = document.querySelectorAll("video");
 const reels = document.querySelector(".reels");
 window.addEventListener("scroll", function () {
-  const scrollPosition = window.scrollY + window.innerHeight;
-  videos.forEach((video, index) => {
-    reels.children[index].removeAttribute("id");
-    const videoPosition = video.getBoundingClientRect().top + video.offsetHeight / 2;
-    if (scrollPosition > videoPosition && videoPosition > 0 && videoPosition <= video.offsetHeight) {
-      video.play();
-      reels.children[index].setAttribute("id", "video_play");
-    } else {
-      video.pause();
-    }
-  });
+    const scrollPosition = window.scrollY + window.innerHeight;
+    videos.forEach((video, index) => {
+        reels.children[index].removeAttribute("id");
+        const videoPosition =
+            video.getBoundingClientRect().top + video.offsetHeight / 2;
+        if (
+            scrollPosition > videoPosition &&
+            videoPosition > 0 &&
+            videoPosition <= video.offsetHeight
+        ) {
+            video.play();
+            reels.children[index].setAttribute("id", "video_play");
+        } else {
+            video.pause();
+        }
+    });
 });
 
 //play && pause && mute video
@@ -433,65 +479,60 @@ window.addEventListener("scroll", function () {
 let search = document.getElementById("search");
 let search_icon = document.getElementById("search_icon");
 search_icon.addEventListener("click", function () {
-  search.classList.toggle("show");
+    search.classList.toggle("show");
 });
 
 let notification = document.getElementById("notification");
 let notification_icon = document.querySelectorAll(".notification_icon");
 notification_icon.forEach((notif) => {
-  notif.addEventListener('click', function () {
-    notification.classList.toggle("show");
-  })
-}
-)
-
+    notif.addEventListener("click", function () {
+        notification.classList.toggle("show");
+    });
+});
 
 /**************************icons+text change **************************/
 //change the icon when the user click on it
 
 //love btn
-let love_icons = document.querySelectorAll(".like");
-love_icons.forEach(function (icon) {
-  icon.addEventListener("click", function () {
-    let not_loved = icon.children[0];
-    let loved = icon.children[1];
-    icon.classList.toggle("love");
-    not_loved.classList.toggle("hide_img");
-    loved.classList.toggle("display");
-  })
-});
+// let love_icons = document.querySelectorAll(".like");
+// love_icons.forEach(function (icon) {
+//   icon.addEventListener("click", function () {
+//     let not_loved = icon.children[0];
+//     let loved = icon.children[1];
+//     icon.classList.toggle("love");
+//     loved.classList.toggle("display");
+//   })
+// });
 
 //save btn
 let save_icon = document.querySelectorAll(".save");
 save_icon.forEach(function (save) {
-  save.addEventListener("click", function () {
-    let not_save = save.children[1];
-    let saved = save.children[0];
-    not_save.classList.toggle("hide");
-    saved.classList.toggle("hide");
-
-  })
-})
+    save.addEventListener("click", function () {
+        let not_save = save.children[1];
+        let saved = save.children[0];
+        not_save.classList.toggle("hide");
+        saved.classList.toggle("hide");
+    });
+});
 
 //notification follow
-let not_follow = document.querySelectorAll("#notification .notif.follow_notif")
-not_follow.forEach(item => {
-  let follow = item.children[0].children[1].children[0];
-  follow.addEventListener("click", function (e) {
-    e.stopPropagation();
-    follow.classList.toggle("following");
-    if (follow.classList.contains("following")) {
-      follow.innerHTML = "Following";
-      follow.style.backgroundColor = 'rgb(142, 142, 142)';
-      follow.style.color = "black";
-    } else {
-      follow.innerHTML = "Follow";
-      follow.style.backgroundColor = 'rgb(0, 149, 246)';
-      follow.style.color = "white";
-    }
-
-  });
-})
+let not_follow = document.querySelectorAll("#notification .notif.follow_notif");
+not_follow.forEach((item) => {
+    let follow = item.children[0].children[1].children[0];
+    follow.addEventListener("click", function (e) {
+        e.stopPropagation();
+        follow.classList.toggle("following");
+        if (follow.classList.contains("following")) {
+            follow.innerHTML = "Following";
+            follow.style.backgroundColor = "rgb(142, 142, 142)";
+            follow.style.color = "black";
+        } else {
+            follow.innerHTML = "Follow";
+            follow.style.backgroundColor = "rgb(0, 149, 246)";
+            follow.style.color = "white";
+        }
+    });
+});
 
 /**************************comments **************************/
 
@@ -501,173 +542,174 @@ let show_replay = document.querySelector(".comments .see_comment");
 let hide_com = document.querySelector(".comments .see_comment .hide_com");
 let show_com = document.querySelector(".comments .see_comment .show_c");
 if (replay_com) {
-  replay_com.classList.add("hide");
-  hide_com.classList.add("hide");
-  show_replay.addEventListener("click", function () {
-    replay_com.classList.toggle("hide");
-    show_com.classList.toggle("hide");
-    hide_com.classList.toggle("hide");
-  });
+    replay_com.classList.add("hide");
+    hide_com.classList.add("hide");
+    show_replay.addEventListener("click", function () {
+        replay_com.classList.toggle("hide");
+        show_com.classList.toggle("hide");
+        hide_com.classList.toggle("hide");
+    });
 }
-
 
 /*************emojie*************** */
 $(document).ready(function () {
-  $("#emoji").emojioneArea({
-    pickerPosition: "top",
-    tonesStyle: "radio"
-  });
+    $("#emoji").emojioneArea({
+        pickerPosition: "top",
+        tonesStyle: "radio",
+    });
 });
 
 $(document).ready(function () {
-  $("#emoji_create").emojioneArea({
-    pickerPosition: "bottom",
-    tonesStyle: "radio"
-  });
+    $("#emoji_create").emojioneArea({
+        pickerPosition: "bottom",
+        tonesStyle: "radio",
+    });
 });
 
 $(document).ready(function () {
-  $("#emoji_comment").emojioneArea({
-    pickerPosition: "bottom",
-    tonesStyle: "radio"
-  });
+    $("#emoji_comment").emojioneArea({
+        pickerPosition: "bottom",
+        tonesStyle: "radio",
+    });
 });
 
 /**********Upload post*************/
-const form = document.getElementById('upload-form');
+const form = document.getElementById("upload-form");
 const img_container = document.querySelector("#image-container");
 
-form.addEventListener('change', handleSubmit);
+form.addEventListener("change", handleSubmit);
 
 let img_url;
 let filesUpload;
 //add the image post
 function handleSubmit(event) {
-  event.preventDefault();
-  if (img_container.classList.contains('hide_img')) {
-    img_container.classList.remove('hide_img');
-    const files = document.getElementById('image-upload').files;
-    const carouselInner = document.querySelector('#image-container .carousel-inner');
-    carouselInner.innerHTML = ''; // Clear previous images
-    filesUpload = files;
-    // Loop through each selected file
-    for (let i = 0; i < files.length; i++) {
-      const imageFile = files[i];
-      const imageURL = URL.createObjectURL(imageFile);
+    event.preventDefault();
+    if (img_container.classList.contains("hide_img")) {
+        img_container.classList.remove("hide_img");
+        const files = document.getElementById("image-upload").files;
+        const carouselInner = document.querySelector(
+            "#image-container .carousel-inner"
+        );
+        carouselInner.innerHTML = ""; // Clear previous images
+        filesUpload = files;
+        // Loop through each selected file
+        for (let i = 0; i < files.length; i++) {
+            const imageFile = files[i];
+            const imageURL = URL.createObjectURL(imageFile);
 
-      // Create carousel item div
-      const carouselItem = document.createElement('div');
-      carouselItem.classList.add('carousel-item');
-      if (i === 0) {
-        carouselItem.classList.add('active'); // Add 'active' class to first item
-      }
+            // Create carousel item div
+            const carouselItem = document.createElement("div");
+            carouselItem.classList.add("carousel-item");
+            if (i === 0) {
+                carouselItem.classList.add("active"); // Add 'active' class to first item
+            }
 
-      // Create image element and append to carousel item
-      const image = document.createElement('img');
-      image.src = imageURL;
-      image.classList.add('d-block', 'w-100');
-      carouselItem.appendChild(image);
+            // Create image element and append to carousel item
+            const image = document.createElement("img");
+            image.src = imageURL;
+            image.classList.add("d-block", "w-100");
+            carouselItem.appendChild(image);
 
-      // Append carousel item to carousel inner
-      carouselInner.appendChild(carouselItem);
+            // Append carousel item to carousel inner
+            carouselInner.appendChild(carouselItem);
+        }
+
+        const next_btn_post = document.querySelector(".next_btn_post");
+        const title_create = document.querySelector(".title_create");
+        next_btn_post.innerHTML = "Next";
+        title_create.innerHTML = "Crop";
     }
-
-    const next_btn_post = document.querySelector(".next_btn_post");
-    const title_create = document.querySelector(".title_create");
-    next_btn_post.innerHTML = 'Next';
-    title_create.innerHTML = 'Crop';
-  }
 }
-
-
 
 /////button submit
 const next_btn_post = document.querySelector(".next_btn_post");
-next_btn_post.addEventListener('click', handleNext);
+next_btn_post.addEventListener("click", handleNext);
 //add a description + click btn to share post
 function handleNext() {
-  if (image_description.classList.contains('hide_img')) {
-    const next_btn_post = document.querySelector(".next_btn_post");
-    const title_create = document.querySelector(".title_create");
-    const image_description = document.querySelector("#image_description");
-    const modal_dialog = document.querySelector("#create_modal .modal-dialog");
-    modal_dialog.classList.add("modal_share");
-    image_description.classList.remove('hide_img')
-    const image = document.createElement('img');
-    image.src = img_url;
-    const img_p = document.querySelector('.img_p');
-    img_p.appendChild(image);
-    next_btn_post.classList.add("share_btn_post");
-    next_btn_post.classList.remove("next_btn_post");
-    next_btn_post.innerHTML = 'Share';
-    title_create.innerHTML = 'Create new post';
-    completed();
-  }
+    if (image_description.classList.contains("hide_img")) {
+        const next_btn_post = document.querySelector(".next_btn_post");
+        const title_create = document.querySelector(".title_create");
+        const image_description = document.querySelector("#image_description");
+        const modal_dialog = document.querySelector(
+            "#create_modal .modal-dialog"
+        );
+        modal_dialog.classList.add("modal_share");
+        image_description.classList.remove("hide_img");
+        const image = document.createElement("img");
+        image.src = img_url;
+        const img_p = document.querySelector(".img_p");
+        img_p.appendChild(image);
+        next_btn_post.classList.add("share_btn_post");
+        next_btn_post.classList.remove("next_btn_post");
+        next_btn_post.innerHTML = "Share";
+        title_create.innerHTML = "Create new post";
+        completed();
+    }
 }
 
 //post published
 function completed() {
-  const share_btn_post = document.querySelector(".share_btn_post");
-  const post_published = document.querySelector('.post_published');
-  const modal_dialog = document.querySelector("#create_modal .modal-dialog");
-  share_btn_post.addEventListener("click", function () {
-    addPost();
-    modal_dialog.classList.add("modal_complete");
-    post_published.classList.remove("hide_img");
+    const share_btn_post = document.querySelector(".share_btn_post");
+    const post_published = document.querySelector(".post_published");
+    const modal_dialog = document.querySelector("#create_modal .modal-dialog");
+    share_btn_post.addEventListener("click", function () {
+        addPost();
+        modal_dialog.classList.add("modal_complete");
+        post_published.classList.remove("hide_img");
 
-    share_btn_post.innerHTML = ""
-  })
+        share_btn_post.innerHTML = "";
+    });
 }
 
-
-
-
 // Retrieve CSRF token from meta tag
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
 
 // Function to add a new post
 async function addPost() {
-  try {
-    const postCaption = document.querySelector('.postCaption').value;
-    console.log(postCaption);
+    try {
+        const postCaption = document.querySelector(".postCaption").value;
+        console.log(postCaption);
 
-    // Convert FileList to array
-    const imageFileArray = Array.from(filesUpload);
+        // Convert FileList to array
+        const imageFileArray = Array.from(filesUpload);
 
-    const formData = new FormData();
-    formData.append('body', postCaption);
+        const formData = new FormData();
+        formData.append("body", postCaption);
 
-    // Append each file from the array to the FormData object
-    imageFileArray.forEach(file => {
-      formData.append('files[]', file);
-    });
+        // Append each file from the array to the FormData object
+        imageFileArray.forEach((file) => {
+            formData.append("files[]", file);
+        });
 
-    // Logging for debugging
-    console.log('FormData:', formData);
+        // Logging for debugging
+        console.log("FormData:", formData);
 
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'X-CSRF-TOKEN': csrfToken
-      },
-      body: formData
-    };
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": csrfToken,
+            },
+            body: formData,
+        };
 
-    const response = await fetch('/posts', requestOptions);
+        const response = await fetch("/posts", requestOptions);
 
-    // if (!response.ok) {
-    //   throw new Error('Network response was not ok');
-    // }
+        // if (!response.ok) {
+        //   throw new Error('Network response was not ok');
+        // }
 
-    const data = await response.json();
-    console.log('Post added successfully:', data);
-  } catch (error) {
-    console.error('Error adding post:', error);
-  }
-  //likers modal 
+        const data = await response.json();
+        console.log("Post added successfully:", data);
+    } catch (error) {
+        console.error("Error adding post:", error);
+    }
+    //likers modal
 
   document.addEventListener("DOMContentLoaded", function() {
-   console.log('likersss'+document.getElementById('likers'));
+    const postId = this.closest('form').dataset.postId;
+   console.log('likersss'+document.getElementById(`likers-${postId}`));
    document.getElementById('likers').addEventListener('click', function () {
        $('#likersModal').modal('show');
    });
@@ -682,3 +724,252 @@ async function addPost() {
 $(document).ready(function () {
   $('.alert').fadeIn().delay(2000).fadeOut();
 });
+
+
+
+
+    document.querySelectorAll('.likeButton').forEach(button => {
+        button.addEventListener('click', function () {
+            event.preventDefault();
+            const postId = this.closest('form').dataset.postId;
+            fetch(`/posts/toggleLike/${postId}`, {
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`likers-${postId}`).innerText = data.likes_count + ' likes';
+                const svg = document.querySelector(`#svg-${postId}`);
+                svg.setAttribute('fill', data.isLiked ? 'red' : 'white');
+                const title = data.isLiked ? 'Unlike' : 'Like';
+                svg.querySelector('title').textContent = title;
+                document.getElementById(`likers-${postId}`).addEventListener('click', function () {
+                    drawLikersModal( data.likers );
+                } );
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+
+    function drawLikersModal(likers) {
+      const likersModal = document.getElementById('likersModal');
+      const likersBody = likersModal.querySelector('.modal-body');
+      const imagePath = "{{ asset('homePage/images/profile_img.jpg') }}";
+      likersBody.innerHTML = '';
+  
+      likers.forEach(liker => {
+          const likerDiv = document.createElement('div');
+          likerDiv.classList.add('d-flex', 'align-items-center', 'mb-2');
+          likerDiv.innerHTML = `
+              <div class="d-flex flex-row justify-content-between align-items-center mb-4">
+                  <div class="d-flex flex-row align-items-center">
+                      <img class="rounded-circle" src="${imagePath}"  width="55" />
+                      <div class="d-flex flex-column align-items-start ml-2">
+                          <span class="font-weight-bold" style="font-size: 1.6em;">${liker.full_name}</span>
+                      </div>
+                  </div>
+              </div>
+          `;
+          likersBody.appendChild(likerDiv);
+      });
+  
+      $('#likersModal').modal('show');
+  }
+  
+    
+/* -------------------------------------------------------------------------- */
+/*                                  save post                                 */
+/* -------------------------------------------------------------------------- */
+
+document.addEventListener("DOMContentLoaded", () => {
+    const successAlert = document.getElementById("successAlert");
+    const warningAlert = document.getElementById("warningAlert");
+    const hiddenInput = document.getElementById("hiddenInput");
+    const saveBtn = document.getElementById("saveBtn");
+
+    document.body.addEventListener("click", (event) => {
+        const saveButton = event.target.closest(".savePostButton");
+        if (saveButton) {
+            const form = saveButton.closest("form");
+            const postId = saveButton.dataset.postId;
+
+            if (form) {
+                const formData = new FormData(form);
+
+                hiddenInput.classList.remove("hide");
+                hiddenInput.classList.remove("hide_img");
+                saveBtn.classList.remove("hide");
+                saveBtn.classList.remove("hide_img");
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", form.getAttribute("action"), true);
+                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        handleResponse(response);
+                    } else {
+                        console.error("Error saving post. Status:", xhr.status);
+                    }
+                };
+                xhr.onerror = () => {
+                    console.error("Network error occurred.");
+                };
+                xhr.send(formData);
+            } else {
+                console.error("Form not found.");
+            }
+        }
+    });
+
+    function handleResponse(response) {
+        successAlert.innerHTML = "";
+        warningAlert.innerHTML = "";
+        successAlert.classList.add("d-none");
+        warningAlert.classList.add("d-none");
+
+        if (response.success) {
+            showAlert(successAlert, response.success, "alert-success");
+        } else if (response.warning) {
+            showAlert(warningAlert, response.warning, "alert-warning");
+        }
+    }
+
+    function showAlert(alertElement, message, className) {
+        alertElement.innerHTML = `<div class="alert ${className}">${message}</div>`;
+        alertElement.classList.remove("d-none");
+        alertElement.classList.add("d-block");
+        $(alertElement).fadeIn(() => {
+            setTimeout(() => {
+                $(alertElement).fadeOut(() => {
+                    alertElement.innerHTML = "";
+                });
+            }, 1500);
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    var commentForms = document.querySelectorAll(".comment-form");
+
+    commentForms.forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var formData = new FormData(form);
+            var postId = form.dataset.postId;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", form.action, true);
+            xhr.setRequestHeader("X-CSRF-TOKEN", "{{ csrf_token() }}");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        console.log("Response:", response);
+                        console.log("Response:", response.likes_count);
+                        var commentInput = form.querySelector(".comment-input");
+
+                        var commentsSection = document.querySelector(
+                            '.comments-section[data-post-id="' + postId + '"]'
+                        );
+                        if (commentsSection) {
+                            var newComment = document.createElement("div");
+                            newComment.classList.add(
+                                "comment",
+                                "d-flex",
+                                "justify-content-between",
+                                "align-items-center"
+                            );
+                            newComment.innerHTML = `
+                                <p>
+                                    <strong class="text-white">${response.user.full_name}</strong>
+                                    <span class="text-white">${response.comment}</span>
+                                </p>
+                                <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
+                                <button id="likeBtn"
+                                class="btn btn-link like-button"
+                                onclick="toggleLike(${response.comment_id})">
+                                <img class="not-loved"
+                                    src="http://localhost:8000/homePage/images/love.png"
+                                    alt="heart image">
+                                    </button>
+                                    <span
+                                        class="text-white like-count">0 Likes
+                                    </span>
+                                </div>
+                            `;
+
+                            commentsSection.prepend(newComment);
+                            commentInput.value = "";
+                        } else {
+                            console.error(
+                                "Comments section not found for post ID:",
+                                postId
+                            );
+                        }
+                    } else {
+                        console.error(xhr.responseText);
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+    });
+});
+
+async function toggleLike(commentId) {
+    const isLiked = document
+        .querySelector(`.like[data-comment-id="${commentId}"] .like-button`)
+        .classList.contains("liked");
+    const method = isLiked ? "DELETE" : "POST";
+    const url = isLiked
+        ? `/comments/${commentId}/unlike`
+        : `/comments/${commentId}/like`;
+
+
+    try {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to toggle like.");
+        }
+
+        const responseData = await response.json();
+        updateLikeStatus(
+            commentId,
+            responseData.liked,
+            responseData.likes_count
+        );
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+function updateLikeStatus(commentId, isLiked, likeCount) {
+    const likeButton = document.querySelector(
+        `.like[data-comment-id="${commentId}"] .like-button`
+    );
+    likeButton.classList.toggle("liked", isLiked);
+    likeButton.classList.remove("hide_img");
+
+    const likeCountElement = document.querySelector(
+        `.like[data-comment-id="${commentId}"] .like-count`
+    );
+    likeCountElement.textContent = likeCount + " Likes";
+
+    const likeImage = document.querySelector(
+        `.like[data-comment-id="${commentId}"] .like-button img`
+    );
+    likeImage.src = isLiked ? heartImageUrl : loveImageUrl;
+}

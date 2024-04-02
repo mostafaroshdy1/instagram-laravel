@@ -141,27 +141,38 @@ class PostController extends Controller
         if ($post->likes->contains('user_id', auth()->id())) {
             $post->likes()->where('user_id', auth()->id())->delete();
             $post->decrement('likes_count');
+            $isLiked = false;
+            $likers = $post->likers;
         } else {
             $post->likes()->create([
                 'user_id' => auth()->id()
             ]);
             $post->increment('likes_count');
+            $isLiked = true;
+            $likers = $post->likers;
         }
-        return redirect()->back();
+        
+        return response()->json([
+            'likes_count' => $post->likes_count,
+            'isLiked' => $isLiked,
+            'likers' => $likers
+        ]);
     }
+    
 
     public function save(Request $request)
-    {
-        $user = auth()->user();
-        $user = User::find($user->id);
-        $postId = $request->post_id;
+{
+    $user = auth()->user();
+    $user = User::find($user->id);
+    $postId = $request->post_id;
 
-        if ($user->savePosts()->where('post_id', $postId)->exists()) {
-            $user->savePosts()->detach($postId);
-            return redirect()->back()->with('warning', 'Post already saved. It has been removed from saved posts.');
-        }
-
-        $user->savePosts()->attach($request->post_id);
-        return redirect()->back()->with('success', 'Post saved successfully!');
+    if ($user->savePosts()->where('post_id', $postId)->exists()) {
+        $user->savePosts()->detach($postId);
+        return response()->json(['warning' => 'Post already saved. It has been removed from saved posts.'], 200);
     }
+
+    $user->savePosts()->attach($request->post_id);
+    return response()->json(['success' => 'Post saved successfully!'], 200);
+}
+
 }

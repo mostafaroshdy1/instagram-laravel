@@ -56,13 +56,6 @@
                             <span>{{$user->followings()->count()}}</span> 
                             following
                         </p>
-                        @if(@auth()->user()->is($user))
-                        <p data-bs-toggle="modal" data-bs-target="#blockedModal" id="blocked">
-                            <span>{{$user->blocked()->count()}}</span> 
-                            blocked
-                        </p>
-                        @endif
-                        
                         @php
                             $isDisabled = false;
                             $isDisabledUnblock = false;
@@ -80,7 +73,7 @@
                                 </form>
                             @else
                             @if(auth()->user()->blocking && auth()->user()->blocking->contains($user))
-                                <p>This user has blocked you. You cannot follow.</p>
+                                <p>This user has blocked you.</p>
                                 @php
                                     $isDisabled = true;
                                 @endphp
@@ -95,21 +88,18 @@
                                 <button type="submit" class="btn {{ $isDisabled ? 'd-none' : 'btn-light' }} {{ $isDisabledUnblock ? 'd-none' : 'btn-light'}}">Follow</button>
                             </form>
                             @endif
-                            @if ($user->blocking && $user->blocking->contains(auth()->user()))
-                                <form method="POST" action="{{ route('unblock', $user) }}">
-                                    @csrf
-                                    <button type="submit">unblock</button>
-                                </form>
-                            @elseif(auth()->user()->blocking && auth()->user()->blocking->contains($user))
-                                 @php
-                                    $isDisabled = true; 
-                                @endphp
-                            @else()
-                                <form method="POST" action="{{ route('block', $user) }}">
-                                    @csrf
-                                    <button type="submit">block</button>
-                                </form>
-                            @endif
+                        @endif
+
+
+                        @if(@auth()->user()->is($user))
+                        <svg data-bs-toggle="modal" data-bs-target="#menuModal" id="menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z" style="fill: white"/>
+                        </svg>
+                        @endif
+                        @if (auth()->user()->isNot($user))
+                        <svg data-bs-toggle="modal" data-bs-target="#usermenuModal" id="menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="{{ $isDisabled ? 'd-none' : 'btn-light' }}">
+                        <path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z" style="fill: white"/>
+                        </svg>
                         @endif
                     </div>
                     
@@ -328,18 +318,44 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h1 class="modal-title fs-2 mx-auto myHov myB" data-bs-toggle="modal" data-bs-target="#blockedModal" id="blocked" style="color: red;">Block List</h1>
+            </div>
+            <div class="modal-header">
+                <h1 class="modal-title fs-2 mx-auto myHov" id="menuModalLabel2" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true">Cancel</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="usermenuModal" tabindex="-1" aria-labelledby="usermenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header d-flex justify-content-center">
+            @if ($user->blocking && $user->blocking->contains(auth()->user()))
+                                <form method="POST" action="{{ route('unblock', $user) }}">
+                                    @csrf
+                                    <button class="modal-title fs-2 mx-auto unblkModalBtn" type="submit">Unblock</button>
+                                </form>
+            @else
+                                <form method="POST" action="{{ route('block', $user) }}">
+                                        @csrf
+                                        <div class="d-flex flex-row align-items-center mt-2">
+                                            <button class="modal-title fs-2 mx-auto blkModalBtn"  type="submit">Block</button>
+                                        </div>
+                                </form>
+            @endif
+            </div>
+            <div class="modal-header">
+                <h1 class="modal-title fs-2 mx-auto myHov" id="menuModalLabel2" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true">Cancel</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script>
-    document.getElementById('followers').addEventListener('click', function () {
-        $('#followersModal').modal('show');
-    });
-    document.getElementById('followings').addEventListener('click', function () {
-        $('#followingsModal').modal('show');
-    });
-    document.querySelectorAll('.btn-close').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            $('#followersModal').modal('hide');
-            $('#followingsModal').modal('hide');
-        });
-    });
+ 
 </script>
 @endsection

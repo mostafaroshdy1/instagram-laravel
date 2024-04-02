@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css">
         <link rel="stylesheet" href="{{ asset('homePage/sass/main.css') }}">
         <link rel="stylesheet" href="{{ asset('homePage/sass/profile.css') }}">
+        
     </head>
 
     <body class="bg-black text-white">
@@ -87,5 +88,6 @@
         <script src="{{asset('homePage/js/carousel.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
         <script src="{{asset('homePage/js/main.js')}}"></script>
+        <script src="{{asset('homePage/js/customProfile.js')}}"></script>
     </body>
 </html>

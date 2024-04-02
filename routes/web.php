@@ -50,6 +50,8 @@ Route::delete('/users/{id}/followers');
 
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+Route::post('/block/{user}', [FollowController::class, 'block'])->name('block');
+Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unblock');
 // user profile
 Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
 Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');

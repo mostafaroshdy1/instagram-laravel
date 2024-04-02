@@ -56,6 +56,17 @@
                             <span>{{$user->followings()->count()}}</span> 
                             following
                         </p>
+                        @if(@auth()->user()->is($user))
+                        <p data-bs-toggle="modal" data-bs-target="#blockedModal" id="blocked">
+                            <span>{{$user->blocked()->count()}}</span> 
+                            blocked
+                        </p>
+                        @endif
+                        
+                        @php
+                            $isDisabled = false;
+                            $isDisabledUnblock = false;
+                        @endphp
                         @if (auth()->user()->isNot($user))
                             @if (auth()->user()->followings && auth()->user()->followings->contains($user))
                                 <form method="POST" action="{{ route('unfollow', $user) }}">
@@ -68,14 +79,40 @@
                                     <button type="submit" class="btn btn-light">Follow Back</button>
                                 </form>
                             @else
-                                <form method="POST" action="{{ route('follow', $user) }}">
+                            @if(auth()->user()->blocking && auth()->user()->blocking->contains($user))
+                                <p>This user has blocked you. You cannot follow.</p>
+                                @php
+                                    $isDisabled = true;
+                                @endphp
+                            @elseif($user->blocking && $user->blocking->contains(auth()->user()))
+                                @php
+                                    $isDisabledUnblock = true;
+                                @endphp
+                            @endif
+
+                            <form method="POST" action="{{ route('follow', $user) }}">
+                                @csrf
+                                <button type="submit" class="btn {{ $isDisabled ? 'd-none' : 'btn-light' }} {{ $isDisabledUnblock ? 'd-none' : 'btn-light'}}">Follow</button>
+                            </form>
+                            @endif
+                            @if ($user->blocking && $user->blocking->contains(auth()->user()))
+                                <form method="POST" action="{{ route('unblock', $user) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-light">Follow</button>
+                                    <button type="submit">unblock</button>
+                                </form>
+                            @elseif(auth()->user()->blocking && auth()->user()->blocking->contains($user))
+                                 @php
+                                    $isDisabled = true; 
+                                @endphp
+                            @else()
+                                <form method="POST" action="{{ route('block', $user) }}">
+                                    @csrf
+                                    <button type="submit">block</button>
                                 </form>
                             @endif
                         @endif
                     </div>
-
+                    
                     <p class="nick_name">{{$user->name}}</p>
                     <p class="desc">
                         This is A Test Bio <br>
@@ -255,7 +292,42 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="blockedModal" tabindex="-1" aria-labelledby="blockedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-2" id="blockedModalLabel">blocked</h1>
+                    <i class="btn-close fa-2x fa-solid fa-xmark" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"></i>
+                </div>
+                <div class="modal-body">
+                    @foreach ($blocked as $blockedUsr)
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3" src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
+                                <div class="d-flex flex-column align-items-start "><span class="font-weight-bold" style="font-size: 1.6em;">{{ $blockedUsr->name }}</span></div>
+                            </div>
+                            @if(auth()->user()->isNot($blockedUsr))
+                                @if(auth()->user()->blocked && auth()->user()->blocked->contains($blockedUsr))
+                                    <form method="POST" action="{{ route('unblock', $blockedUsr) }}">
+                                        @csrf
+                                        <div class="d-flex flex-row align-items-center mt-2">
+                                            <button type="submit" class="btn  btn-lg bg-secondary  text-white unfollow">Unblock</button>
+                                        </div>
+                                    </form>
+                                @else
+                                    <form method="POST" action="{{ route('block', $blockedUsr) }}">
+                                        @csrf
+                                        <div class="d-flex flex-row align-items-center mt-2">
+                                            <button type="submit" class="btn btn-primary btn-lg ">Block</button>
+                                        </div>
+                                    </form>
+                                @endif
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
     document.getElementById('followers').addEventListener('click', function () {
         $('#followersModal').modal('show');

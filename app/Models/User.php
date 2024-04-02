@@ -62,4 +62,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
     }
+    
+    public function blocking()
+    {
+        return $this->belongsToMany(User::class, 'blocking_users', 'user_id', 'blocking_id');
+    }
+
+    public function blocked()
+    {
+        return $this->belongsToMany(User::class, 'blocking_users', 'blocking_id', 'user_id');
+    }   
+
 }

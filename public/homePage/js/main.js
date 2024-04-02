@@ -758,7 +758,7 @@ $(document).ready(function () {
       const likersBody = likersModal.querySelector('.modal-body');
       const imagePath = "{{ asset('homePage/images/profile_img.jpg') }}";
       likersBody.innerHTML = '';
-  
+
       likers.forEach(liker => {
           const likerDiv = document.createElement('div');
           likerDiv.classList.add('d-flex', 'align-items-center', 'mb-2');
@@ -774,11 +774,11 @@ $(document).ready(function () {
           `;
           likersBody.appendChild(likerDiv);
       });
-  
+
       $('#likersModal').modal('show');
   }
-  
-    
+
+
 /* -------------------------------------------------------------------------- */
 /*                                  save post                                 */
 /* -------------------------------------------------------------------------- */
@@ -929,7 +929,6 @@ async function toggleLike(commentId) {
         ? `/comments/${commentId}/unlike`
         : `/comments/${commentId}/like`;
 
-
     try {
         const response = await fetch(url, {
             method: method,
@@ -951,10 +950,43 @@ async function toggleLike(commentId) {
             responseData.liked,
             responseData.likes_count
         );
+
+        //modalllllllllll
+        const modalLikeButton = document.querySelector(
+            `.modal .like[data-comment-id="${commentId}"] .like-button`
+        );
+        const modalLikeCountElement = document.querySelector(
+            `.modal .like[data-comment-id="${commentId}"] .like-count`
+        );
+
+        if (modalLikeButton && modalLikeCountElement) {
+            modalLikeButton.classList.toggle("liked", responseData.liked);
+            modalLikeCountElement.textContent = responseData.likes_count + " Likes";
+
+            const modalLikeImage = modalLikeButton.querySelector("img");
+            modalLikeImage.src = responseData.liked ? heartImageUrl : 'http://localhost:8000/homePage/images/love2.png';
+        }
+
+        //post
+        const postLikeButton = document.querySelector(
+            `.post_desc .like[data-comment-id="${commentId}"] .like-button`
+        );
+        const postLikeCountElement = document.querySelector(
+            `.post_desc .like[data-comment-id="${commentId}"] .like-count`
+        );
+
+        if (postLikeButton && postLikeCountElement) {
+            postLikeButton.classList.toggle("liked", responseData.liked);
+            postLikeCountElement.textContent = responseData.likes_count + " Likes";
+
+            const postLikeImage = postLikeButton.querySelector("img");
+            postLikeImage.src = responseData.liked ? heartImageUrl : loveImageUrl;
+        }
     } catch (error) {
         console.error("Error:", error);
     }
 }
+
 
 function updateLikeStatus(commentId, isLiked, likeCount) {
     const likeButton = document.querySelector(
@@ -973,3 +1005,4 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
     );
     likeImage.src = isLiked ? heartImageUrl : loveImageUrl;
 }
+

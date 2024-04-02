@@ -675,10 +675,6 @@
                                                         </script>
                                                     </div>
 
-
-
-
-
                                                 </div>
                                             @endforeach
 
@@ -722,7 +718,7 @@
                                                                                     class="btn btn-link like-button liked"
                                                                                     onclick="toggleLike({{ $comment->id }})">
                                                                                     <img class="not-loved"
-                                                                                        src="{{ asset('homePage/images/heart.png') }}"
+                                                                                        src="http://localhost:8000/homePage/images/heart.png"
                                                                                         alt="heart image">
                                                                                 </button>
                                                                             @else
@@ -730,7 +726,7 @@
                                                                                     class="btn btn-link like-button"
                                                                                     onclick="toggleLike({{ $comment->id }})">
                                                                                     <img class="loved"
-                                                                                        src="{{ asset('homePage/images/love.png') }}"
+                                                                                        src="http://localhost:8000/homePage/images/love.png"
                                                                                         alt="love image">
                                                                                 </button>
                                                                             @endif
@@ -800,21 +796,22 @@
                                                                 <button id="likeBtn"
                                                                     class="btn btn-link like-button liked"
                                                                     onclick="toggleLike({{ $comment->id }})">
-                                                                    <img class="not-loved"
+                                                                    {{-- <img class="not-loved"
                                                                         src="{{ asset('homePage/images/heart.png') }}"
-                                                                        alt="heart image">
+                                                                        alt="heart image"> --}}
                                                                 </button>
                                                             @else
                                                                 <button id="likeBtn"
                                                                     class="btn btn-link like-button"
                                                                     onclick="toggleLike({{ $comment->id }})">
-                                                                    <img class="loved"
+                                                                    {{-- <img class="loved"
                                                                         src="{{ asset('homePage/images/love.png') }}"
-                                                                        alt="love image">
+                                                                        alt="love image"> --}}
                                                                 </button>
                                                             @endif
-                                                            <span class="like-count">{{ $comment->likes()->count() }}
-                                                                Likes</span>
+                                                            <span class="like-count">
+                                                                {{-- {{ $comment->likes()->count() }} Likes --}}
+                                                            </span>
 
                                                             <script>
                                                                 heartImageUrl = "{{ asset('homePage/images/heart.png') }}";

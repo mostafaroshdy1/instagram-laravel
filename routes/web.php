@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\BlockCheck;
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,15 +49,16 @@ Route::post('/users/{id}/followers'); // create followers table needed
 Route::delete('/users/{id}/followers');
 */
 
-Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
-Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
-Route::post('/block/{user}', [FollowController::class, 'block'])->name('block');
-Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unblock');
+Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow')->middleware('auth');
+Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow')->middleware('auth');
+Route::post('/block/{user}', [FollowController::class, 'block'])->name('block')->middleware('auth')->middleware(BlockCheck::class);
+Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unblock')->middleware('auth');
+
 // user profile
-Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
-Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');
-Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store');
-Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update');
+Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware('auth')->middleware(BlockCheck::class);
+Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth');
+Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth');
+Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth');
 
 
 Route::fallback(function () {

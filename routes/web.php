@@ -82,7 +82,8 @@ Route::post('/block/{user}', [FollowController::class, 'block'])->name('block')-
 Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unblock')->middleware('auth');
 
 // user profile
-Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware('auth')->middleware(BlockCheck::class);
+Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware(['auth', BlockCheck::class]);
+// ->middleware(BlockCheck::class);
 Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth');
 Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth');
 Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth');

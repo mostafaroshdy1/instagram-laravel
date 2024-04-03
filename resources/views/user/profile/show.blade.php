@@ -1,7 +1,7 @@
 @extends('layout.insta')
 @section('content')
 {{-- <h1>User Profile</h1>
-<p>{{ $user->name }}</p>
+<p>{{ $user->full_name }}</p>
 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#followersModal" id="followers">
         Followers
 </button>
@@ -26,7 +26,7 @@
             <button type="submit">Follow</button>
         </form>
     @endif
-    
+
 <p>Number of followers: {{$user->followers()->count()}}</p>
 <p>Number of followings: {{$user->followings()->count()}}</p>
 @endif
@@ -39,21 +39,21 @@
                 </div>
                 <div class="info">
                     <p class="name">
-                        ganzury._
+                        {{$user->username}}
                         <a href="{{route('user.profile.edit',$user)}}">
                             <button class="edit_profile">
-                                Edit profile 
+                                Edit profile
                             </button>
                         </a>
                     </p>
                     <div class="general_info">
                         <p><span>{{$user->posts()->count()}}</span> posts</p>
                         <p data-bs-toggle="modal" data-bs-target="#followersModal" id="followers">
-                            <span>{{$user->followers()->count()}}</span> 
+                            <span>{{$user->followers()->count()}}</span>
                             followers
                         </p>
                         <p data-bs-toggle="modal" data-bs-target="#followingsModal" id="followings">
-                            <span>{{$user->followings()->count()}}</span> 
+                            <span>{{$user->followings()->count()}}</span>
                             following
                         </p>
                         @php
@@ -102,7 +102,7 @@
                         </svg>
                         @endif
                     </div>
-                    
+
                     <p class="nick_name">{{$user->name}}</p>
                     <p class="desc">
                         This is A Test Bio <br>
@@ -132,7 +132,7 @@
                 <svg aria-label="" class="x1lliihq x1n2onr6 x1roi4f4" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12">
                     <title></title>
                     <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
-                </svg>                
+                </svg>
                 <span class="ps-1">SAVED</span>
               </button>
             </li>
@@ -143,7 +143,7 @@
                     <path d="M10.201 3.797 12 1.997l1.799 1.8a1.59 1.59 0 0 0 1.124.465h5.259A1.818 1.818 0 0 1 22 6.08v14.104a1.818 1.818 0 0 1-1.818 1.818H3.818A1.818 1.818 0 0 1 2 20.184V6.08a1.818 1.818 0 0 1 1.818-1.818h5.26a1.59 1.59 0 0 0 1.123-.465Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                     <path d="M18.598 22.002V21.4a3.949 3.949 0 0 0-3.948-3.949H9.495A3.949 3.949 0 0 0 5.546 21.4v.603" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                     <circle cx="12.072" cy="11.075" fill="none" r="3.556" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
-                </svg>                
+                </svg>
                 <span class="ps-1">TAGGED</span>
               </button>
             </li>
@@ -176,7 +176,7 @@
                     <div class="item">
                         <img class="img-fluid item_img" src="https://i.ibb.co/pJ8thst/account13.jpg" alt="">
                     </div>
-                    
+
                 </div>
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
@@ -189,7 +189,7 @@
                     </div>
                 </div>
             </div>
-            
+
           </div>
     </div>
 </div>
@@ -356,6 +356,6 @@
 </div>
 
     <script>
- 
+
 </script>
 @endsection

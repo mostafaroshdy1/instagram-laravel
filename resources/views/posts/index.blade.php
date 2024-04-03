@@ -317,7 +317,7 @@
                         src="{{ asset('homePage/images/video.png') }}"></a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#create_modal"><img
                         src="{{ asset('homePage/images/tab.png') }}"></a>
-                <a href="profile.html")}}"><img class="circle story"
+                <a href="{{asset("profile.html")}}"><img class="circle story"
                         src="{{ asset('homePage/images/profile_img.jpg') }}"></a>
             </div>
         </div>

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use app\Models\Comment;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 
@@ -93,4 +94,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    public function blocking()
+    {
+        return $this->belongsToMany(User::class, 'blocking_users', 'user_id', 'blocking_id');
+    }
+
+    public function blocked()
+    {
+        return $this->belongsToMany(User::class, 'blocking_users', 'blocking_id', 'user_id');
+    }
+
 }

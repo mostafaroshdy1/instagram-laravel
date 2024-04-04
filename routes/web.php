@@ -10,18 +10,24 @@ use App\Models\Hashtag;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HashtagsController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\CheckIsAdmin;
 
 Auth::routes(['verify' => true]);
 
 Route::get(
     '/',
     function () {
-        // return view('auth.login');
-        // return view('landingPage.login');
-        // If user is register return the welcome view unitl TODO: the home page
         return view('welcome');
     }
 )->middleware(Authenticate::class);
+
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+
+    return redirect('/login');
+})->name('logout');
 
 Route::get(
     '/dashboard',
@@ -72,7 +78,7 @@ Route::get('/hashtags/{hashtag}', [HashtagsController::class, 'showPosts'])->nam
 
 
 // users
-Route::post('/users/{id}/followers'); // create followers table needed
+Route::post('/users/{id}/followers');
 Route::delete('/users/{id}/followers');
 
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
@@ -80,6 +86,12 @@ Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('un
 // user profile
 
 Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
+
+
+Route::get(
+    '/admin/dashboard',
+    [AdminController::class, 'index']
+)->middleware(['auth', CheckIsAdmin::class])->name('admin.dashboard');
 
 
 Route::fallback(

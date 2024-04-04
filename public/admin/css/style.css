@@ -1,0 +1,29 @@
+.header {
+    color: white;
+    font-size: 30px;
+}
+
+.card {
+    background-color: #000000;
+    border: 1px solid #fdfcfc;
+    border-radius: 10px;
+}
+
+.card .card-header {
+    background-color: #fdfcfc;
+    color: rgb(0, 0, 0);
+}
+
+.card-text {
+    color: white;
+}
+
+.btn {
+    background-color: #fdfcfc;
+    color: #000000;
+    width: 70%;
+}
+
+.img {
+    border-radius: 50%;
+}

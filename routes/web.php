@@ -92,6 +92,10 @@ Route::get(
     '/admin/dashboard',
     [AdminController::class, 'index']
 )->middleware(['auth', CheckIsAdmin::class])->name('admin.dashboard');
+Route::patch('/admin/{id}', [AdminController::class, 'update'])->middleware(['auth', CheckIsAdmin::class])->name('admin.update.user');
+Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->middleware(['auth', CheckIsAdmin::class])->name('admin.destroy.user');
+Route::get('/admin/trashed', [AdminController::class, 'trashed'])->middleware(['auth', CheckIsAdmin::class])->name('admin.trashed');
+Route::patch('/admin/restore/{id}', [AdminController::class, 'restore'])->middleware(['auth', CheckIsAdmin::class])->name('admin.restore.user');
 
 
 Route::fallback(

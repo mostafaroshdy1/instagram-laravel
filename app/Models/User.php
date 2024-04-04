@@ -10,11 +10,11 @@ use Illuminate\Notifications\Notifiable;
 use app\Models\Comment;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'full_name',
         'username',
         'isAdmin',
+        'isVerified',
     ];
 
 

@@ -56,7 +56,11 @@
                             <img src="{{ asset('images/mail.png') }}" class="card-img-top" alt="User Image">
                             <div class="card-body">
                                 <p class="card-text">{{ $user->email }}</p>
-                                <button type="submit" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#adminEditModal" id="adminEdit" onclick="openEditModal('{{ $user->id }}')">Edit</button>
+                                <form action="{{route('admin.restore.user',$user->id)}}" method="post">
+                                    @csrf
+                                    @method('patch')
+                                    <button type="submit" class="btn btn-light">Restore</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -64,45 +68,6 @@
             @endforeach
         </div>
     </div>
-    <div class="modal fade" id="adminEditModal" tabindex="-1" aria-labelledby="adminEditModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm modal-dialog-scrollable">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-2" id="adminEditModalLabel">Edit User</h1>
-                    <i class="btn-close fa-2x fa-solid fa-xmark" data-bs-dismiss="modal" aria-label="Close"
-                        aria-hidden="true"></i>
-                </div>
-                <div class="modal-body ">
-                    <form action="{{ route('admin.update.user', $user->id) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-
-                        <div class="mb-3">
-                            <label class="toggle-switch">
-                                <label for="isVerified">isVerified</label>
-                                <input type="hidden" name="isVerified" value="0">
-                                <input type="checkbox" name="isVerified" {{ $user->isVerified ? 'checked' : '' }} value="1"> 
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="row justify-content-center">
-                           <button type="submit" class="btn btn-primary btn-modal-update">Update</button>
-                        </div>
-                    </form>
-                   <form action="{{ route('admin.destroy.user', $user->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="row justify-content-center">
-                           <button type="submit" class="btn btn-danger btn-modal-delete">Delete User</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <script src="{{ asset('homePage/sass/vender/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('homePage/sass/vender/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"

@@ -40,7 +40,9 @@ class UserProfileController extends Controller
         // dd($user->name);
         $followers = $user->followers()->get();
         $followings = $user->followings()->get();
-        return view('user.profile.show',['user' => $user, 'followers' => $followers, 'followings' => $followings]);
+        $blocking = $user->blocking()->get();
+        $blocked= $user->blocked()->get();
+        return view('user.profile.show',['user' => $user, 'followers' => $followers, 'followings' => $followings, 'blocking' => $blocking, 'blocked' => $blocked]);
     }
 
     /**
@@ -48,7 +50,8 @@ class UserProfileController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user =User::findOrFail($id);
+        return view('user.profile.edit',['user'=>$user]);
     }
 
     /**

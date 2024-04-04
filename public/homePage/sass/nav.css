@@ -1,0 +1,8 @@
+.profile-picture-nav{
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    padding: 1px;
+    object-fit: cover;
+    /* border: 2px solid white; */
+}

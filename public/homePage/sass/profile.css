@@ -1,0 +1,24 @@
+.profile-picture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.unblkModalBtn{
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+.blkModalBtn{
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-weight: bold;
+}
+.myHov:hover{
+    cursor: pointer;
+}
+.myB{
+    font-weight: bold;
+}

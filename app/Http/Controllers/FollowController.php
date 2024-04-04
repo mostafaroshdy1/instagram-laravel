@@ -77,4 +77,23 @@ class FollowController extends Controller
         $user->followers()->detach(auth()->id());
         return back();
     }
+    public function block(User $user)
+    {
+        if (auth()->id() !== $user->id) {
+            if ($user->followers()->where('follower_id', auth()->id())->exists()) {
+                $user->followers()->detach(auth()->id());
+            }
+            if ($user->followings()->where('user_id', auth()->id())->exists()) {
+                $user->followings()->detach(auth()->id());
+            }
+            $user->blocking()->attach(auth()->id());
+        }
+        return back();
+    }
+
+    public function unblock(User $user)
+    {
+        $user->blocking()->detach(auth()->id());
+        return back();
+    }
 }

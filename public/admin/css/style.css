@@ -1,17 +1,25 @@
+.card {
+    width: 300px;
+    max-width: 100%;
+    background-color: #000000;
+    border: 1px solid #fdfcfc;
+    border-radius: 10px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
 .header {
     color: white;
     font-size: 30px;
 }
 
-.card {
-    background-color: #000000;
-    border: 1px solid #fdfcfc;
-    border-radius: 10px;
-}
-
 .card .card-header {
     background-color: #fdfcfc;
     color: rgb(0, 0, 0);
+    width: 100%;
 }
 
 .card-text {
@@ -24,17 +32,29 @@
     width: 70%;
 }
 
-.img {
+.circular-image {
+    width: 90%;
+    height: 300px;
     border-radius: 50%;
+    overflow: hidden;
+    margin-top: 10px;
 }
-.btn-modal-update{
+
+.circular-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.btn-modal-update {
     background-color: rgb(34, 34, 192);
     color: white;
-    width:50%;
+    width: 50%;
     margin-bottom: 20px;
 }
-.btn-modal-delete{
+
+.btn-modal-delete {
     background-color: rgb(192, 34, 34);
     color: white;
-    width:50%;
+    width: 50%;
 }

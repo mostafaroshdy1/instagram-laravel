@@ -48,15 +48,20 @@
             </div>
             @foreach ($users as $user)
                 @if ($user->id != null && $user->isAdmin == 0)
-                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4 text-center">
-                        <div class="card text-center">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-4 text-center">
+                        <div class="card d-flex align-content-center">
                             <div class="card-header">
                                 {{ $user->full_name }}
                             </div>
-                            <img src="{{ asset('images/mail.png') }}" class="card-img-top" alt="User Image">
+                            <div class="circular-image">
+                                users->id
+                                {{-- <img src="{{ $users->avatars->url }}" class="card-img-top" alt="User Image"> --}}
+                            </div>
                             <div class="card-body">
                                 <p class="card-text">{{ $user->email }}</p>
-                                <button type="submit" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#adminEditModal" id="adminEdit" onclick="openEditModal('{{ $user->id }}')">Edit</button>
+                                <button type="submit" class="btn btn-light" data-bs-toggle="modal"
+                                    data-bs-target="#adminEditModal" id="adminEdit"
+                                    onclick="openEditModal('{{ $user->id }}')">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -64,8 +69,7 @@
             @endforeach
         </div>
     </div>
-    <div class="modal fade" id="adminEditModal" tabindex="-1" aria-labelledby="adminEditModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="adminEditModal" tabindex="-1" aria-labelledby="adminEditModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm modal-dialog-scrollable">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
@@ -82,19 +86,20 @@
                             <label class="toggle-switch">
                                 <label for="isVerified">isVerified</label>
                                 <input type="hidden" name="isVerified" value="0">
-                                <input type="checkbox" name="isVerified" {{ $user->isVerified ? 'checked' : '' }} value="1"> 
+                                <input type="checkbox" name="isVerified" {{ $user->isVerified ? 'checked' : '' }}
+                                    value="1">
                                 <span class="slider"></span>
                             </label>
                         </div>
                         <div class="row justify-content-center">
-                           <button type="submit" class="btn btn-primary btn-modal-update">Update</button>
+                            <button type="submit" class="btn btn-primary btn-modal-update">Update</button>
                         </div>
                     </form>
-                   <form action="{{ route('admin.destroy.user', $user->id) }}" method="POST">
+                    <form action="{{ route('admin.destroy.user', $user->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="row justify-content-center">
-                           <button type="submit" class="btn btn-danger btn-modal-delete">Delete User</button>
+                            <button type="submit" class="btn btn-danger btn-modal-delete">Delete User</button>
                         </div>
                     </form>
                 </div>

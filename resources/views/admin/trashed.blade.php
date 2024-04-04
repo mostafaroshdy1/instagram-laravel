@@ -48,15 +48,17 @@
             </div>
             @foreach ($users as $user)
                 @if ($user->id != null && $user->isAdmin == 0)
-                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4 text-center">
-                        <div class="card text-center">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-4 text-center">
+                        <div class="card d-flex align-content-center">
                             <div class="card-header">
                                 {{ $user->full_name }}
                             </div>
-                            <img src="{{ asset('images/mail.png') }}" class="card-img-top" alt="User Image">
+                            <div class="circular-image">
+                                {{-- <img src="{{ $users->avatars->url }}" class="card-img-top" alt="User Image"> --}}
+                            </div>
                             <div class="card-body">
                                 <p class="card-text">{{ $user->email }}</p>
-                                <form action="{{route('admin.restore.user',$user->id)}}" method="post">
+                                <form action="{{ route('admin.restore.user', $user->id) }}" method="post">
                                     @csrf
                                     @method('patch')
                                     <button type="submit" class="btn btn-light">Restore</button>

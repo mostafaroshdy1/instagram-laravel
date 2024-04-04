@@ -23,7 +23,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all()->sortDesc(); // will be changed later
-        return view('posts/index', ['posts' => $posts]);
+        return view('posts/index', ['posts' => $posts, 'user' => auth()->user()]);
     }
 
     /**
@@ -151,28 +151,27 @@ class PostController extends Controller
             $isLiked = true;
             $likers = $post->likers;
         }
-        
+
         return response()->json([
             'likes_count' => $post->likes_count,
             'isLiked' => $isLiked,
             'likers' => $likers
         ]);
     }
-    
+
 
     public function save(Request $request)
-{
-    $user = auth()->user();
-    $user = User::find($user->id);
-    $postId = $request->post_id;
+    {
+        $user = auth()->user();
+        $user = User::find($user->id);
+        $postId = $request->post_id;
 
-    if ($user->savePosts()->where('post_id', $postId)->exists()) {
-        $user->savePosts()->detach($postId);
-        return response()->json(['warning' => 'Post already saved. It has been removed from saved posts.'], 200);
+        if ($user->savePosts()->where('post_id', $postId)->exists()) {
+            $user->savePosts()->detach($postId);
+            return response()->json(['warning' => 'Post already saved. It has been removed from saved posts.'], 200);
+        }
+
+        $user->savePosts()->attach($request->post_id);
+        return response()->json(['success' => 'Post saved successfully!'], 200);
     }
-
-    $user->savePosts()->attach($request->post_id);
-    return response()->json(['success' => 'Post saved successfully!'], 200);
-}
-
 }

@@ -189,7 +189,7 @@
 
                             </li>
                             <li>
-                                <a href="{{ asset('homePage/profile.html') }}">
+                                <a href="{{ route('user.profile.show', ['id' => $user->id]) }}">
                                     <img class="circle story" src="{{ asset('homePage/images/profile_img.jpg') }}">
                                     <span class="d-none d-lg-block text-white fw-semibold">Profile</span>
                                 </a>
@@ -317,7 +317,7 @@
                         src="{{ asset('homePage/images/video.png') }}"></a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#create_modal"><img
                         src="{{ asset('homePage/images/tab.png') }}"></a>
-                <a href="{{asset("profile.html")}}"><img class="circle story"
+                <a href="{{ asset('profile.html') }}"><img class="circle story"
                         src="{{ asset('homePage/images/profile_img.jpg') }}"></a>
             </div>
         </div>
@@ -687,8 +687,7 @@
                                             <div class="modal fade bg-black" id="commentsModal-{{ $post->id }}"
                                                 tabindex="-1"
                                                 aria-labelledby="commentsModalLabel-{{ $post->id }}"
-                                                aria-hidden="true"
-                                                >
+                                                aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content bg-dark">
                                                         <div class="modal-header">
@@ -711,21 +710,22 @@
                                                                         <div class="like"
                                                                             data-comment-id="{{ $comment->id }}">
                                                                             @if ($comment->likes->contains(auth()->id()))
-                                                                            <button id="likeBtn"
-                                                                                class="btn btn-link like-button liked"
-                                                                                onclick="toggleLike({{ $comment->id }})">
-                                                                                <img class="not-loved"
-                                                                                    src="{{ asset('homePage/images/heart.png') }}"
-                                                                                    alt="heart image">
-                                                                            </button>
-                                                                        @else
-                                                                            <button id="likeBtn" class="btn btn-link like-button"
-                                                                                onclick="toggleLike({{ $comment->id }})">
-                                                                                <img class="loved"
-                                                                                    src="http://localhost:8000/homePage/images/love.png"
-                                                                                    alt="love image">
-                                                                            </button>
-                                                                        @endif
+                                                                                <button id="likeBtn"
+                                                                                    class="btn btn-link like-button liked"
+                                                                                    onclick="toggleLike({{ $comment->id }})">
+                                                                                    <img class="not-loved"
+                                                                                        src="{{ asset('homePage/images/heart.png') }}"
+                                                                                        alt="heart image">
+                                                                                </button>
+                                                                            @else
+                                                                                <button id="likeBtn"
+                                                                                    class="btn btn-link like-button"
+                                                                                    onclick="toggleLike({{ $comment->id }})">
+                                                                                    <img class="loved"
+                                                                                        src="http://localhost:8000/homePage/images/love.png"
+                                                                                        alt="love image">
+                                                                                </button>
+                                                                            @endif
                                                                             <span
                                                                                 class=" like-count text-white">{{ $comment->likes()->count() }}
                                                                                 Likes</span>

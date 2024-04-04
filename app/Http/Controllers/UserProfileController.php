@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\helpers\PostInformation;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,13 @@ class UserProfileController extends Controller
         $followings = $user->followings()->get();
         $blocking = $user->blocking()->get();
         $blocked= $user->blocked()->get();
-        return view('user.profile.show',['user' => $user, 'followers' => $followers, 'followings' => $followings, 'blocking' => $blocking, 'blocked' => $blocked]);
+        $posts = $user->posts()->get();
+        $postInfoArr = $posts->map(
+            function ($post) {
+                return new PostInformation($post);
+            }
+        );
+        return view('user.profile.show', ['user' => $user, 'followers' => $followers, 'followings' => $followings, 'blocking' => $blocking, 'blocked' => $blocked, 'postInfo' => $postInfoArr]);
     }
 
     /**
@@ -51,7 +58,7 @@ class UserProfileController extends Controller
     public function edit(string $id)
     {
         $user =User::findOrFail($id);
-        return view('user.profile.edit',['user'=>$user]);
+        return view('user.profile.edit', ['user'=>$user]);
     }
 
     /**

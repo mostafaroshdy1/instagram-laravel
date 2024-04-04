@@ -5,12 +5,15 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Post;    
+use app\Models\Comment;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -20,10 +23,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'full_name',
+        'username',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -58,6 +63,7 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id');
     }
 
+
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
@@ -73,4 +79,30 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'blocking_users', 'blocking_id', 'user_id');
     }   
 
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+
+    public function likedComments()
+    {
+        return $this->belongsToMany(Comment::class, 'likes', 'user_id', 'comment_id');
+    }
+
+    public function savePosts()
+    {
+        return $this->belongsToMany(Post::class, 'saved_posts')->withTimestamps();
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
 }

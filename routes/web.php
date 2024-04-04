@@ -9,6 +9,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Models\Hashtag;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BlockCheck;
+use App\Http\Middleware\EditProfileCheck;
 use App\Http\Controllers\HashtagsController;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,9 +84,9 @@ Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unbl
 
 // user profile
 Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware('auth')->middleware(BlockCheck::class);
-Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth');
-Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth');
-Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth');
+Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
+Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
+Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 // user profile

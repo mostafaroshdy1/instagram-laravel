@@ -69,4 +69,20 @@ class UserProfileController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->query('query');
+
+        $results = [];
+
+        if (!empty($query)) {
+            $results = User::where('full_name', 'like', "%$query%")
+                        ->orWhere('username', 'like', "%$query%")
+                        ->get();
+        }
+
+        return response()->json($results);
+    }
+
 }

@@ -322,32 +322,11 @@
             </div>
         </div>
         <!-- search  -->
-        <div id="search" class="search_section">
+        <div id="search" class="search_section position-fixed ps-4">
             <h2>Search</h2>
-            <form method="post">
-                <input type="text" placeholder="Search">
-            </form>
-            <div class="find">
-                <div class="desc">
-                    <h4>Recent</h4>
-                    <p><a href="#">Clear all</a></p>
-                </div>
-                <div class="account">
-                    <div class="cart">
-                        <div>
-                            <div class="img">
-                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                            </div>
-                            <div class="info">
-                                <p class="name">Zineb_essoussi</p>
-                                <p class="second_name">Zim Ess</p>
-                            </div>
-                        </div>
-                        <div class="clear">
-                            <a href="#">X</a>
-                        </div>
-                    </div>
-                </div>
+            <input id="search-input" name="search" class="form-control" type="text" placeholder="Search">
+            <div class="find mt-5" id="search-result">
+
             </div>
         </div>
         <!-- search  -->

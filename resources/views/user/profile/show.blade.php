@@ -111,12 +111,7 @@
                         @endif
                     </div>
 
-                    <p class="nick_name">{{ $user->username }}</p>
-                    <p class="desc">
-                        @if (!@empty($user->bio))
-                            {{ $user->bio }}
-                        @endif
-                    </p>
+                    <p class="nick_name">{{$user->name}}</p>
                     <p class="desc">
                         @if (!@empty($user->website))
                             <a href={{ $user->website }}>{{ $user->website }}</a>

@@ -616,6 +616,7 @@ button.log_btn:hover {
   border-right: 1px solid rgb(219, 219, 219);
 }
 
+
 @media screen and (max-width: 768px) {
   .nav {
     display: none;

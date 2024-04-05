@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
@@ -36,13 +37,20 @@ class UserProfileController extends Controller
      */
     public function show(string $id)
     {
+        
         $user = User::findOrFail($id);
+        if(!$user->isAdmin){
         // dd($user->name);
         $followers = $user->followers()->get();
         $followings = $user->followings()->get();
         $blocking = $user->blocking()->get();
         $blocked= $user->blocked()->get();
         return view('user.profile.show',['user' => $user, 'followers' => $followers, 'followings' => $followings, 'blocking' => $blocking, 'blocked' => $blocked]);
+        }
+        else{
+            return redirect()->route('posts.index');
+        }
+
     }
 
     /**

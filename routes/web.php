@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\EditFormController;
 use App\Models\Hashtag;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HashtagsController;
@@ -85,6 +86,7 @@ Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unbl
 Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware(['auth', BlockCheck::class]);
 // ->middleware(BlockCheck::class);
 Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth');
+Route::get('/users/{id}/edit/{formId}', [UserProfileController::class, 'getForm'])->name('user.profile.getForm')->where('id', '[0-9]+')->middleware('auth');
 Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth');
 Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth');
 

@@ -103,7 +103,7 @@
                         @endif
                     </div>
 
-                    <p class="nick_name">{{$user->name}}</p>
+                    <p class="nick_name">{{$user->full_name}}</p>
                     <p class="desc">
                         This is A Test Bio <br>
                         Information Technology Institute ITI

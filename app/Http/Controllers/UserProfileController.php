@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class UserProfileController extends Controller
 {
@@ -60,6 +61,14 @@ class UserProfileController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function getForm($id,$formId)
+    {
+        $user = User::findOrFail($id);
+        // Here you can dynamically render the Blade component based on the $formId
+        $formView = View::make('component.edit_forms.'.$formId, ['user' => $user])->render();
+        return $formView;
     }
 
     /**

@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.link');
     const formContainer = document.querySelector('.formcontainer');
-
     navLinks[0].click();
-    console.log(navLinks[0].click());
+
     navLinks.forEach(link => {
         link.addEventListener('click', async (event) => {
             event.preventDefault();
@@ -26,5 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error fetching form:', error);
             }
         });
+        navLinks[0].click();
     });
 });

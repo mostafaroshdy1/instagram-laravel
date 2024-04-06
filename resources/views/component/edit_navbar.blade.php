@@ -3,7 +3,7 @@
         <p class="fs-4 fw-bold m-5">Settings</p>
     </div>
     <div class="row pb-4 ">
-        <div class="col mx-5 rounded link" data-form="edit_profile" data-user-id="1">
+        <div class="col mx-5 rounded link" data-form="edit_profile" data-user-id="{{$user->id}}">
             <div class="d-flex m-3">
                 <div class="col-1">
                     <svg aria-label="" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row pb-4 ">
-        <div class="col mx-5 rounded link" data-form="pass_reset" data-user-id="1">
+        <div class="col mx-5 rounded link" data-form="pass_reset" data-user-id="{{$user->id}}">
             <div class="d-flex m-3">
                 <div class="col-1">
                     <svg aria-label="" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="row pb-4 ">
-        <div class="col mx-5 rounded link" data-form="email_change" data-user-id="1">
+        <div class="col mx-5 rounded link" data-form="email_change" data-user-id="{{$user->id}}">
             <div class="d-flex m-3">
                 <div class="col-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

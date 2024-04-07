@@ -183,7 +183,7 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                     tabindex="0">
                     <div id="posts_sec" class="post d-grid gap-3"
-                        style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                        style="grid-template-columns: repeat(3, 1fr);">
                         {{-- <div class="item">
                             <img class="img-fluid item_img" src="https://i.ibb.co/Jqh3rHv/img1.jpg" alt="">
                         </div>

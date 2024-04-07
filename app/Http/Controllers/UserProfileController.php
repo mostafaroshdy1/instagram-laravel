@@ -70,11 +70,11 @@ class UserProfileController extends Controller
         //
     }
 
-    public function getForm($id,$formId)
+    public function getForm(Request $request,$id,$formId)
     {
         $user = User::findOrFail($id);
         // Here you can dynamically render the Blade component based on the $formId
-        $formView = View::make('component.edit_forms.'.$formId, ['user' => $user])->render();
+        $formView = View::make('component.edit_forms.'.$formId, ['user' => $user, 'request' => $request])->render();
         return $formView;
     }
 

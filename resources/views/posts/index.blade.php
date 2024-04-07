@@ -51,6 +51,7 @@
 
 
     <div class="post_page ">
+    
         @include('includes.navbar')
 
         <div class="second_container">

@@ -108,10 +108,12 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        view('layouts.postModal', compact('post'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

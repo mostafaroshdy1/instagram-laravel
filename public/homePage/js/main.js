@@ -1016,3 +1016,38 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
     );
     likeImage.src = isLiked ? 'http://localhost:8000/homePage/images/heart.png' : 'http://localhost:8000/homePage/images/love.png';
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+
+    searchInput.addEventListener('keyup', async function(event) {
+        const query = event.target.value.trim();
+        try {
+            const response = await fetch(`/search?query=${query}`);
+            const data = await response.json();
+            const searchResults = document.getElementById('search-result');
+            searchResults.innerHTML = '';
+            data.forEach((user)=> {
+            searchResults.innerHTML += `
+                <div class="account">
+                    <div class="cart">
+                        <div>
+                            <div class="img">
+                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                            </div>
+                            <div class="info">
+                                <p class="name">${user.full_name}</p>
+                                <p class="second_name">${user.username}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+            });
+            console.log(data);
+        } catch (error) {
+            console.log('search error:', error);
+        }
+    });
+});

@@ -110,6 +110,8 @@ Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->middleware(['
 Route::get('/admin/trashed', [AdminController::class, 'trashed'])->middleware(['auth', CheckIsAdmin::class])->name('admin.trashed');
 Route::patch('/admin/restore/{id}', [AdminController::class, 'restore'])->middleware(['auth', CheckIsAdmin::class])->name('admin.restore.user');
 
+Route::get('/search', [UserProfileController::class, 'search'])->name('search');
+
 
 Route::fallback(
     function () {

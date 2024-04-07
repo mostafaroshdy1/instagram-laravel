@@ -12,18 +12,25 @@ use App\Http\Middleware\BlockCheck;
 use App\Http\Middleware\EditProfileCheck;
 use App\Http\Controllers\HashtagsController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\checkAdminAccess;
+use App\Http\Middleware\CheckIsAdmin;
 
 Auth::routes(['verify' => true]);
 
 Route::get(
     '/',
     function () {
-        // return view('auth.login');
-        // return view('landingPage.login');
-        // If user is register return the welcome view unitl TODO: the home page
         return view('welcome');
     }
 )->middleware(Authenticate::class);
+
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+
+    return redirect('/login');
+})->name('logout');
 
 Route::get(
     '/dashboard',
@@ -44,54 +51,64 @@ require __DIR__ . '/auth.php';
 
 
 // posts
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
-Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->middleware('auth');
-Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit')->middleware('auth');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
-Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update')->middleware('auth');
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy')->middleware('auth');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy')->middleware('auth')->middleware(checkAdminAccess::class);
 
 
 // comments
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
-Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch')->middleware('auth');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch')->middleware('auth')->middleware(checkAdminAccess::class);
 
 // comment reaction
-Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like')->middleware('auth');
-Route::delete('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike')->middleware('auth');
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::delete('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike')->middleware('auth')->middleware(checkAdminAccess::class);
 
 
 //likes
-Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike')->middleware('auth');
+Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike')->middleware('auth')->middleware(checkAdminAccess::class);
 
 
 // saved posts
-Route::post('/posts/save-post', [PostController::class, 'save'])->name('posts.save-post')->middleware('auth');
+Route::post('/posts/save-post', [PostController::class, 'save'])->name('posts.save-post')->middleware('auth')->middleware(checkAdminAccess::class);
 
 // hashtags
-Route::get('/hashtags/{hashtag}', [HashtagsController::class, 'showPosts'])->name('hashtags.showPosts')->middleware('auth');
+Route::get('/hashtags/{hashtag}', [HashtagsController::class, 'showPosts'])->name('hashtags.showPosts')->middleware('auth')->middleware(checkAdminAccess::class);
 
 
 // users
-Route::post('/users/{id}/followers'); // create followers table needed
-Route::delete('/users/{id}/followers');
+Route::post('/users/{id}/followers')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::delete('/users/{id}/followers')->middleware('auth')->middleware(checkAdminAccess::class);
 
-Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow')->middleware('auth');
-Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow')->middleware('auth');
-Route::post('/block/{user}', [FollowController::class, 'block'])->name('block')->middleware('auth')->middleware(BlockCheck::class);
-Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unblock')->middleware('auth');
+Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::post('/block/{user}', [FollowController::class, 'block'])->name('block')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(BlockCheck::class);
+Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unblock')->middleware('auth')->middleware(checkAdminAccess::class);
 
 // user profile
-Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware('auth')->middleware(BlockCheck::class);
-Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
-Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
-Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
-Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
-Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(BlockCheck::class);
+Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
+Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
+Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
+// Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
+// Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 // user profile
 
-Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
+Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->middleware(checkAdminAccess::class);
+
+
+Route::get(
+    '/admin/dashboard',
+    [AdminController::class, 'index']
+)->middleware(['auth', CheckIsAdmin::class])->name('admin.dashboard');
+Route::patch('/admin/{id}', [AdminController::class, 'update'])->middleware(['auth', CheckIsAdmin::class])->name('admin.update.user');
+Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->middleware(['auth', CheckIsAdmin::class])->name('admin.destroy.user');
+Route::get('/admin/trashed', [AdminController::class, 'trashed'])->middleware(['auth', CheckIsAdmin::class])->name('admin.trashed');
+Route::patch('/admin/restore/{id}', [AdminController::class, 'restore'])->middleware(['auth', CheckIsAdmin::class])->name('admin.restore.user');
 
 Route::get('/search', [UserProfileController::class, 'search'])->name('search');
 

@@ -184,21 +184,6 @@
                     tabindex="0">
                     <div id="posts_sec" class="post d-grid gap-3"
                         style="grid-template-columns: repeat(3, 1fr);">
-                        {{-- <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/Jqh3rHv/img1.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/2ZxBFVp/img2.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/5vQt677/img3.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/pJ8thst/account13.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/j8L7FPY/account10.jpg" alt="">
-                        </div> --}}
                         @foreach ($postInfo as $post)
                             <div class="item bg-white">
                                 <img class="img-fluid item_img" src={{$post->getImages()->first()->url}}
@@ -209,13 +194,13 @@
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                     tabindex="0">
-                    <div id="saved_sec" class="post">
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/6WvdZS9/account12.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/pJ8thst/account13.jpg" alt="">
-                        </div>
+                    <div id="saved_sec" class="post d-grid gap-3"
+                        style="grid-template-columns: repeat(3, 1fr);">
+                        @foreach ($savedPostInfoArr as $savedPost)
+                            <div class="item bg-white">
+                                <img class="img-fluid item_img" src={{$savedPost->getImages()->first()->url}} alt=''>
+                            </div>
+                        @endforeach
 
                     </div>
                 </div>

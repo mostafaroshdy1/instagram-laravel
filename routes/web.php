@@ -93,7 +93,7 @@ Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('un
 
 Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
 
-Route::get('/search', [UserProfileController::class,'search'])->name('search');
+Route::get('/search', [UserProfileController::class, 'search'])->name('search');
 
 
 Route::fallback(

@@ -18,8 +18,9 @@
 
     <link rel="stylesheet" href="{{ asset('tags/css/style.css') }}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css">
+    <link rel="stylesheet" href="{{ asset('postModal/css/style.css') }}">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css">
 
     {{-- from Roshdy: Uncomment this if you need bootstrap cdn --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -498,10 +499,11 @@
                                         <div class="col-lg-4 col-md-5 mb-4">
                                             <div class="item">
                                                 @foreach ($post->images as $image)
-                                                    <img class="img-fluid item_img posts-img"
+                                                    <img id="{{ $post->id }}"
+                                                        class="img-fluid item_img posts-img test"
                                                         src="{{ $image->url }}" alt=""
-                                                        data-bs-toggle="modal" data-bs-target="#imageModal"
                                                         data-image-url="{{ $image->url }}">
+                                                    @include('layouts.postModal')
                                                 @endforeach
                                             </div>
                                         </div>
@@ -644,7 +646,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <script src="{{ asset('homePage/sass/vender/bootstrap.bundle.js') }}"></script>
@@ -658,6 +659,8 @@
         <script src="{{ asset('homePage/owlcarousel/jquery.min.js') }}"></script>
         <script src="{{ asset('homePage/owlcarousel/owl.carousel.min.js') }}"></script>
         <script src="{{ asset('homePage/js/carousel.js') }}"></script>
+        <script src="{{ asset('postModal/js/script.js') }}"></script>
+
 </body>
 
 </html>

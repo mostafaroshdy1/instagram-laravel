@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\helpers\PostInformation;
 use App\Models\User;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
@@ -91,8 +92,9 @@ class UserProfileController extends Controller
             [
                 'username' => ['nullable', 'string', 'regex:/^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/', 'unique:users,username'],
                 'name' => ['nullable', 'string', 'max:20'],
-                'website' => ['nullable', 'active_url'],
-                'bio' => ['nullable', 'string']
+                'website' => ['nullable', 'url'],
+                'bio' => ['nullable', 'string'],
+                'photo' => ['nullable', 'file']
             ]
         );
 
@@ -101,6 +103,11 @@ class UserProfileController extends Controller
         isset($request->name) ? $user->full_name = $request->name : '';
         isset($request->website) ? $user->website = $request->website : '';
         isset($request->bio) ? $user->bio = $request->bio : '';
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $uploadedFileUrl = Cloudinary::upload($file->getRealPath())->getSecurePath();
+            $user->avatar = $uploadedFileUrl;
+        }
         $user->save();
 
         return redirect()->route('user.profile.edit', ['id' => $user->id]);

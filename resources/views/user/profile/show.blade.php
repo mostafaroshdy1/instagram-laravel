@@ -35,7 +35,7 @@
         <div class="profile_info">
             <div class="cart">
                 <div class="img">
-                    <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                    <img src="{{ $user->avatar ?? asset('homePage/images/profile_img.jpg') }}" alt="">
                 </div>
                 <div class="info">
                     <p class="name">

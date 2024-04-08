@@ -1,7 +1,9 @@
     <div class="row">
         <p class="fs-5 fw-bold">Edit Profile</p>
     </div>
-    <form action="">
+    <form method="POST" action={{route('user.profile.update', ['id' => $user->id])}}>
+        @csrf
+        @method('PUT')
         <div class="row">
             <div class="col-12 mx-auto mb-4 d-flex justify-content-center bg-dark rounded">
                 <div class="col-2 d-flex flex-column justify-content-center">
@@ -31,11 +33,11 @@
           </div>
         <div class="mb-4">
             <label for="exampleFormControlInput1" class="form-label fs-6">Website</label>
-            <input type="email" name="website" class="form-control bg-black text-white" id="exampleFormControlInput1" placeholder="name@example.com">
+            <input type="url" name="website" class="form-control bg-black text-white" id="exampleFormControlInput1" placeholder="name@example.com">
           </div>
           <div class="mb-4">
             <label for="exampleFormControlTextarea1" class="form-label">Bio</label>
-            <textarea class="form-control bg-black text-white" name="Bio" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control bg-black text-white" name="bio" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
           <div class="mb-4 d-flex justify-content-end">
             <input type="submit" class="btn btn-primary btn-lg mt-4 px-6" value="Submit">

@@ -53,20 +53,24 @@ class UserProfileController extends Controller
 
         $savedPosts = $user->savePosts()->with('users')->get();
 
-        $savedPostInfoArr = $savedPosts->map(function ($savedPost) {
-            return new PostInformation($savedPost);
-        });
+        $savedPostInfoArr = $savedPosts->map(
+            function ($savedPost) {
+                return new PostInformation($savedPost);
+            }
+        );
 
         // foreach ($savedPosts as $savedPost) {
         //     dd($savedPost->body);
         // }
 
-        return view('user.profile.show',
+        return view(
+            'user.profile.show',
             [
                 'user' => $user, 'followers' => $followers, 'followings' => $followings,
                 'blocking' => $blocking, 'blocked' => $blocked, 'postInfo' => $postInfoArr,
                 'savedPostInfoArr'=>$savedPostInfoArr
-        ]);
+            ]
+        );
     }
 
     /**
@@ -83,7 +87,24 @@ class UserProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate(
+            [
+                'username' => ['nullable', 'string', 'regex:/^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/', 'unique:users,username'],
+                'name' => ['nullable', 'string', 'max:20'],
+                'website' => ['nullable', 'active_url'],
+                'bio' => ['nullable', 'string']
+            ]
+        );
+
+        $user = User::find($id);
+        isset($request->username) ? $user->username = $request->username : '';
+        isset($request->name) ? $user->full_name = $request->name : '';
+        isset($request->website) ? $user->website = $request->website : '';
+        isset($request->bio) ? $user->bio = $request->bio : '';
+        $user->save();
+
+        return redirect()->route('user.profile.edit', ['id' => $user->id]);
+
     }
 
     public function getForm(Request $request,$id,$formId)

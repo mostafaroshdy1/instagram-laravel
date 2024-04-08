@@ -1,7 +1,7 @@
-<div class="nav_menu " style="background-color: red;width: fit-content;">
+<div class="nav_menu ">
     <div class="fix_top ">
         <!-- nav for big->medium screen -->
-        <div class="nav bg-black">
+        <div class="nav bg-black border-right" style="border-right-color: rgb(var(--ig-separator));">
             <div class="logo">
                 <a href="">
                     <svg style="color: white" aria-label="Instagram" class="x1lliihq x1n2onr6 x5n08af"

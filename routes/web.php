@@ -9,6 +9,8 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\EditFormController;
 use App\Models\Hashtag;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\BlockCheck;
+use App\Http\Middleware\EditProfileCheck;
 use App\Http\Controllers\HashtagsController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\BlockCheck;
@@ -44,33 +46,33 @@ require __DIR__ . '/auth.php';
 
 
 // posts
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->middleware('auth');
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit')->middleware('auth');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
+Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update')->middleware('auth');
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy')->middleware('auth');
 
 
 // comments
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch')->middleware('auth');
 
 // comment reaction
-Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
-Route::delete('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike');
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like')->middleware('auth');
+Route::delete('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike')->middleware('auth');
 
 
 //likes
-Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike');
+Route::patch('/posts/toggleLike/{post}', [PostController::class, 'toggleLike'])->name('posts.toggleLike')->middleware('auth');
 
 
 // saved posts
-Route::post('/posts/save-post', [PostController::class, 'save'])->name('posts.save-post');
+Route::post('/posts/save-post', [PostController::class, 'save'])->name('posts.save-post')->middleware('auth');
 
 // hashtags
-Route::get('/hashtags/{hashtag}', [HashtagsController::class, 'showPosts'])->name('hashtags.showPosts');
+Route::get('/hashtags/{hashtag}', [HashtagsController::class, 'showPosts'])->name('hashtags.showPosts')->middleware('auth');
 
 
 // users
@@ -89,6 +91,10 @@ Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('us
 Route::get('/users/{id}/edit/{formId}', [UserProfileController::class, 'getForm'])->name('user.profile.getForm')->where('id', '[0-9]+')->middleware('auth');
 Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth');
 Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth');
+Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
+Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+Route::get('/search', [UserProfileController::class,'search'])->name('search');
+
 
 Route::fallback(
     function () {

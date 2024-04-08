@@ -411,24 +411,24 @@ if (reels_container)
 //play video onscroll
 const videos = document.querySelectorAll("video");
 const reels = document.querySelector(".reels");
-window.addEventListener("scroll", function () {
-    const scrollPosition = window.scrollY + window.innerHeight;
-    videos.forEach((video, index) => {
-        reels.children[index].removeAttribute("id");
-        const videoPosition =
-            video.getBoundingClientRect().top + video.offsetHeight / 2;
-        if (
-            scrollPosition > videoPosition &&
-            videoPosition > 0 &&
-            videoPosition <= video.offsetHeight
-        ) {
-            video.play();
-            reels.children[index].setAttribute("id", "video_play");
-        } else {
-            video.pause();
-        }
-    });
-});
+// window.addEventListener("scroll", function () {
+//     const scrollPosition = window.scrollY + window.innerHeight;
+//     videos.forEach((video, index) => {
+//         reels.children[index].removeAttribute("id");
+//         const videoPosition =
+//             video.getBoundingClientRect().top + video.offsetHeight / 2;
+//         if (
+//             scrollPosition > videoPosition &&
+//             videoPosition > 0 &&
+//             videoPosition <= video.offsetHeight
+//         ) {
+//             video.play();
+//             reels.children[index].setAttribute("id", "video_play");
+//         } else {
+//             video.pause();
+//         }
+//     });
+// });
 
 //play && pause && mute video
 // let video_container = document.querySelectorAll(".video");
@@ -702,6 +702,7 @@ async function addPost() {
 
         const data = await response.json();
         console.log("Post added successfully:", data);
+        window.location.reload();
     } catch (error) {
         console.error("Error adding post:", error);
     }
@@ -728,35 +729,40 @@ $(document).ready(function () {
     $(".alert").fadeIn().delay(2000).fadeOut();
 });
 
-document.querySelectorAll(".likeButton").forEach((button) => {
-    button.addEventListener("click", function () {
-        event.preventDefault();
-        const postId = this.closest("form").dataset.postId;
-        fetch(`/posts/toggleLike/${postId}`, {
-            method: "PATCH",
-            headers: {
-                "X-CSRF-TOKEN": document
-                    .querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content"),
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                document.getElementById(`likers-${postId}`).innerText =
-                    data.likes_count + " likes";
-                const svg = document.querySelector(`#svg-${postId}`);
-                svg.setAttribute("fill", data.isLiked ? "red" : "white");
-                const title = data.isLiked ? "Unlike" : "Like";
-                svg.querySelector("title").textContent = title;
-                document
-                    .getElementById(`likers-${postId}`)
-                    .addEventListener("click", function () {
-                        drawLikersModal(data.likers);
-                    });
-            })
-            .catch((error) => console.error("Error:", error));
+function postLikes() {
+    document.querySelectorAll(".likeButton").forEach((button) => {
+        button.removeEventListener("click", likeButtonClick);
+        button.addEventListener("click", likeButtonClick);
     });
-});
+}
+
+function likeButtonClick(event) {
+    event.preventDefault();
+    const postId = this.closest("form").dataset.postId;
+    fetch(`/posts/toggleLike/${postId}`, {
+        method: "PATCH",
+        headers: {
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            document.getElementById(`likers-${postId}`).innerText =
+                data.likes_count + " likes";
+            const svg = document.querySelector(`#svg-${postId}`);
+            svg.setAttribute("fill", data.isLiked ? "red" : "white");
+            const title = data.isLiked ? "Unlike" : "Like";
+            svg.querySelector("title").textContent = title;
+            document
+                .getElementById(`likers-${postId}`)
+                .addEventListener("click", function () {
+                    drawLikersModal(data.likers);
+                });
+        })
+        .catch((error) => console.error("Error:", error));
+}
 
 function drawLikersModal(likers) {
     const likersModal = document.getElementById("likersModal");
@@ -855,74 +861,83 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+function resetCommentEvents() {
     var commentForms = document.querySelectorAll(".comment-form");
-
     commentForms.forEach(function (form) {
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            var formData = new FormData(form);
-            var postId = form.dataset.postId;
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", form.action, true);
-            xhr.setRequestHeader("X-CSRF-TOKEN", "{{ csrf_token() }}");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        console.log("Response:", response);
-                        console.log("Response:", response.likes_count);
-                        var commentInput = form.querySelector(".comment-input");
-
-                        var commentsSection = document.querySelector(
-                            '.comments-section[data-post-id="' + postId + '"]'
-                        );
-                        if (commentsSection) {
-                            var newComment = document.createElement("div");
-                            newComment.classList.add(
-                                "comment",
-                                "d-flex",
-                                "justify-content-between",
-                                "align-items-center"
-                            );
-                            newComment.innerHTML = `
-                                <p>
-                                    <strong class="text-white">${response.user.full_name}</strong>
-                                    <span class="text-white">${response.comment}</span>
-                                </p>
-                                <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
-                                <button id="likeBtn"
-                                class="btn btn-link like-button"
-                                onclick="toggleLike(${response.comment_id})">
-                                <img class="not-loved"
-                                    src="http://localhost:8000/homePage/images/love.png"
-                                    alt="heart image">
-                                    </button>
-                                    <span
-                                        class="text-white like-count">0 Likes
-                                    </span>
-                                </div>
-                            `;
-
-                            commentsSection.prepend(newComment);
-                            commentInput.value = "";
-                        } else {
-                            console.error(
-                                "Comments section not found for post ID:",
-                                postId
-                            );
-                        }
-                    } else {
-                        console.error(xhr.responseText);
-                    }
-                }
-            };
-            xhr.send(formData);
-        });
+        form.removeEventListener("submit", handleCommentSubmission);
+        form.addEventListener("submit", handleCommentSubmission);
     });
+}
+
+function handleCommentSubmission(event) {
+    event.preventDefault();
+
+    var form = event.target;
+    var formData = new FormData(form);
+    var postId = form.dataset.postId;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", form.action, true);
+    xhr.setRequestHeader("X-CSRF-TOKEN", "{{ csrf_token() }}");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                console.log("Response:", response);
+                console.log("Response:", response.likes_count);
+                var commentInput = form.querySelector(".comment-input");
+
+                var commentsSection = document.querySelector(
+                    '.comments-section[data-post-id="' + postId + '"]'
+                );
+                if (commentsSection) {
+                    var newComment = document.createElement("div");
+                    newComment.classList.add(
+                        "comment",
+                        "d-flex",
+                        "justify-content-between",
+                        "align-items-center"
+                    );
+                    newComment.innerHTML = `
+                    <p>
+                        <strong class="text-white">${response.user.full_name}</strong>
+                        <span class="text-white">${response.comment}</span>
+                    </p>
+                    <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
+                    <button id="likeBtn"
+                    class="btn btn-link like-button"
+                    onclick="toggleLike(${response.comment_id})">
+                    <img class="not-loved"
+                        src="http://localhost:8000/homePage/images/love.png"
+                        alt="heart image">
+                        </button>
+                        <span
+                            class="text-white like-count">0 Likes
+                        </span>
+                    </div>
+                `;
+
+                    commentsSection.prepend(newComment);
+                    commentInput.value = "";
+                } else {
+                    console.error(
+                        "Comments section not found for post ID:",
+                        postId
+                    );
+                }
+            } else {
+                console.error(xhr.responseText);
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    resetCommentEvents();
 });
+
+// Whenever you need to reset the comment event listeners, just call resetCommentEvents()
 
 async function toggleLike(commentId) {
     const isLiked = document
@@ -972,8 +987,6 @@ async function toggleLike(commentId) {
             modalLikeImage.src = responseData.liked
                 ? "http://localhost:8000/homePage/images/heart.png"
                 : "http://localhost:8000/homePage/images/love.png";
-
-
         }
 
         //post
@@ -991,8 +1004,8 @@ async function toggleLike(commentId) {
 
             const postLikeImage = postLikeButton.querySelector("img");
             postLikeImage.src = responseData.liked
-                ? 'http://localhost:8000/homePage/images/heart.png'
-                : 'http://localhost:8000/homePage/images/love.png';
+                ? "http://localhost:8000/homePage/images/heart.png"
+                : "http://localhost:8000/homePage/images/love.png";
         }
     } catch (error) {
         console.error("Error:", error);
@@ -1014,5 +1027,46 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
     const likeImage = document.querySelector(
         `.like[data-comment-id="${commentId}"] .like-button img`
     );
-    likeImage.src = isLiked ? 'http://localhost:8000/homePage/images/heart.png' : 'http://localhost:8000/homePage/images/love.png';
+    likeImage.src = isLiked
+        ? "http://localhost:8000/homePage/images/heart.png"
+        : "http://localhost:8000/homePage/images/love.png";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input");
+
+    searchInput.addEventListener("keyup", async function (event) {
+        const query = event.target.value.trim();
+        try {
+            const response = await fetch(`/search?query=${query}`);
+            const data = await response.json();
+            const searchResults = document.getElementById("search-result");
+            searchResults.innerHTML = "";
+            data.forEach((user) => {
+                searchResults.innerHTML += `
+                <div class="account">
+                    <div class="cart">
+                        <div>
+                            <div class="img">
+                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                            </div>
+                            <div class="info">
+                                <p class="name">${user.full_name}</p>
+                                <p class="second_name">${user.username}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+            });
+            console.log(data);
+        } catch (error) {
+            console.log("search error:", error);
+        }
+    });
+});
+// initialize post like and comment feature
+window.addEventListener("DOMContentLoaded", function () {
+    postLikes();
+});

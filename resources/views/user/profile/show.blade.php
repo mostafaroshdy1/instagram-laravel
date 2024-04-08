@@ -2,6 +2,7 @@
 @section('content')
     {{-- <h1>User Profile</h1>
 <p>{{ $user->full_name }}</p>
+
 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#followersModal" id="followers">
         Followers
 </button>
@@ -26,7 +27,6 @@
             <button type="submit">Follow</button>
         </form>
     @endif
-
 <p>Number of followers: {{$user->followers()->count()}}</p>
 <p>Number of followings: {{$user->followings()->count()}}</p>
 @endif
@@ -221,7 +221,6 @@
         </div>
     </div>
 
-
     <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
@@ -237,7 +236,7 @@
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
                                     src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
                                 <div class="d-flex flex-column align-items-start ml-2"><span class="font-weight-bold"
-                                        style="font-size: 1.6em;">{{ $follower->name }}</span></div>
+                                        style="font-size: 1.6em;">{{ $follower->full_name }}</span></div>
                             </div>
                             @if (auth()->user()->isNot($follower))
                                 @if (auth()->user()->followings && auth()->user()->followings->contains($follower))
@@ -286,7 +285,7 @@
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
                                     src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
                                 <div class="d-flex flex-column align-items-start "><span class="font-weight-bold"
-                                        style="font-size: 1.6em;">{{ $following->name }}</span></div>
+                                        style="font-size: 1.6em;">{{ $following->full_name }}</span></div>
                             </div>
                             @if (auth()->user()->isNot($following))
                                 @if (auth()->user()->followings && auth()->user()->followings->contains($following))
@@ -333,7 +332,7 @@
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
                                     src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
                                 <div class="d-flex flex-column align-items-start "><span class="font-weight-bold"
-                                        style="font-size: 1.6em;">{{ $blockedUsr->name }}</span></div>
+                                        style="font-size: 1.6em;">{{ $blockedUsr->full_name }}</span></div>
                             </div>
                             @if (auth()->user()->isNot($blockedUsr))
                                 @if (auth()->user()->blocked && auth()->user()->blocked->contains($blockedUsr))

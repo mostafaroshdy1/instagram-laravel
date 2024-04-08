@@ -9,11 +9,19 @@
                     </div>
 
                     <div class="col-lg-6 col-md-12 p-2">
-                        <div class="fixed-top-section d-flex align-items-center mb-3">
-                            <img src={{ $post->images[0]['url'] }} class="img-fluid rounded-circle me-2 avatar"
-                                alt="user avatar">
-                            <h5 class="mb-0">{{ $post->user->full_name }} </h5>
+                    <div class="fixed-top-section d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ $post->images[0]['url'] }}" class="img-fluid rounded-circle me-2 avatar" alt="user avatar">
+                            <h5 class="mb-0">{{ $post->user->full_name }}</h5>
                         </div>
+                        
+                        @if (auth()->id() == $post->user_id)
+                            <div class="more delmenu" data-bs-toggle="modal" id="{{ $post->id }}" data-post-id="{{$post->id}}" >
+                            <svg fill="#ffffff" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 297 297" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="M42.352,106.148C18.999,106.148,0,125.147,0,148.5c0,23.353,18.999,42.352,42.352,42.352 c23.353,0,42.352-18.999,42.352-42.352C84.704,125.147,65.705,106.148,42.352,106.148z"></path> <path d="M148.5,106.148c-23.353,0-42.352,18.999-42.352,42.352c0,23.353,18.999,42.352,42.352,42.352 s42.352-18.999,42.352-42.352C190.852,125.147,171.853,106.148,148.5,106.148z"></path> <path d="M254.648,106.148c-23.353,0-42.352,18.999-42.352,42.352c0,23.353,18.999,42.352,42.352,42.352S297,171.853,297,148.5 C297,125.147,278.001,106.148,254.648,106.148z"></path> </g> </g> </g> </g></svg>
+                            </div>
+                            
+                        @endif
+                    </div>
 
                         <div class="mb-3">
                             <p>{{ $post->body }}</p>

@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\checkAdminAccess;
 use App\Http\Middleware\CheckIsAdmin;
+use App\Http\Middleware\CheckPossession;
 
 Auth::routes(['verify' => true]);
 
@@ -57,7 +58,7 @@ Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->
 Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update')->middleware('auth')->middleware(checkAdminAccess::class);
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy')->middleware('auth')->middleware(CheckPossession::class)->middleware(checkAdminAccess::class);
 
 
 // comments

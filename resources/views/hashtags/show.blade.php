@@ -73,6 +73,7 @@
                                                         src="{{ $image->url }}" alt=""
                                                         data-image-url="{{ $image->url }}">
                                                     @include('layouts.postModal')
+                                                    @include('layouts.likes', ['post' => $post])
                                                 @endforeach
                                             </div>
                                         </div>
@@ -229,6 +230,7 @@
         <script src="{{ asset('homePage/owlcarousel/owl.carousel.min.js') }}"></script>
         <script src="{{ asset('homePage/js/carousel.js') }}"></script>
         <script src="{{ asset('postModal/js/script.js') }}"></script>
+        <script src="{{ asset('likes/js/likesShowModal.js') }}"></script>
 
 </body>
 

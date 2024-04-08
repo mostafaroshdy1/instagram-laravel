@@ -287,6 +287,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
     <script src="{{ asset('homePage/js/main.js') }}"></script>
     <script src="{{ asset('tags/js/script.js') }}"></script>
+    <script src="{{ asset('likes/js/likes.js') }}"></script>
 
     <script>
         $(document).ready(function() {

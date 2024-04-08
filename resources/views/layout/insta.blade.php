@@ -22,14 +22,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        <div class="row vh-100">
                         @yield('content')
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-
-    
+            
             <!--Create model-->
             <div class="modal fade" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

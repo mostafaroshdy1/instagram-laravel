@@ -6,12 +6,14 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\EditFormController;
 use App\Models\Hashtag;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BlockCheck;
 use App\Http\Middleware\EditProfileCheck;
 use App\Http\Controllers\HashtagsController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\BlockCheck;
 
 Auth::routes(['verify' => true]);
 
@@ -83,16 +85,14 @@ Route::post('/block/{user}', [FollowController::class, 'block'])->name('block')-
 Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unblock')->middleware('auth');
 
 // user profile
-Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware('auth')->middleware(BlockCheck::class);
-Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
-Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
-Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth')->middleware(EditProfileCheck::class);
+Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware(['auth', BlockCheck::class]);
+// ->middleware(BlockCheck::class);
+Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth');
+Route::get('/users/{id}/edit/{formId}', [UserProfileController::class, 'getForm'])->name('user.profile.getForm')->where('id', '[0-9]+')->middleware('auth');
+Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth');
+Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth');
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
-// user profile
-
-Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show');
-
 Route::get('/search', [UserProfileController::class,'search'])->name('search');
 
 

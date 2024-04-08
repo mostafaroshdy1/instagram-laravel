@@ -1,7 +1,8 @@
 @extends('layout.insta')
 @section('content')
     {{-- <h1>User Profile</h1>
-<p>{{ $user->name }}</p>
+<p>{{ $user->full_name }}</p>
+
 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#followersModal" id="followers">
         Followers
 </button>
@@ -26,7 +27,6 @@
             <button type="submit">Follow</button>
         </form>
     @endif
-    
 <p>Number of followers: {{$user->followers()->count()}}</p>
 <p>Number of followings: {{$user->followings()->count()}}</p>
 @endif
@@ -35,11 +35,11 @@
         <div class="profile_info">
             <div class="cart">
                 <div class="img">
-                    <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                    <img src="{{ $user->avatar ?? asset('homePage/images/profile_img.jpg') }}" alt="">
                 </div>
                 <div class="info">
                     <p class="name">
-                        {{ $user->full_name }}
+                        {{ $user->username }}
                         <a href="{{ route('user.profile.edit', $user) }}">
                             <button class="edit_profile">
                                 Edit profile
@@ -111,11 +111,13 @@
                         @endif
                     </div>
 
-                    <p class="nick_name">{{ $user->full_name }}</p>
+                    <p class="nick_name">{{$user->full_name}}</p>
                     <p class="desc">
-                        This is A Test Bio <br>
-                        Information Technology Institute ITI
+                        @if (!@empty($user->website))
+                            <a href={{ $user->website }}>{{ $user->website }}</a>
+                        @endif
                     </p>
+                    <p class="desc">{{$user->bio}}</p>
                 </div>
             </div>
         </div>
@@ -181,33 +183,25 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                     tabindex="0">
-                    <div id="posts_sec" class="post">
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/Jqh3rHv/img1.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/2ZxBFVp/img2.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/5vQt677/img3.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/pJ8thst/account13.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/j8L7FPY/account10.jpg" alt="">
-                        </div>
+                    <div id="posts_sec" class="post d-grid gap-3"
+                        style="grid-template-columns: repeat(3, 1fr);">
+                        @foreach ($postInfo as $post)
+                            <div class="item bg-white">
+                                <img class="img-fluid item_img" src={{$post->getImages()->first()->url}}
+                                    alt="">
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                     tabindex="0">
-                    <div id="saved_sec" class="post">
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/6WvdZS9/account12.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/pJ8thst/account13.jpg" alt="">
-                        </div>
+                    <div id="saved_sec" class="post d-grid gap-3"
+                        style="grid-template-columns: repeat(3, 1fr);">
+                        @foreach ($savedPostInfoArr as $savedPost)
+                            <div class="item bg-white">
+                                <img class="img-fluid item_img" src={{$savedPost->getImages()->first()->url}} alt=''>
+                            </div>
+                        @endforeach
 
                     </div>
                 </div>
@@ -226,7 +220,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel"
         aria-hidden="true">

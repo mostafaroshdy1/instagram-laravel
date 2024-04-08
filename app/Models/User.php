@@ -9,7 +9,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Post;    
 use app\Models\Comment;
-use App\Models\Post;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 
@@ -70,15 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class, 'user_id', 'id');
     }
     
-    public function blocking()
-    {
-        return $this->belongsToMany(User::class, 'blocking_users', 'user_id', 'blocking_id');
-    }
-
-    public function blocked()
-    {
-        return $this->belongsToMany(User::class, 'blocking_users', 'blocking_id', 'user_id');
-    }   
+  
 
 
     public function comments(): HasMany
@@ -115,6 +106,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function blocked()
     {
         return $this->belongsToMany(User::class, 'blocking_users', 'blocking_id', 'user_id');
-    }
-
+    }   
 }

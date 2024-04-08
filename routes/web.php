@@ -13,7 +13,6 @@ use App\Http\Middleware\BlockCheck;
 use App\Http\Middleware\EditProfileCheck;
 use App\Http\Controllers\HashtagsController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Middleware\BlockCheck;
 
 Auth::routes(['verify' => true]);
 

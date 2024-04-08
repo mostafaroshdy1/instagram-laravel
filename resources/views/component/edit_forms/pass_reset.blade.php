@@ -1,24 +1,6 @@
     <div class="row">
         <p class="fs-5 fw-bold">Reset Password</p>
     </div>
-    <div class="row">
-        <div class="col-12 mx-auto mb-4 d-flex justify-content-center bg-dark rounded">
-            <div class="col-2 d-flex flex-column justify-content-center">
-                <img src="{{ asset('homePage/images/profile_img.jpg') }}" class="profile-picture" alt="">
-            </div>
-            <div class="col-7 my-auto py-3">
-                <div class="row">
-                    <span class="fw-bold h6">{{ $user->username }}</span>
-                </div>
-                <div class="row">
-                    <span class="fs-6 ">{{ $user->full_name }}</span>
-                </div>
-            </div>
-            <div class="col-3 my-auto">
-                <button type="button" class="btn btn-primary btn-sm">Change Photo</button>
-            </div>
-        </div>
-    </div>
     <div>
         <form method="POST" action="{{ route('password.update') }}">
             @csrf

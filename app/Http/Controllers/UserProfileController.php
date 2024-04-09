@@ -43,39 +43,39 @@ class UserProfileController extends Controller
     {
 
         $user = User::findOrFail($id);
-        if(!$user->isAdmin){
-          // dd($user->name);
-          $followers = $user->followers()->get();
-          $followings = $user->followings()->get();
-          $blocking = $user->blocking()->get();
-          $blocked= $user->blocked()->get();
-          $posts = $user->posts()->get();
-          $postInfoArr = $posts->map(
-              function ($post) {
-                  return new PostInformation($post);
-              }
-          );
+        if(!$user->isAdmin) {
+            // dd($user->name);
+            $followers = $user->followers()->get();
+            $followings = $user->followings()->get();
+            $blocking = $user->blocking()->get();
+            $blocked= $user->blocked()->get();
+            $posts = $user->posts()->get();
+            $postInfoArr = $posts->map(
+                function ($post) {
+                    return new PostInformation($post);
+                }
+            );
 
-          $savedPosts = $user->savePosts()->with('users')->get();
+            $savedPosts = $user->savePosts()->with('users')->get();
 
-          $savedPostInfoArr = $savedPosts->map(
-              function ($savedPost) {
-                  return new PostInformation($savedPost);
-              }
-          );
+            $savedPostInfoArr = $savedPosts->map(
+                function ($savedPost) {
+                    return new PostInformation($savedPost);
+                }
+            );
 
-          // foreach ($savedPosts as $savedPost) {
-          //     dd($savedPost->body);
-          // }
+            // foreach ($savedPosts as $savedPost) {
+            //     dd($savedPost->body);
+            // }
 
-          return view(
-              'user.profile.show',
-              [
+            return view(
+                'user.profile.show',
+                [
                   'user' => $user, 'followers' => $followers, 'followings' => $followings,
                   'blocking' => $blocking, 'blocked' => $blocked, 'postInfo' => $postInfoArr,
                   'savedPostInfoArr'=>$savedPostInfoArr
-              ]
-          );
+                ]
+            );
         }
         else{
             return redirect()->route('posts.index');
@@ -98,7 +98,7 @@ class UserProfileController extends Controller
     {
         $request->validate(
             [
-                'username' => ['nullable', 'string', 'regex:/^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/', 'unique:users,username'],
+                'username' => ['nullable', 'string', 'regex:/^(?=.{1,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/'],
                 'name' => ['nullable', 'string', 'max:20'],
                 'website' => ['nullable', 'url'],
                 'bio' => ['nullable', 'string'],
@@ -107,7 +107,7 @@ class UserProfileController extends Controller
         );
 
         $user = User::find($id);
-        isset($request->username) ? $user->username = $request->username : '';
+        isset($request->username) && User::whereNotIn('id', array($user->id))->where('username', '=', $request->username)->count() <= 0 ? $user->username = $request->username : '';
         isset($request->name) ? $user->full_name = $request->name : '';
         isset($request->website) ? $user->website = $request->website : '';
         isset($request->bio) ? $user->bio = $request->bio : '';

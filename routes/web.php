@@ -28,11 +28,13 @@ Route::get(
     }
 )->middleware(Authenticate::class);
 
-Route::post('/logout', function (Request $request) {
-    Auth::logout();
+Route::post(
+    '/logout', function (Request $request) {
+        Auth::logout();
 
-    return redirect('/login');
-})->name('logout');
+        return redirect('/login');
+    }
+)->name('logout');
 
 Route::get(
     '/dashboard',

@@ -7,6 +7,7 @@ use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
@@ -39,39 +40,45 @@ class UserProfileController extends Controller
      */
     public function show(string $id)
     {
+        
         $user = User::findOrFail($id);
-        // dd($user->name);
-        $followers = $user->followers()->get();
-        $followings = $user->followings()->get();
-        $blocking = $user->blocking()->get();
-        $blocked= $user->blocked()->get();
-        $posts = $user->posts()->get();
-        $postInfoArr = $posts->map(
-            function ($post) {
-                return new PostInformation($post);
-            }
-        );
+        if(!$user->isAdmin){
+          // dd($user->name);
+          $followers = $user->followers()->get();
+          $followings = $user->followings()->get();
+          $blocking = $user->blocking()->get();
+          $blocked= $user->blocked()->get();
+          $posts = $user->posts()->get();
+          $postInfoArr = $posts->map(
+              function ($post) {
+                  return new PostInformation($post);
+              }
+          );
 
-        $savedPosts = $user->savePosts()->with('users')->get();
+          $savedPosts = $user->savePosts()->with('users')->get();
 
-        $savedPostInfoArr = $savedPosts->map(
-            function ($savedPost) {
-                return new PostInformation($savedPost);
-            }
-        );
+          $savedPostInfoArr = $savedPosts->map(
+              function ($savedPost) {
+                  return new PostInformation($savedPost);
+              }
+          );
 
-        // foreach ($savedPosts as $savedPost) {
-        //     dd($savedPost->body);
-        // }
+          // foreach ($savedPosts as $savedPost) {
+          //     dd($savedPost->body);
+          // }
 
-        return view(
-            'user.profile.show',
-            [
-                'user' => $user, 'followers' => $followers, 'followings' => $followings,
-                'blocking' => $blocking, 'blocked' => $blocked, 'postInfo' => $postInfoArr,
-                'savedPostInfoArr'=>$savedPostInfoArr
-            ]
-        );
+          return view(
+              'user.profile.show',
+              [
+                  'user' => $user, 'followers' => $followers, 'followings' => $followings,
+                  'blocking' => $blocking, 'blocked' => $blocked, 'postInfo' => $postInfoArr,
+                  'savedPostInfoArr'=>$savedPostInfoArr
+              ]
+          );
+        }
+        else{
+            return redirect()->route('posts.index');
+        }
     }
 
     /**

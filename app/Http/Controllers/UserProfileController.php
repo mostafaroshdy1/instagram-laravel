@@ -8,6 +8,7 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserProfileController extends Controller
 {
@@ -40,7 +41,7 @@ class UserProfileController extends Controller
      */
     public function show(string $id)
     {
-        
+
         $user = User::findOrFail($id);
         if(!$user->isAdmin){
           // dd($user->name);
@@ -139,17 +140,33 @@ class UserProfileController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->query('query');
+        try {
+            $query = $request->query('query');
 
-        $results = [];
+            $results = [];
 
-        if (!empty($query)) {
-            $results = User::where('full_name', 'like', "%$query%")
-                        ->orWhere('username', 'like', "%$query%")
-                        ->get();
+            if (!empty($query)) {
+                $users = User::where('full_name', 'like', "%$query%")
+                            ->orWhere('username', 'like', "%$query%")
+                            ->get();
+
+                foreach ($users as $user) {
+                    $profileImage = $user->avatar ? $user->avatar : null;
+                    $results[] = [
+                        'user' => $user,
+                        'profile_image' => $profileImage
+                    ];
+                }
+            }
+
+            return response()->json($results);
+        } catch (\Exception $e) {
+            Log::error('Search Error: ' . $e->getMessage());
+
+            return response()->json(['error' => 'Error during the search.'], 500);
         }
-
-        return response()->json($results);
     }
+
+
 
 }

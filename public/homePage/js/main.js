@@ -1037,22 +1037,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     searchInput.addEventListener("keyup", async function (event) {
         const query = event.target.value.trim();
+        console.log("Query:", query);
         try {
+            console.log('try block');
             const response = await fetch(`/search?query=${query}`);
+            console.log(response);
             const data = await response.json();
+            console.log(data);
             const searchResults = document.getElementById("search-result");
+            console.log(searchResults);
             searchResults.innerHTML = "";
             data.forEach((user) => {
+                console.log(user);
                 searchResults.innerHTML += `
                 <div class="account">
                     <div class="cart">
                         <div>
                             <div class="img">
-                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                <img src="${user.profile_image}" alt="">
                             </div>
                             <div class="info">
-                                <p class="name">${user.full_name}</p>
-                                <p class="second_name">${user.username}</p>
+                                <p class="name">${user.user.full_name}</p>
+                                <p class="second_name">${user.user.username}</p>
                             </div>
                         </div>
                     </div>
@@ -1066,6 +1072,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 // initialize post like and comment feature
 window.addEventListener("DOMContentLoaded", function () {
     postLikes();

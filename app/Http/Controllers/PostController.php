@@ -113,10 +113,12 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        view('layouts.postModal', compact('post'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -137,9 +139,11 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect()->route('posts.index');
     }
     public function toggleLike(Post $post, Request $request)
     {

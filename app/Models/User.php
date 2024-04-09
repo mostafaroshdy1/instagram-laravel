@@ -12,11 +12,11 @@ use app\Models\Comment;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +28,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'full_name',
         'username',
+        'isAdmin',
+        'isVerified',
     ];
 
 
@@ -51,6 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'isAdmin' => 'boolean',
         ];
     }
 

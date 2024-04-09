@@ -6,7 +6,11 @@ use App\helpers\PostInformation;
 use App\Models\User;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\View;
+
+use Illuminate\Support\Facades\Auth;
+
 
 class UserProfileController extends Controller
 {
@@ -39,12 +43,15 @@ class UserProfileController extends Controller
      */
     public function show(string $id)
     {
+        
         $user = User::findOrFail($id);
+        if(!$user->isAdmin){
         // dd($user->name);
         $followers = $user->followers()->get();
         $followings = $user->followings()->get();
         $blocking = $user->blocking()->get();
         $blocked= $user->blocked()->get();
+
         $posts = $user->posts()->get();
         $postInfoArr = $posts->map(
             function ($post) {
@@ -72,6 +79,13 @@ class UserProfileController extends Controller
                 'savedPostInfoArr'=>$savedPostInfoArr
             ]
         );
+
+        }
+        else{
+            return redirect()->route('posts.index');
+        }
+
+
     }
 
     /**

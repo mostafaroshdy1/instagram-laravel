@@ -616,6 +616,7 @@ button.log_btn:hover {
   border-right: 1px solid rgb(219, 219, 219);
 }
 
+
 @media screen and (max-width: 768px) {
   .nav {
     display: none;
@@ -2122,3 +2123,15 @@ button.log_btn:hover {
   background-color: rgb(33 37 41) !important;
   cursor: pointer;
 }
+
+.deletePostBtn{
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+.myHov{
+  cursor: pointer;
+}
+

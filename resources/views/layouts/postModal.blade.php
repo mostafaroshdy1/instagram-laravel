@@ -1,3 +1,8 @@
+<div id="successAlert" class="alert successAlert d-none">
+</div>
+<div id="warningAlert" class="alert warningAlert d-none">
+</div>
+
 <div class="modal fade" id="postModal-{{ $post->id }}" tabindex="-1" aria-labelledby="postModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
@@ -75,10 +80,13 @@
                                 <div class="save">
                                     <form class="savePostForm" action="{{ route('posts.save-post') }}" method="post">
                                         @csrf
-                                        <input id="hiddenInput" type="hidden" name="post_id" value="">
-                                        <button id="saveBtn" type="button" class="savePostButton btn">
-                                            <img src="{{ asset('homePage/images/bookmark.png') }}">
-                                        </button>
+                                        <div class="save not_saved">
+                                            <input id="hiddenInput" type="hidden" name="post_id" value="{{ $post->id }}">
+                                            <button id="saveBtn" type="button" class="savePostButton btn"
+                                                data-post-id="{{ $post->id }}">
+                                                <img src="{{ asset('homePage/images/bookmark.png') }}">
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Auth\Middleware\Authenticate;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\EditFormController;
 use App\Models\Hashtag;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BlockCheck;
@@ -95,12 +96,8 @@ Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name(
 Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
 Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
 Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
-// Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
-// Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
-// user profile
-
-Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->middleware(checkAdminAccess::class);
-
+Route::get('/users/{id}/edit/{formId}', [UserProfileController::class, 'getForm'])->name('user.profile.getForm')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);;
+Route::get('/search', [UserProfileController::class,'search'])->name('search');
 
 Route::get(
     '/admin/dashboard',
@@ -110,8 +107,6 @@ Route::patch('/admin/{id}', [AdminController::class, 'update'])->middleware(['au
 Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->middleware(['auth', CheckIsAdmin::class])->name('admin.destroy.user');
 Route::get('/admin/trashed', [AdminController::class, 'trashed'])->middleware(['auth', CheckIsAdmin::class])->name('admin.trashed');
 Route::patch('/admin/restore/{id}', [AdminController::class, 'restore'])->middleware(['auth', CheckIsAdmin::class])->name('admin.restore.user');
-
-Route::get('/search', [UserProfileController::class, 'search'])->name('search');
 
 
 Route::fallback(

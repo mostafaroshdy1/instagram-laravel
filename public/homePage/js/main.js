@@ -730,6 +730,67 @@ $(document).ready(function () {
 });
 
 
+function postLikes() {
+    document.querySelectorAll(".likeButton").forEach((button) => {
+        button.removeEventListener("click", likeButtonClick);
+        button.addEventListener("click", likeButtonClick);
+    });
+}
+
+function likeButtonClick(event) {
+    event.preventDefault();
+    const postId = this.closest("form").dataset.postId;
+    fetch(`/posts/toggleLike/${postId}`, {
+        method: "PATCH",
+        headers: {
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            document.getElementById(`likers-${postId}`).innerText =
+                data.likes_count + " likes";
+            const svg = document.querySelector(`#svg-${postId}`);
+            svg.setAttribute("fill", data.isLiked ? "red" : "white");
+            const title = data.isLiked ? "Unlike" : "Like";
+            svg.querySelector("title").textContent = title;
+            document
+                .getElementById(`likers-${postId}`)
+                .addEventListener("click", function () {
+                    drawLikersModal(data.likers);
+                });
+        })
+        .catch((error) => console.error("Error:", error));
+}
+
+function drawLikersModal(likers) {
+    const likersModal = document.getElementById("likersModal");
+    const likersBody = likersModal.querySelector(".modal-body");
+    const imagePath = "{{ asset('homePage/images/profile_img.jpg') }}";
+    likersBody.innerHTML = "";
+
+    likers.forEach((liker) => {
+        const likerDiv = document.createElement("div");
+        likerDiv.classList.add("d-flex", "align-items-center", "mb-2");
+        likerDiv.innerHTML = `
+              <div class="d-flex flex-row justify-content-between align-items-center mb-4">
+                  <div class="d-flex flex-row align-items-center">
+                      <img class="rounded-circle" src="${imagePath}"  width="55" />
+                      <div class="d-flex flex-column align-items-start ml-2">
+                          <span class="font-weight-bold" style="font-size: 1.6em;">${liker.full_name}</span>
+                      </div>
+                  </div>
+              </div>
+          `;
+        likersBody.appendChild(likerDiv);
+    });
+
+    $("#likersModal").modal("show");
+}
+
+
 /* -------------------------------------------------------------------------- */
 /*                                  save post                                 */
 /* -------------------------------------------------------------------------- */
@@ -844,7 +905,11 @@ function handleCommentSubmission(event) {
                         <strong class="text-white">${response.user.full_name}</strong>
                         <span class="text-white">${response.comment}</span>
                     </p>
+
+                   
+
                     <div class="like d-flex align-items-center ps-3" data-comment-id="${response.comment_id}">
+
                     <button id="likeBtn"
                     class="btn btn-link like-button"
                     onclick="toggleLike(${response.comment_id})">
@@ -905,7 +970,53 @@ async function toggleLike(commentId) {
         }
 
         const responseData = await response.json();
+
+        updateLikeStatus(
+            commentId,
+            responseData.liked,
+            responseData.likes_count
+        );
+
+        //modalllllllllll
+        const modalLikeButton = document.querySelector(
+            `.modal .like[data-comment-id="${commentId}"] .like-button`
+        );
+        const modalLikeCountElement = document.querySelector(
+            `.modal .like[data-comment-id="${commentId}"] .like-count`
+        );
+
+        if (modalLikeButton && modalLikeCountElement) {
+            modalLikeButton.classList.toggle("liked", responseData.liked);
+            modalLikeCountElement.textContent =
+                responseData.likes_count + " Likes";
+
+            const modalLikeImage = modalLikeButton.querySelector("img");
+            modalLikeImage.src = responseData.liked
+                ? "http://localhost:8000/homePage/images/heart.png"
+                : "http://localhost:8000/homePage/images/love.png";
+        }
+
+        //post
+        const postLikeButton = document.querySelector(
+            `.post_desc .like[data-comment-id="${commentId}"] .like-button`
+        );
+        const postLikeCountElement = document.querySelector(
+            `.post_desc .like[data-comment-id="${commentId}"] .like-count`
+        );
+
+        if (postLikeButton && postLikeCountElement) {
+            postLikeButton.classList.toggle("liked", responseData.liked);
+            postLikeCountElement.textContent =
+                responseData.likes_count + " Likes";
+
+            const postLikeImage = postLikeButton.querySelector("img");
+            postLikeImage.src = responseData.liked
+                ? "http://localhost:8000/homePage/images/heart.png"
+                : "http://localhost:8000/homePage/images/love.png";
+        }
+
         updateLikeStatus(commentId, responseData.liked, responseData.likes_count);
+
     } catch (error) {
         console.error("Error:", error);
     }
@@ -945,22 +1056,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     searchInput.addEventListener("keyup", async function (event) {
         const query = event.target.value.trim();
+        console.log("Query:", query);
         try {
+            console.log('try block');
             const response = await fetch(`/search?query=${query}`);
+            console.log(response);
             const data = await response.json();
+
+            console.log(data);
             const searchResults = document.getElementById("search-result");
+            console.log(searchResults);
             searchResults.innerHTML = "";
             data.forEach((user) => {
+                console.log(user);
+
+
                 searchResults.innerHTML += `
                 <div class="account">
                     <div class="cart">
                         <div>
                             <div class="img">
-                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                <img src="${user.profile_image}" alt="">
                             </div>
                             <div class="info">
-                                <p class="name">${user.full_name}</p>
-                                <p class="second_name">${user.username}</p>
+                                <p class="name">${user.user.full_name}</p>
+                                <p class="second_name">${user.user.username}</p>
                             </div>
                         </div>
                     </div>
@@ -974,6 +1094,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 // initialize post like and comment feature
 window.addEventListener("DOMContentLoaded", function () {
     postLikes();

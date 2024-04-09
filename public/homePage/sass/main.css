@@ -1954,13 +1954,13 @@ button.log_btn:hover {
 }
 
 .profile_container .posts_profile .post .item .item_img {
-  max-width: 250px;
+  /* max-width: 250px; */
   max-height: 250px;
 }
 
 @media screen and (max-width: 768px) {
   .profile_container .posts_profile .post .item .item_img {
-    max-width: 200px;
+    /* max-width: 200px; */
     max-height: 200px;
   }
 }
@@ -2123,6 +2123,7 @@ button.log_btn:hover {
   background-color: rgb(33 37 41) !important;
   cursor: pointer;
 }
+
 .deletePostBtn{
   background-color: transparent;
   border: none;
@@ -2133,3 +2134,4 @@ button.log_btn:hover {
 .myHov{
   cursor: pointer;
 }
+

@@ -449,7 +449,7 @@ button.log_btn:hover {
 	color: rgb(142, 142, 142);
 	font-weight: 600;
 }
- .seperator span.ligne {
+.seperator span.ligne {
 	display: inline-block;
 	width: 100px;
 	height: 1px;
@@ -1648,12 +1648,12 @@ button.log_btn:hover {
 	width: auto;
 }
 .profile_container .posts_profile .post .item .item_img {
-	max-width: 250px;
+	/* max-width: 250px; */
 	max-height: 250px;
 }
 @media screen and (max-width: 768px) {
 	.profile_container .posts_profile .post .item .item_img {
-		max-width: 200px;
+		/* max-width: 200px; */
 		max-height: 200px;
 	}
 }

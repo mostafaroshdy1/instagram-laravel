@@ -249,6 +249,7 @@
 
             </div>
         </div>
+
     </div>
     <!-- menu in the botton for smal screen  -->
     <div class="nav_bottom">
@@ -286,6 +287,7 @@
                 <div class="clear">
                     <a href="#">X</a>
                 </div>
+
             </div>
         </div>
     </div>
@@ -419,6 +421,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
-<!--***** nav menu end ****** -->
+

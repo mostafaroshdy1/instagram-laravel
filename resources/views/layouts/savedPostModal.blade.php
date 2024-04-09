@@ -3,7 +3,7 @@
 <div id="warningAlert" class="alert warningAlert d-none">
 </div>
 
-<div class="modal fade" id="postModal-{{ $post->id }}" tabindex="-1" aria-labelledby="postModalLabel"
+<div class="modal fade" id="savedPostModal-{{ $post->id }}" tabindex="-1" aria-labelledby="postModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
         <div class="modal-content bg-dark text-white">

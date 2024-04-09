@@ -67,7 +67,7 @@ Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])-
 
 // comment reaction
 Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like')->middleware('auth')->middleware(checkAdminAccess::class);
-Route::delete('/comments/{comment}/unlike', [CommentController::class, 'unlike'])->name('comments.unlike')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::delete('/comments/{comment}/unlike', [CommentController::class, 'like'])->name('comments.unlike')->middleware('auth')->middleware(checkAdminAccess::class);
 
 
 //likes

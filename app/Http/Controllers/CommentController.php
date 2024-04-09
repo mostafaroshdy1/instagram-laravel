@@ -92,21 +92,21 @@ class CommentController extends Controller
 
     public function like(Comment $comment)
     {
-        $comment->likes()->attach(auth()->id());
+        $userId = auth()->id();
+        $isLiked = $comment->likes()->where('user_id', $userId)->exists();
 
-        $isLiked = true;
+        if ($isLiked) {
+            $comment->likes()->detach($userId);
+            $isLiked = false;
+        } else {
+            $comment->likes()->attach($userId);
+            $isLiked = true;
+        }
+
         $likeCount = $comment->likes()->count();
 
         return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
     }
 
-    public function unlike(Comment $comment)
-    {
-        $comment->likes()->detach(auth()->id());
 
-        $isLiked = false;
-        $likeCount = $comment->likes()->count();
-
-        return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
-    }
 }

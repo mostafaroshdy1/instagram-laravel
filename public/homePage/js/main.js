@@ -708,26 +708,27 @@ async function addPost() {
     }
     //likers modal
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const postId = this.closest("form").dataset.postId;
-        console.log("likersss" + document.getElementById(`likers-${postId}`));
-        document
-            .getElementById("likers")
-            .addEventListener("click", function () {
-                $("#likersModal").modal("show");
-            });
-        console.log(document.getElementById("likersClose"));
-        document
-            .getElementById("likersClose")
-            .addEventListener("click", function () {
-                $("#likersModal").modal("hide");
-            });
-    });
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     const postId = this.closest("form").dataset.postId;
+    //     console.log("likersss" + document.getElementById(`likers-${postId}`));
+    //     document
+    //         .getElementById("likers")
+    //         .addEventListener("click", function () {
+    //             $("#likersModal").modal("show");
+    //         });
+    //     console.log(document.getElementById("likersClose"));
+    //     document
+    //         .getElementById("likersClose")
+    //         .addEventListener("click", function () {
+    //             $("#likersModal").modal("hide");
+    //         });
+    // });
 }
 
 $(document).ready(function () {
     $(".alert").fadeIn().delay(2000).fadeOut();
 });
+
 
 function postLikes() {
     document.querySelectorAll(".likeButton").forEach((button) => {
@@ -788,6 +789,7 @@ function drawLikersModal(likers) {
 
     $("#likersModal").modal("show");
 }
+
 
 /* -------------------------------------------------------------------------- */
 /*                                  save post                                 */
@@ -903,7 +905,11 @@ function handleCommentSubmission(event) {
                         <strong class="text-white">${response.user.full_name}</strong>
                         <span class="text-white">${response.comment}</span>
                     </p>
-                    <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
+
+                   
+
+                    <div class="like d-flex align-items-center ps-3" data-comment-id="${response.comment_id}">
+
                     <button id="likeBtn"
                     class="btn btn-link like-button"
                     onclick="toggleLike(${response.comment_id})">
@@ -964,6 +970,7 @@ async function toggleLike(commentId) {
         }
 
         const responseData = await response.json();
+
         updateLikeStatus(
             commentId,
             responseData.liked,
@@ -1007,6 +1014,9 @@ async function toggleLike(commentId) {
                 ? "http://localhost:8000/homePage/images/heart.png"
                 : "http://localhost:8000/homePage/images/love.png";
         }
+
+        updateLikeStatus(commentId, responseData.liked, responseData.likes_count);
+
     } catch (error) {
         console.error("Error:", error);
     }
@@ -1019,10 +1029,19 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
     likeButton.classList.toggle("liked", isLiked);
     likeButton.classList.remove("hide_img");
 
-    const likeCountElement = document.querySelector(
-        `.like[data-comment-id="${commentId}"] .like-count`
+    const postLikeCountElement = document.querySelector(
+        `.post_desc .like[data-comment-id="${commentId}"] .like-count`
     );
-    likeCountElement.textContent = likeCount + " Likes";
+    if (postLikeCountElement) {
+        postLikeCountElement.textContent = likeCount + " Likes";
+    }
+
+    const modalLikeCountElement = document.querySelector(
+        `.modal .like[data-comment-id="${commentId}"] .like-count`
+    );
+    if (modalLikeCountElement) {
+        modalLikeCountElement.textContent = likeCount + " Likes";
+    }
 
     const likeImage = document.querySelector(
         `.like[data-comment-id="${commentId}"] .like-button img`
@@ -1043,12 +1062,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const response = await fetch(`/search?query=${query}`);
             console.log(response);
             const data = await response.json();
+
             console.log(data);
             const searchResults = document.getElementById("search-result");
             console.log(searchResults);
             searchResults.innerHTML = "";
             data.forEach((user) => {
                 console.log(user);
+
+
                 searchResults.innerHTML += `
                 <div class="account">
                     <div class="cart">

@@ -1,0 +1,13 @@
+.link {
+    background-color: rgb(32, 32, 32);
+    cursor: pointer;
+}
+
+.link:hover {
+    transition-duration: 0.2s;
+    background-color: rgb(56, 56, 56);
+}
+
+.active_nav{
+    background-color: rgb(56, 56, 56);
+}

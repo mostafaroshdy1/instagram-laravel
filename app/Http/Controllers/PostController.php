@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Hashtag;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 
 class PostController extends Controller
@@ -20,10 +21,14 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all()->sortDesc(); // will be changed later
-        return view('posts/index', ['posts' => $posts, 'user' => auth()->user()]);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(3);
+        if ($request->ajax()) {
+            $view = view('posts.load', compact('posts'))->render();
+            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(),'user' => auth()->user()]);
+        }
+        return view('posts.index', ['posts' => $posts, 'user' => auth()->user()]);
     }
 
     /**

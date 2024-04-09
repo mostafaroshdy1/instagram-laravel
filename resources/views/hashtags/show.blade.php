@@ -74,6 +74,7 @@
                                                         data-image-url="{{ $image->url }}">
                                                     @include('layouts.postModal')
                                                     @include('layouts.likes', ['post' => $post])
+                                                    @include('layouts.commentsIcon')
                                                     @include('layouts.deleteMenu', ['post' => $post])
                                                 @endforeach
                                             </div>
@@ -233,6 +234,7 @@
         <script src="{{ asset('postModal/js/script.js') }}"></script>
         <script src="{{ asset('likes/js/likesShowModal.js') }}"></script>
         <script src="{{ asset('delete/js/delete.js') }}"></script>
+        <script src="{{ asset('homePage/js/main.js') }}"></script>
 
 </body>
 

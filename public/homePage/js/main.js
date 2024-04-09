@@ -844,7 +844,7 @@ function handleCommentSubmission(event) {
                         <strong class="text-white">${response.user.full_name}</strong>
                         <span class="text-white">${response.comment}</span>
                     </p>
-                    <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
+                    <div class="like d-flex align-items-center pe-3" data-comment-id="${response.comment_id}">
                     <button id="likeBtn"
                     class="btn btn-link like-button"
                     onclick="toggleLike(${response.comment_id})">

@@ -46,3 +46,12 @@
 .submit-comment {
     color: rgba(204, 204, 204, 0.5) !important;
 }
+
+.scrollable-comments {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.image_width{
+    width: 10% !important;
+}

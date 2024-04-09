@@ -40,16 +40,7 @@
 
 
                     <div class="chat">
-                        <button type="button" class="btn p-0 m-0" data-bs-toggle="modal"
-                            data-bs-target="#message_modal_{{ $post->id }}">
-                            <svg class="ms-3 m-0 p-0" style="color: white" aria-label="Comment"
-                                class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img"
-                                viewBox="0 0 24 24" width="24">
-                                <title>Comment</title>
-                                <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none"
-                                    stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
-                            </svg>
-                        </button>
+                        @include('layouts.commentsIcon')
                     </div>
                     <div class="send">
                         <button type="button" class="btn p-0" data-bs-toggle="modal"
@@ -81,14 +72,14 @@
 
 
             </div>
-            
+
             <div class="liked">
                 <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal" onclick="drawLikersModal({{ $post->likers }})"
                     id="likers-{{ $post->id }}">{{ $post->likes_count }} likes</a>
             </div>
             @include('layouts.likes', ['post' => $post])
-          
-        
+
+
 
             <div class="post_desc">
                 <p>

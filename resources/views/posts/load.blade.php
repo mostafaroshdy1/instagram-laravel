@@ -131,7 +131,7 @@
                 </p>
                 <div class="comments-section" data-post-id="{{ $post->id }}">
                     {{-- posts comments --}}
-                    @foreach ($post->comments()->orderBy('created_at', 'desc')->take(3)->get() as $comment)
+                    @foreach ($post->comments->reverse()->take(3) as $comment)
                         <div class="comment d-flex justify-content-between align-items-center">
                             <p>
                                 <strong class="text-white">{{ $comment->user->full_name }}</strong>
@@ -151,18 +151,18 @@
                                             alt="love image">
                                     </button>
                                 @endif
-                                <span class="text-white like-count">{{ $comment->likes()->count() }}
+                                <span class="text-white like-count">{{ $comment->likes->count() }}
                                     Likes</span>
                             </div>
 
                         </div>
                     @endforeach
 
-                    @if ($post->comments()->count() > 3)
+                    @if ($post->comments_count > 3)
                         <div class="view-all-comments" data-bs-toggle="modal"
                             data-bs-target="#commentsModal-{{ $post->id }}" data-post-id="{{ $post->id }}">
                             <a href="#" class="gray">View all
-                                {{ $post->comments()->count() }} comments</a>
+                                {{ $post->comments_count }} comments</a>
                         </div>
                     @endif
 

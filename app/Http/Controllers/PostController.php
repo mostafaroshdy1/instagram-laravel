@@ -23,15 +23,18 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $followersIds = auth()->user()->followers()->pluck('id')->toArray();
+        $current_user = User::find(auth()->id());
+        $followersIds = $current_user->followers()->pluck('id')->toArray();
         $posts = Post::whereIn('user_id', $followersIds)
             ->orWhere('user_id', auth()->id())
+            ->with(['comments.user', 'comments.likes'])
+            ->withCount('comments') // comments_count
             ->orderBy('created_at', 'desc')
             ->paginate(3);
 
         if ($request->ajax()) {
             $view = view('posts.load', compact('posts'))->render();
-            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user()]);
+            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user(), 'current_user_id' => auth()->id()]);
         }
         return view('posts.index', ['posts' => $posts, 'user' => auth()->user()]);
     }

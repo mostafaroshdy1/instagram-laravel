@@ -92,7 +92,7 @@ Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('
 Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth');
 Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
 Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
-Route::get('/search', [UserProfileController::class,'search'])->name('search');
+Route::get('/search', [UserProfileController::class, 'search'])->name('search');
 
 
 Route::fallback(

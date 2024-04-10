@@ -900,21 +900,19 @@ function handleCommentSubmission(event) {
                         "justify-content-between",
                         "align-items-center"
                     );
+                    newComment.setAttribute("data-comment-id", response.comment_id);
                     newComment.innerHTML = `
-                    <div class="comment d-flex justify-content-between align-items-center" data-comment-id="${response.comment_id}">
-                        <p class="mb-0 me-auto">
-                            <strong class="text-white">${response.user.full_name}</strong>
-                            <span class="text-white">${response.comment}</span>
-                        </p>
-                        
-                        <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
-                            <button id="likeBtn-${response.comment_id}" class="btn btn-link like-button" onclick="toggleLike(${response.comment_id})">
-                                <img class="not-loved" src="http://localhost:8000/homePage/images/love.png" alt="heart image">
-                            </button>
-                            <span class="text-white like-count">0 Likes</span>
-                            <a class="btn text-white fw-bold delete-comment" onclick="deleteComment(${response.comment_id})">X</a>
-                        </div>
-                    </div>
+                            <p>
+                                <strong class="text-white">${response.user.full_name}</strong>
+                                <span class="text-white">${response.comment}</span>
+                            </p>
+                            <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
+                                <button id="likeBtn-${response.comment_id}" class="btn btn-link like-button" onclick="toggleLike(${response.comment_id})">
+                                    <img class="not-loved" src="http://localhost:8000/homePage/images/love.png" alt="heart image">
+                                </button>
+                                <span class="text-white like-count">0 Likes</span>
+                                <a class="btn text-white fw-bold delete-comment" onclick="deleteComment(${response.comment_id})">X</a>
+                            </div>
                 `;
 
                     commentsSection.prepend(newComment);

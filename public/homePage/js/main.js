@@ -1,8 +1,6 @@
 /***************Post**************************/
 const posts = document.querySelector(".posts");
-const post_data = [
-    
-];
+const post_data = [];
 
 if (posts)
     for (var i = 0; i < post_data.length; i++) {
@@ -537,7 +535,6 @@ form.addEventListener("change", handleSubmit);
 
 let img_url;
 let filesUpload;
-//add the image post
 function handleSubmit(event) {
     event.preventDefault();
     if (img_container.classList.contains("hide_img")) {
@@ -548,25 +545,29 @@ function handleSubmit(event) {
         );
         carouselInner.innerHTML = ""; // Clear previous images
         filesUpload = files;
-        // Loop through each selected file
         for (let i = 0; i < files.length; i++) {
-            const imageFile = files[i];
-            const imageURL = URL.createObjectURL(imageFile);
+            const file = files[i];
+            const fileURL = URL.createObjectURL(file);
 
-            // Create carousel item div
             const carouselItem = document.createElement("div");
             carouselItem.classList.add("carousel-item");
             if (i === 0) {
-                carouselItem.classList.add("active"); // Add 'active' class to first item
+                carouselItem.classList.add("active");
             }
 
-            // Create image element and append to carousel item
-            const image = document.createElement("img");
-            image.src = imageURL;
-            image.classList.add("d-block", "w-100");
-            carouselItem.appendChild(image);
+            let mediaElement;
+            if (file.type.includes("image")) {
+                mediaElement = document.createElement("img");
+            } else if (file.type.includes("video")) {
+                mediaElement = document.createElement("video");
+                mediaElement.controls = true;
+            }
 
-            // Append carousel item to carousel inner
+            mediaElement.src = fileURL;
+            mediaElement.classList.add("d-block", "w-100");
+
+            carouselItem.appendChild(mediaElement);
+
             carouselInner.appendChild(carouselItem);
         }
 
@@ -660,6 +661,12 @@ async function addPost() {
         console.log("Post added successfully:", data);
         window.location.reload();
     } catch (error) {
+        const creatPostResponse = document.querySelector("#creatPostResponse");
+        creatPostResponse.innerHTML = `
+    <div class="alert alert-danger" role="alert">
+        <strong>Media size is too large!</strong> Please select a smaller file.
+    </div>
+`;
         console.error("Error adding post:", error);
     }
     //likers modal

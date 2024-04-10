@@ -683,8 +683,8 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="post_published hide_img">
-                            <img src="{{ asset('homePage/images/uploaded_post.gif') }}" alt="">
+                        <div id="creatPostResponse" class="post_published hide_img">
+                            <img src="{{ asset('homePage/images/loading.gif') }}" alt="">
                         </div>
                     </div>
                 </div>

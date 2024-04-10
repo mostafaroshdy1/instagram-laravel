@@ -86,46 +86,25 @@ class UserProfileController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if(!$user->isAdmin) {
-            // dd($user->name);
+        if (!$user->isAdmin) {
             $followers = $user->followers()->get();
             $followings = $user->followings()->get();
             $blocking = $user->blocking()->get();
-            $blocked= $user->blocked()->get();
+            $blocked = $user->blocked()->get();
             $posts = $user->posts()->get();
-            $postInfoArr = $posts->map(
-                function ($post) {
-                    return new PostInformation($post);
-                }
-            );
-
             $savedPosts = $user->savePosts()->with('users')->get();
 
-            $savedPostInfoArr = $savedPosts->map(
-                function ($savedPost) {
-                    return new PostInformation($savedPost);
-                }
-            );
-
-            // foreach ($savedPosts as $savedPost) {
-            //     dd($savedPost->body);
-            // }
-
-            return view(
-                'user.profile.show',
-                [
-                  'user' => $user, 'followers' => $followers, 'followings' => $followings,
-                  'blocking' => $blocking, 'blocked' => $blocked, 'postInfo' => $postInfoArr,
-                  'savedPostInfoArr'=>$savedPostInfoArr
-                ]
-            );
-        }
-        else{
-
-            return redirect()->route('posts.index');
-        }
-    }
-
+            return view('user.profile.show', [
+                'user' => $user,
+                'followers' => $followers,
+                'followings' => $followings,
+                'blocking' => $blocking,
+                'blocked' => $blocked,
+                'posts' => $posts,
+                'savedPosts' => $savedPosts
+            ]);
+        } else {
+            return redirect()->route('posts.index');}}
     /**
      * Show the form for editing the specified resource.
      */

@@ -906,7 +906,7 @@ function handleCommentSubmission(event) {
                         <span class="text-white">${response.comment}</span>
                     </p>
 
-                   
+
 
                     <div class="like d-flex align-items-center ps-3" data-comment-id="${response.comment_id}">
 
@@ -1079,7 +1079,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <img src="${user.profile_image}" alt="">
                             </div>
                             <div class="info">
-                                <p class="name">${user.user.full_name}</p>
+                                <a href="http://127.0.0.1:8000/users/${user.user.id}/profile" class="name text-dark">${user.user.full_name}</a>
                                 <p class="second_name">${user.user.username}</p>
                             </div>
                         </div>

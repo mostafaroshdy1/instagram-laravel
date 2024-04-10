@@ -27,7 +27,7 @@ class PostController extends Controller
         $followersIds = $current_user->followers()->pluck('id')->toArray();
         $posts = Post::whereIn('user_id', $followersIds)
             ->orWhere('user_id', auth()->id())
-            ->with(['comments.user', 'comments.likes'])
+            ->with(['comments.user', 'comments.likes', 'user'])
             ->withCount('comments') // comments_count
             ->orderBy('created_at', 'desc')
             ->paginate(3);

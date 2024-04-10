@@ -13,9 +13,8 @@
         </div>
         @if ($post->images->isEmpty())
             @foreach ($post->videos as $video)
-                <div class="video">
-                    <!-- Display video player here using the video URL -->
-                    <video controls>
+                <div class="video-container">
+                    <video controls class="w-100">
                         <source src="{{ $video->url }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>

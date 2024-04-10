@@ -51,17 +51,19 @@ function drawLikersModal(likers, postId) {
 
     likers.forEach((liker) => {
         const likerDiv = document.createElement("div");
-        likerDiv.classList.add("d-flex", "align-items-center", "mb-2");
+        likerDiv.classList.add("d-flex", "align-items-center", "mb-4");
         likerDiv.innerHTML = `
               <div class="d-flex flex-row justify-content-between align-items-center mb-4">
                   <div class="d-flex flex-row align-items-center">
-                      <img class="rounded-circle" src="${imagePath}"  width="55" />
+                      <img class="rounded-circle me-3" src="${liker.avatar}"  width="30%" />
                       <div class="d-flex flex-column align-items-start ml-2">
                           <span class="font-weight-bold" style="font-size: 1.6em;">${liker.full_name}</span>
                       </div>
                   </div>
               </div>
           `;
+          const avatarImg = likerDiv.querySelector('img');
+            avatarImg.style.width = '60px'; 
         likersBody.appendChild(likerDiv);
     });
 

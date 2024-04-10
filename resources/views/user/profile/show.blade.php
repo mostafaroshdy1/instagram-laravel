@@ -210,7 +210,23 @@
                                 @include('layouts.postModal', ['post' => $post])
                                 @include('layouts.likes', ['post' => $post])
                                 @include('layouts.commentsIcon', ['post' => $post])
-                                @include('layouts.deleteMenu', ['post' => $post])
+                                <div class="modal fade" id="postMenuModal-{{ $post->id }}-2" tabindex="-1" aria-labelledby="postsMenuModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+                                        <div class="modal-content bg-dark text-white">
+                                            <div class="modal-header d-flex justify-content-center"> 
+                                                <form action="{{route('posts.destroy',$post->id)}}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="modal-title fs-2 deletePostBtn" style="color: red;">Delete</button>
+                                                    </form>
+                                            
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center"> 
+                                                <h1 class="modal-title fs-2 myHov" id="menuModalLabel22" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true">Cancel</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -237,11 +253,10 @@
                                                     aria-label="Close" aria-hidden="true" id="likersClose2"></i>
                                             </div>
                                             <div class="modal-body">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         @endforeach
@@ -276,7 +291,7 @@
                     @foreach ($followers as $follower)
                         <div class="d-flex flex-row justify-content-between align-items-center mb-4">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
+                                    src="{{ $follower->avatar ?? asset('homePage/images/profile_img.jpg')  }}" width="55">
                                 <div class="d-flex flex-column align-items-start ml-2"><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $follower->full_name }}</span></div>
                             </div>
@@ -325,7 +340,7 @@
                     @foreach ($followings as $following)
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
+                                    src="{{ $following->avatar ?? asset('homePage/images/profile_img.jpg')  }}" width="55">
                                 <div class="d-flex flex-column align-items-start "><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $following->full_name }}</span></div>
                             </div>
@@ -372,7 +387,7 @@
                     @foreach ($blocked as $blockedUsr)
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
+                                    src="{{ $blockedUsr->avatar ?? asset('homePage/images/profile_img.jpg')   }}" width="55">
                                 <div class="d-flex flex-column align-items-start "><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $blockedUsr->full_name }}</span></div>
                             </div>

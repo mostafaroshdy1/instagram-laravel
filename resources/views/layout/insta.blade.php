@@ -98,6 +98,7 @@
     <script src="{{ asset('postModal/js/script.js') }}"></script>
     <script src="{{ asset('likes/js/likesShowModal.js') }}"></script>
     <script src="{{ asset('delete/js/delete.js') }}"></script>
+    <script src="{{ asset('delete/js/deleteProfile.js') }}"></script>
     <script src="{{ asset('homePage/js/main.js') }}"></script>
     <script src="{{ asset('likes/js/likesSaved.js') }}"></script>
 

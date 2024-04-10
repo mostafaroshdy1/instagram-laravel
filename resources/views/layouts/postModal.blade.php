@@ -22,7 +22,7 @@
                             </div>
 
                             @if (auth()->id() == $post->user_id)
-                                <div class="more delmenu" data-bs-toggle="modal" id="{{ $post->id }}"
+                                <div class="more delmenu2" data-bs-toggle="modal" id="{{ $post->id }}"
                                     data-post-id="{{ $post->id }}">
                                     <svg fill="#ffffff" height="20px" width="20px" version="1.1" id="Layer_1"
                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

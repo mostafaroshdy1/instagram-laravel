@@ -1,51 +1,7 @@
 /***************Post**************************/
 const posts = document.querySelector(".posts");
 const post_data = [
-    [
-        "https://i.ibb.co/3S1hjKR/account1.jpg",
-        "zineb",
-        45,
-        "https://i.ibb.co/Jqh3rHv/img1.jpg",
-        150,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-    [
-        "https://i.ibb.co/8x4Hqdw/account2.jpg",
-        "ikram",
-        15,
-        "https://i.ibb.co/2ZxBFVp/img2.jpg",
-        150,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-    [
-        "https://i.ibb.co/CWbynB2/account3-1.jpg",
-        "amina",
-        5,
-        "https://i.ibb.co/5vQt677/img3.jpg",
-        350,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-    [
-        "https://i.ibb.co/19R19st/account4.jpg",
-        "amal",
-        15,
-        "https://i.ibb.co/FVVxR6x/img.jpg",
-        150,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-    [
-        "https://i.ibb.co/x68ZFKP/account6.jpg",
-        "amine",
-        15,
-        "https://i.ibb.co/r7xBR56/img5.jpg",
-        150,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
+    
 ];
 
 if (posts)

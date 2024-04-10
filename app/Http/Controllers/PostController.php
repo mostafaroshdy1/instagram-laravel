@@ -23,10 +23,15 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(3);
+        $followersIds = auth()->user()->followers()->pluck('id')->toArray();
+        $posts = Post::whereIn('user_id', $followersIds)
+            ->orWhere('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(3);
+
         if ($request->ajax()) {
             $view = view('posts.load', compact('posts'))->render();
-            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(),'user' => auth()->user()]);
+            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user()]);
         }
         return view('posts.index', ['posts' => $posts, 'user' => auth()->user()]);
     }

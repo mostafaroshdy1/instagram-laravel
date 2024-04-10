@@ -51,10 +51,10 @@
     </div>
 
 
-    <div class="post_page ">
+    <div class="post_page">
         <!--***** nav menu start ****** -->
-        <div class="nav_menu ">
-            <div class="fix_top ">
+        <div class="nav_menu sticky-top">
+            <div class="fix_top">
                 <!-- nav for big->medium screen -->
                 <div class="nav bg-black border-right" style="border-right-color: rgb(var(--ig-separator));">
                     <div class="logo">
@@ -238,7 +238,7 @@
                     </div>
                 </div>
                 <!-- nav for small screen  -->
-                <div class="nav_sm mt-2  border-bottom" style="border-color: #363636 !important">
+                <div class="nav_sm border-bottom" style="border-color: #363636 !important">
                     <div class="content bg-black">
                         <div class="dropdown ms-3">
                             <svg aria-label="Instagram" class="x1lliihq x1n2onr6 x5n08af" style="color: white"
@@ -276,15 +276,59 @@
 
             </div>
             <!-- menu in the botton for smal screen  -->
-            <div class="nav_bottom">
-                <a href="{{ asset('homePage/home.html') }}"><img
-                        src="{{ asset('homePage/images/accueil.png') }}"></a>
-                <a href="{{ asset('homePage/explore.html') }}"><img
-                        src="{{ asset('homePage/images/compass.png') }}"></a>
-                <a href="{{ asset('homePage/reels.html') }}"><img
-                        src="{{ asset('homePage/images/video.png') }}"></a>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#create_modal"><img
-                        src="{{ asset('homePage/images/tab.png') }}"></a>
+            <div class="nav_bottom bg-black border-top pt-3 pb-2" style="border-top-color:#363636 !important">
+                <a href="{{ asset('homePage/home.html') }}">
+                    <svg aria-label="Home" class="x1lliihq x1n2onr6 x5n08af" fill="white" height="24"
+                        role="img" viewBox="0 0 24 24" width="24">
+                        <title>Home</title>
+                        <path
+                            d="M22 23h-6.001a1 1 0 0 1-1-1v-5.455a2.997 2.997 0 1 0-5.993 0V22a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V11.543a1.002 1.002 0 0 1 .31-.724l10-9.543a1.001 1.001 0 0 1 1.38 0l10 9.543a1.002 1.002 0 0 1 .31.724V22a1 1 0 0 1-1 1Z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="{{ asset('homePage/explore.html') }}"><svg aria-label="Explore"
+                        class="x1lliihq x1n2onr6 x5n08af" fill="white" height="24" role="img"
+                        viewBox="0 0 24 24" width="24">
+                        <polygon fill="black"
+                            points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953" stroke="white"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        </polygon>
+                        <polygon fill-rule="evenodd" points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056">
+                        </polygon>
+                        <circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="white"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                    </svg></a>
+                <a href="{{ asset('homePage/reels.html') }}"><svg aria-label="Reels"
+                        class="x1lliihq x1n2onr6 x5n08af" fill="white" height="24" role="img"
+                        viewBox="0 0 24 24" width="24">
+                        <title>Reels</title>
+                        <line fill="white" stroke="white" stroke-linejoin="round" stroke-width="2" x1="2.049"
+                            x2="21.95" y1="7.002" y2="7.002"></line>
+                        <line fill="white" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" x1="13.504" x2="16.362" y1="2.001" y2="7.002"></line>
+                        <line fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" x1="7.207" x2="10.002" y1="2.11" y2="7.002"></line>
+                        <path
+                            d="M2 12.001v3.449c0 2.849.698 4.006 1.606 4.945.94.908 2.098 1.607 4.946 1.607h6.896c2.848 0 4.006-.699 4.946-1.607.908-.939 1.606-2.096 1.606-4.945V8.552c0-2.848-.698-4.006-1.606-4.945C19.454 2.699 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.546 2 5.704 2 8.552Z"
+                            fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
+                        <path
+                            d="M9.763 17.664a.908.908 0 0 1-.454-.787V11.63a.909.909 0 0 1 1.364-.788l4.545 2.624a.909.909 0 0 1 0 1.575l-4.545 2.624a.91.91 0 0 1-.91 0Z"
+                            fill-rule="evenodd"></path>
+                    </svg></a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#create_modal"><svg aria-label="New post"
+                        class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img"
+                        viewBox="0 0 24 24" width="24">
+                        <title>New post</title>
+                        <path
+                            d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z"
+                            fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
+                        <line fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" x1="6.545" x2="17.455" y1="12.001" y2="12.001"></line>
+                        <line fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
+                    </svg></a>
                 <a href="{{ asset('profile.html') }}"><img class="circle story"
                         src="{{ asset('homePage/images/profile_img.jpg') }}"></a>
             </div>
@@ -450,20 +494,7 @@
             <!--***** followers_container start ****** -->
             <div class="followers_container">
                 <div>
-                    <div class="cart">
-                        <div>
-                            <div class="img">
-                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                            </div>
-                            <div class="info">
-                                <p class="name">Zineb_essoussi</p>
-                                <p class="second_name">Zim Ess</p>
-                            </div>
-                        </div>
-                        <div class="switch">
-                            <a href="#">Switch</a>
-                        </div>
-                    </div>
+
                     <div class="suggestions">
                         <div class="title">
                             <h4>Suggestions for you</h4>
@@ -658,7 +689,7 @@
     </script>
     <script src="{{ asset('homePage/owlcarousel/jquery.min.js') }}"></script>
     <script src="{{ asset('homePage/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('homePage/js/carousel.js') }}"></script>
+    {{-- <script src="{{ asset('homePage/js/carousel.js') }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
     <script src="{{ asset('homePage/js/main.js') }}"></script>
     <script src="{{ asset('tags/js/script.js') }}"></script>

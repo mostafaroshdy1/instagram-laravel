@@ -22,7 +22,7 @@
             <div class="modal-body">
                 <div class="comments">
                     @foreach ($post->comments as $comment)
-                        <div class="comment mb-3">
+                        <div class="comment mb-3 data-comment-id="{{ $comment->id }}"">
                             <div class="d-flex">
                                 <div class="img">
                                     <img src="{{ asset('homePage/images/profile_img.jpg') }}"
@@ -55,6 +55,9 @@
                                 <span class="like-count">
                                     {{-- {{ $comment->likes()->count() }} Likes --}}
                                 </span>
+                                @if(auth()->user()->id === $comment->user_id)
+                                    <a class="btn text-white fw-bold delete-comment" onclick="deleteComment({{ $comment->id }})">X</a>
+                                @endif
                             </div>
                         </div>
                     @endforeach

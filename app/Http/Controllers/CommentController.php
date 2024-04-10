@@ -44,7 +44,6 @@ class CommentController extends Controller
         // dd($post->body);
         $comment->save();
 
-        // return redirect()->back()->with('success', 'Comment added successfully');
 
         $user = $comment->user;
 
@@ -81,13 +80,22 @@ class CommentController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+/**
+ * Remove the specified resource from storage.
+ */
+    public function destroy(Comment $comment)
     {
-        //
+        if (auth()->user()->id !== $comment->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        $postId = $comment->post_id;
+
+        $comment->delete();
+
+        return response()->json(['message' => 'Comment deleted successfully','post_id'=>$postId]);
     }
+
+
 
 
     public function like(Comment $comment)

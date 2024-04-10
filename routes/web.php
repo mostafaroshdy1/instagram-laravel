@@ -69,6 +69,9 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.de
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::get('/posts/{id}/comments', [CommentController::class, 'fetchComments'])->name('posts.comments.fetch')->middleware('auth')->middleware(checkAdminAccess::class);
 
+//delete comment
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth')->middleware(checkAdminAccess::class);
+
 // comment reaction
 Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::delete('/comments/{comment}/unlike', [CommentController::class, 'like'])->name('comments.unlike')->middleware('auth')->middleware(checkAdminAccess::class);

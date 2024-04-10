@@ -95,11 +95,12 @@
                 <div class="comments-section" data-post-id="{{ $post->id }}">
                     {{-- posts comments --}}
                     @foreach ($post->comments()->orderBy('created_at', 'desc')->take(3)->get() as $comment)
-                        <div class="comment d-flex justify-content-between align-items-center">
+                        <div class="comment d-flex justify-content-between align-items-center" data-comment-id="{{ $comment->id }}">
                             <p>
                                 <strong class="text-white">{{ $comment->user->full_name }}</strong>
                                 <span class="text-white">{{ $comment->comment }}</span>
                             </p>
+                            
                             <div class="like d-flex align-items-center" data-comment-id="{{ $comment->id }}">
                                 @if ($comment->likes->contains(auth()->id()))
                                     <button id="likeBtn" class="btn btn-link like-button liked"
@@ -116,6 +117,9 @@
                                 @endif
                                 <span class="text-white like-count">{{ $comment->likes()->count() }}
                                     Likes</span>
+                            @if(auth()->user()->id === $comment->user_id)
+                                <a class="btn text-white fw-bold delete-comment" onclick="deleteComment({{ $comment->id }})">X</a>
+                            @endif
                             </div>
 
                         </div>
@@ -146,7 +150,7 @@
                                         {{-- modal comments --}}
                                         @foreach ($post->comments as $comment)
                                             <div
-                                                class="comment text-white d-flex justify-content-between align-items-center">
+                                                class="comment text-white d-flex justify-content-between align-items-center" data-comment-id="{{ $comment->id }}">
                                                 <p>
                                                     <strong>{{ $comment->user->full_name }}</strong>
                                                     <span>{{ $comment->comment }}</span>
@@ -170,6 +174,9 @@
                                                     <span
                                                         class=" like-count text-white">{{ $comment->likes()->count() }}
                                                         Likes</span>
+                                                        @if(auth()->user()->id === $comment->user_id)
+                                                            <a class="btn text-white fw-bold delete-comment" onclick="deleteComment({{ $comment->id }})">X</a>
+                                                        @endif
                                                 </div>
                                             </div>
                                         @endforeach

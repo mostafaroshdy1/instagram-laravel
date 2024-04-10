@@ -1,7 +1,7 @@
 <div class="comments-section scrollable-comments" data-post-id="{{ $post->id }}" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-3 rounded-2" tabindex="0">
     {{-- posts comments --}}
     @foreach ($post->comments()->orderBy('created_at', 'desc')->get() as $comment)
-        <div class="comment d-flex justify-content-between align-items-center">
+        <div class="comment d-flex justify-content-between align-items-center " data-comment-id="{{ $comment->id }}">
             <p>
                 <strong class="text-white">{{ $comment->user->full_name }}</strong>
                 <span class="text-white">{{ $comment->comment }}</span>
@@ -22,6 +22,9 @@
                 @endif
                 <span class="text-white like-count">{{ $comment->likes()->count() }}
                     Likes</span>
+                @if(auth()->user()->id === $comment->user_id)
+                    <a class="btn text-white fw-bold delete-comment" onclick="deleteComment({{ $comment->id }})">X</a>
+                @endif
             </div>
 
         </div>

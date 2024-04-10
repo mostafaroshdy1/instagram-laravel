@@ -9,9 +9,10 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::where('isAdmin', 0)->get();
         return view('admin.dashboard', compact('users'));
     }
+    
     public function update(Request $request,$id)
     {
         $user=User::find($id);

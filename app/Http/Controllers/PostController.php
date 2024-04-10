@@ -26,7 +26,7 @@ class PostController extends Controller
         $posts = Post::orderBy('created_at', 'desc')->paginate(3);
         if ($request->ajax()) {
             $view = view('posts.load', compact('posts'))->render();
-            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(),'user' => auth()->user()]);
+            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user()]);
         }
         return view('posts.index', ['posts' => $posts, 'user' => auth()->user()]);
     }
@@ -117,6 +117,12 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         view('layouts.postModal', compact('post'));
+    }
+
+    public function showSaved(string $id)
+    {
+        $post = Post::findOrFail($id);
+        view('layouts.savedPostModal', compact('post'));
     }
 
 

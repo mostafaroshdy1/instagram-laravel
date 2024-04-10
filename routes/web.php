@@ -58,6 +58,7 @@ require __DIR__ . '/auth.php';
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::get('/posts/saved/{id}', [PostController::class, 'showSaved'])->name('posts.saved.show')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update')->middleware('auth')->middleware(checkAdminAccess::class);
@@ -99,7 +100,7 @@ Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('us
 Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
 Route::put('/users/{id}/edit', [UserProfileController::class, 'update'])->name('user.profile.update')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
 Route::get('/users/{id}/edit/{formId}', [UserProfileController::class, 'getForm'])->name('user.profile.getForm')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);;
-Route::get('/search', [UserProfileController::class,'search'])->name('search');
+Route::get('/search', [UserProfileController::class, 'search'])->name('search');
 
 Route::get(
     '/admin/dashboard',

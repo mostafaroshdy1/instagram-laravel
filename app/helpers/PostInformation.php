@@ -1,10 +1,12 @@
 <?php
+
 namespace App\helpers;
 
 
 class PostInformation
 {
     protected $post;
+    protected $postId;
     protected $comments;
     protected $likes;
     protected $images;
@@ -27,6 +29,11 @@ class PostInformation
     //     return $this->post->users()->get();
     // }
 
+    public function getId()
+    {
+        $this->postId = $this->post->id;
+        return $this->postId;
+    }
 
     public function getComments()
     {
@@ -74,5 +81,4 @@ class PostInformation
         $this->getComments();
         return $this->comments->count();
     }
-
 }

@@ -75,7 +75,9 @@
                             placeholder="Add a comment...">
                         <input type="hidden" name="post_id" value="{{ $post->id }}">
                         <button type="submit" class="btn submit-comment"
-                            data-post-id="{{ $post->id }}">Post</button>
+                            data-post-id="{{ $post->id }}">
+                            <img src="{{ asset('homePage/images/send.png') }}" alt="send"/>
+                        </button>
                     </div>
                 </form>
                 {{-- <form action="{{ route('comments.store') }}" method="post">

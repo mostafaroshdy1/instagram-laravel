@@ -31,6 +31,14 @@
 <p>Number of followings: {{$user->followings()->count()}}</p>
 @endif
 {{--  --}}
+
+
+<div id="successAlert" class="alert successAlert d-none">
+</div>
+<div id="warningAlert" class="alert warningAlert d-none">
+</div>
+
+
     <div class="profile_container">
         <div class="profile_info">
             <div class="cart">
@@ -273,15 +281,24 @@
                                             </svg>
                                         </div>
                                     @endif
+                                    @if($savedPost->images->isEmpty())
+                                        <div class="video-container">
+                                            <video id="{{ $savedPost['pivot']['post_id'] }}" class="w-100 h-100 saved-posts-video">
+                                                <source src="{{ $savedPost->videos->first()->url }}" type="video/mp4"
+                                                    autoplay="false">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                    @else
                                     <img id="{{ $savedPost['pivot']['post_id'] }}"
                                         class="img-fluid item_img saved-posts-img test"
                                         src={{ $savedPost->images->first()->url }} alt=""
                                         data-image-url="{{ $savedPost->images->first()->url }}"
                                         style="width: 100%; height: 100%; object-fit: cover;">
+                                    @endif
                                 </div>
-
                                 @include('layouts.savedPostModal', ['post' => $savedPost])
-                                @include('layouts.commentsIcon', ['post' => $savedPost])
+                                {{-- @include('layouts.commentsIcon', ['post' => $savedPost]) --}}
                                 @include('layouts.deleteMenu', ['post' => $savedPost])
                                 <div class="modal fade" id="likersModal2" tabindex="-1"
                                     aria-labelledby="likersModalLabel" aria-hidden="true">

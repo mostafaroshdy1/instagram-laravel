@@ -18,8 +18,8 @@ class BlockCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $id = $request->id;
-        $profile_user = User::find($id);
+        $id = $request->id ?  $request->id : $request->user->id;
+        $profile_user = User::findorfail($id);
         if ($profile_user->blocked()->where('user_id', auth()->id())->exists()) {
             abort(403);
         }

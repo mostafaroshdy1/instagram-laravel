@@ -1,52 +1,6 @@
 /***************Post**************************/
 const posts = document.querySelector(".posts");
-const post_data = [
-    [
-        "https://i.ibb.co/3S1hjKR/account1.jpg",
-        "zineb",
-        45,
-        "https://i.ibb.co/Jqh3rHv/img1.jpg",
-        150,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-    [
-        "https://i.ibb.co/8x4Hqdw/account2.jpg",
-        "ikram",
-        15,
-        "https://i.ibb.co/2ZxBFVp/img2.jpg",
-        150,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-    [
-        "https://i.ibb.co/CWbynB2/account3-1.jpg",
-        "amina",
-        5,
-        "https://i.ibb.co/5vQt677/img3.jpg",
-        350,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-    [
-        "https://i.ibb.co/19R19st/account4.jpg",
-        "amal",
-        15,
-        "https://i.ibb.co/FVVxR6x/img.jpg",
-        150,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-    [
-        "https://i.ibb.co/x68ZFKP/account6.jpg",
-        "amine",
-        15,
-        "https://i.ibb.co/r7xBR56/img5.jpg",
-        150,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima accusantium aperiam quod non minus cumque, recusandae hic soluta harum aut nulla... ",
-        2,
-    ],
-];
+const post_data = [];
 
 if (posts)
     for (var i = 0; i < post_data.length; i++) {
@@ -55,7 +9,7 @@ if (posts)
         post_div.innerHTML = `
     <div class="info">
       <div class="person">
-          <img src="${post_data[i][0]}">
+          <img src="${post_data.user.avatar}">
           <a href="#">${post_data[i][1]}</a>
           <span class="circle">.</span>
           <span>${post_data[i][2]}m</span>
@@ -581,7 +535,6 @@ form.addEventListener("change", handleSubmit);
 
 let img_url;
 let filesUpload;
-//add the image post
 function handleSubmit(event) {
     event.preventDefault();
     if (img_container.classList.contains("hide_img")) {
@@ -592,25 +545,29 @@ function handleSubmit(event) {
         );
         carouselInner.innerHTML = ""; // Clear previous images
         filesUpload = files;
-        // Loop through each selected file
         for (let i = 0; i < files.length; i++) {
-            const imageFile = files[i];
-            const imageURL = URL.createObjectURL(imageFile);
+            const file = files[i];
+            const fileURL = URL.createObjectURL(file);
 
-            // Create carousel item div
             const carouselItem = document.createElement("div");
             carouselItem.classList.add("carousel-item");
             if (i === 0) {
-                carouselItem.classList.add("active"); // Add 'active' class to first item
+                carouselItem.classList.add("active");
             }
 
-            // Create image element and append to carousel item
-            const image = document.createElement("img");
-            image.src = imageURL;
-            image.classList.add("d-block", "w-100");
-            carouselItem.appendChild(image);
+            let mediaElement;
+            if (file.type.includes("image")) {
+                mediaElement = document.createElement("img");
+            } else if (file.type.includes("video")) {
+                mediaElement = document.createElement("video");
+                mediaElement.controls = true;
+            }
 
-            // Append carousel item to carousel inner
+            mediaElement.src = fileURL;
+            mediaElement.classList.add("d-block", "w-100");
+
+            carouselItem.appendChild(mediaElement);
+
             carouselInner.appendChild(carouselItem);
         }
 
@@ -626,10 +583,11 @@ const next_btn_post = document.querySelector(".next_btn_post");
 next_btn_post.addEventListener("click", handleNext);
 //add a description + click btn to share post
 function handleNext() {
+    const image_description = document.querySelector("#image_description");
     if (image_description.classList.contains("hide_img")) {
         const next_btn_post = document.querySelector(".next_btn_post");
         const title_create = document.querySelector(".title_create");
-        const image_description = document.querySelector("#image_description");
+        // image_description = document.querySelector("#image_description");
         const modal_dialog = document.querySelector(
             "#create_modal .modal-dialog"
         );
@@ -704,30 +662,37 @@ async function addPost() {
         console.log("Post added successfully:", data);
         window.location.reload();
     } catch (error) {
+        const creatPostResponse = document.querySelector("#creatPostResponse");
+        creatPostResponse.innerHTML = `
+    <div class="alert alert-danger" role="alert">
+        <strong>Media size is too large!</strong> Please select a smaller file.
+    </div>
+`;
         console.error("Error adding post:", error);
     }
     //likers modal
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const postId = this.closest("form").dataset.postId;
-        console.log("likersss" + document.getElementById(`likers-${postId}`));
-        document
-            .getElementById("likers")
-            .addEventListener("click", function () {
-                $("#likersModal").modal("show");
-            });
-        console.log(document.getElementById("likersClose"));
-        document
-            .getElementById("likersClose")
-            .addEventListener("click", function () {
-                $("#likersModal").modal("hide");
-            });
-    });
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     const postId = this.closest("form").dataset.postId;
+    //     console.log("likersss" + document.getElementById(`likers-${postId}`));
+    //     document
+    //         .getElementById("likers")
+    //         .addEventListener("click", function () {
+    //             $("#likersModal").modal("show");
+    //         });
+    //     console.log(document.getElementById("likersClose"));
+    //     document
+    //         .getElementById("likersClose")
+    //         .addEventListener("click", function () {
+    //             $("#likersModal").modal("hide");
+    //         });
+    // });
 }
 
 $(document).ready(function () {
     $(".alert").fadeIn().delay(2000).fadeOut();
 });
+
 
 function postLikes() {
     document.querySelectorAll(".likeButton").forEach((button) => {
@@ -788,6 +753,7 @@ function drawLikersModal(likers) {
 
     $("#likersModal").modal("show");
 }
+
 
 /* -------------------------------------------------------------------------- */
 /*                                  save post                                 */
@@ -898,23 +864,19 @@ function handleCommentSubmission(event) {
                         "justify-content-between",
                         "align-items-center"
                     );
+                    newComment.setAttribute("data-comment-id", response.comment_id);
                     newComment.innerHTML = `
-                    <p>
-                        <strong class="text-white">${response.user.full_name}</strong>
-                        <span class="text-white">${response.comment}</span>
-                    </p>
-                    <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
-                    <button id="likeBtn"
-                    class="btn btn-link like-button"
-                    onclick="toggleLike(${response.comment_id})">
-                    <img class="not-loved"
-                        src="http://localhost:8000/homePage/images/love.png"
-                        alt="heart image">
-                        </button>
-                        <span
-                            class="text-white like-count">0 Likes
-                        </span>
-                    </div>
+                            <p>
+                                <strong class="text-white">${response.user.full_name}</strong>
+                                <span class="text-white">${response.comment}</span>
+                            </p>
+                            <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
+                                <button id="likeBtn-${response.comment_id}" class="btn btn-link like-button" onclick="toggleLike(${response.comment_id})">
+                                    <img class="not-loved" src="http://localhost:8000/homePage/images/love.png" alt="heart image">
+                                </button>
+                                <span class="text-white like-count">0 Likes</span>
+                                <a class="btn text-white fw-bold delete-comment" onclick="deleteComment(${response.comment_id})">X</a>
+                            </div>
                 `;
 
                     commentsSection.prepend(newComment);
@@ -964,6 +926,7 @@ async function toggleLike(commentId) {
         }
 
         const responseData = await response.json();
+
         updateLikeStatus(
             commentId,
             responseData.liked,
@@ -1007,6 +970,9 @@ async function toggleLike(commentId) {
                 ? "http://localhost:8000/homePage/images/heart.png"
                 : "http://localhost:8000/homePage/images/love.png";
         }
+
+        updateLikeStatus(commentId, responseData.liked, responseData.likes_count);
+
     } catch (error) {
         console.error("Error:", error);
     }
@@ -1019,10 +985,19 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
     likeButton.classList.toggle("liked", isLiked);
     likeButton.classList.remove("hide_img");
 
-    const likeCountElement = document.querySelector(
-        `.like[data-comment-id="${commentId}"] .like-count`
+    const postLikeCountElement = document.querySelector(
+        `.post_desc .like[data-comment-id="${commentId}"] .like-count`
     );
-    likeCountElement.textContent = likeCount + " Likes";
+    if (postLikeCountElement) {
+        postLikeCountElement.textContent = likeCount + " Likes";
+    }
+
+    const modalLikeCountElement = document.querySelector(
+        `.modal .like[data-comment-id="${commentId}"] .like-count`
+    );
+    if (modalLikeCountElement) {
+        modalLikeCountElement.textContent = likeCount + " Likes";
+    }
 
     const likeImage = document.querySelector(
         `.like[data-comment-id="${commentId}"] .like-button img`
@@ -1032,27 +1007,37 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
         : "http://localhost:8000/homePage/images/love.png";
 }
 
+//search
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search-input");
 
     searchInput.addEventListener("keyup", async function (event) {
         const query = event.target.value.trim();
+        console.log("Query:", query);
         try {
+            console.log('try block');
             const response = await fetch(`/search?query=${query}`);
+            console.log(response);
             const data = await response.json();
+
+            console.log(data);
             const searchResults = document.getElementById("search-result");
+            console.log(searchResults);
             searchResults.innerHTML = "";
             data.forEach((user) => {
+                console.log(user);
+
+
                 searchResults.innerHTML += `
                 <div class="account">
                     <div class="cart">
                         <div>
                             <div class="img">
-                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                <img src="${user.profile_image}" alt="">
                             </div>
                             <div class="info">
-                                <p class="name">${user.full_name}</p>
-                                <p class="second_name">${user.username}</p>
+                                <a href="http://127.0.0.1:8000/users/${user.user.id}/profile" class="name text-dark">${user.user.full_name}</a>
+                                <p class="second_name">${user.user.username}</p>
                             </div>
                         </div>
                     </div>
@@ -1066,7 +1051,43 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 // initialize post like and comment feature
 window.addEventListener("DOMContentLoaded", function () {
     postLikes();
 });
+
+
+//delete comment
+function deleteComment(commentId) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    fetch(`/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to delete comment');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Post ID:', data.post_id);
+        console.log('Comment ID:', commentId);
+    
+        const commentElement = document.querySelector(`.comment[data-comment-id="${commentId}"]`);
+        if (commentElement) {
+            // console.log('Comment found:', commentElement);
+            commentElement.remove();
+        } else {
+            console.error('Comment not found');
+        }
+    })         
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}

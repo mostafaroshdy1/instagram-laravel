@@ -23,10 +23,18 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(3);
+        $current_user = User::find(auth()->id());
+        $followersIds = $current_user->followers()->pluck('id')->toArray();
+        $posts = Post::whereIn('user_id', $followersIds)
+            ->orWhere('user_id', auth()->id())
+            ->with(['comments.user', 'comments.likes', 'user'])
+            ->withCount('comments') // comments_count
+            ->orderBy('created_at', 'desc')
+            ->paginate(3);
+
         if ($request->ajax()) {
             $view = view('posts.load', compact('posts'))->render();
-            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(),'user' => auth()->user()]);
+            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user()]);
         }
         return view('posts.index', ['posts' => $posts, 'user' => auth()->user()]);
     }
@@ -113,10 +121,18 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        view('layouts.postModal', compact('post'));
     }
+
+    public function showSaved(string $id)
+    {
+        $post = Post::findOrFail($id);
+        view('layouts.savedPostModal', compact('post'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -137,9 +153,11 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect()->route('posts.index');
     }
     public function toggleLike(Post $post, Request $request)
     {

@@ -616,6 +616,7 @@ button.log_btn:hover {
   border-right: 1px solid rgb(219, 219, 219);
 }
 
+
 @media screen and (max-width: 768px) {
   .nav {
     display: none;
@@ -752,11 +753,11 @@ button.log_btn:hover {
   }
 }
 
-@media screen and (max-width: 498px) {
+/* @media screen and (max-width: 498px) {
   .nav_sm .content {
     display: none;
   }
-}
+} */
 
 .nav_sm .content .left .search_bar {
   margin-right: 30px;
@@ -2121,4 +2122,23 @@ button.log_btn:hover {
 .unfollow:hover {
   background-color: rgb(33 37 41) !important;
   cursor: pointer;
+}
+
+input::placeholder {
+
+  color: #8F8F8F !important;
+}
+.deletePostBtn{
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+.myHov{
+  cursor: pointer;
+}
+
+.search-data{
+    cursor: pointer;
 }

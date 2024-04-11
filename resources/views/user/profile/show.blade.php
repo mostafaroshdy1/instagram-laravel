@@ -40,6 +40,24 @@
                 <div class="info">
                     <p class="name">
                         {{ $user->username }}
+                        @if ($user->isVerified)
+                            <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                fill="none" viewBox="0 0 24 24" id="verified">
+                                <g clip-path="url(#clip0_1084_3803)">
+                                    <path fill="#4DC4FF"
+                                        d="M13.3546 1.46995C12.6544 0.614752 11.3466 0.614755 10.6465 1.46995L9.65463 2.6814C9.58665 2.76443 9.47325 2.79482 9.37286 2.7569L7.90817 2.20367C6.87422 1.81314 5.74163 2.46703 5.56286 3.55774L5.30963 5.10281C5.29227 5.20871 5.20926 5.29172 5.10335 5.30908L3.55829 5.56231C2.46759 5.74108 1.81368 6.87366 2.20422 7.90762L2.75745 9.37231C2.79537 9.4727 2.76498 9.5861 2.68195 9.65408L1.4705 10.6459C0.615302 11.3461 0.615304 12.6539 1.4705 13.3541L2.68195 14.3459C2.76498 14.4139 2.79537 14.5273 2.75745 14.6277L2.20422 16.0924C1.81369 17.1263 2.46758 18.2589 3.55829 18.4377L5.10335 18.6909C5.20926 18.7083 5.29227 18.7913 5.30963 18.8972L5.56286 20.4422C5.74163 21.5329 6.87421 22.1868 7.90817 21.7963L9.37286 21.2431C9.47325 21.2052 9.58665 21.2355 9.65463 21.3186L10.6465 22.53C11.3466 23.3852 12.6544 23.3852 13.3546 22.53L14.3464 21.3186C14.4144 21.2355 14.5278 21.2052 14.6282 21.2431L16.0929 21.7963C17.1269 22.1868 18.2595 21.5329 18.4382 20.4422L18.6915 18.8972C18.7088 18.7913 18.7918 18.7083 18.8977 18.6909L20.4428 18.4377C21.5335 18.2589 22.1874 17.1263 21.7969 16.0924L21.2436 14.6277C21.2057 14.5273 21.2361 14.4139 21.3191 14.3459L22.5306 13.3541C23.3858 12.6539 23.3858 11.3461 22.5306 10.6459L21.3191 9.65408C21.2361 9.5861 21.2057 9.4727 21.2436 9.37231L21.7969 7.90762C22.1874 6.87366 21.5335 5.74108 20.4428 5.56231L18.8977 5.30908C18.7918 5.29172 18.7088 5.20871 18.6915 5.10281L18.4382 3.55774C18.2595 2.46704 17.1269 1.81313 16.0929 2.20367L14.6282 2.7569C14.5278 2.79482 14.4144 2.76443 14.3464 2.6814L13.3546 1.46995Z">
+                                    </path>
+                                    <path fill="#ECEFF1" fill-rule="evenodd"
+                                        d="M18.0303 7.96967C18.3232 8.26256 18.3232 8.73744 18.0303 9.03033L11.0303 16.0303C10.8897 16.171 10.6989 16.25 10.5 16.25C10.3011 16.25 10.1103 16.171 9.96967 16.0303L5.96967 12.0303C5.67678 11.7374 5.67678 11.2626 5.96967 10.9697C6.26256 10.6768 6.73744 10.6768 7.03033 10.9697L10.5 14.4393L16.9697 7.96967C17.2626 7.67678 17.7374 7.67678 18.0303 7.96967Z"
+                                        clip-rule="evenodd"></path>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_1084_3803">
+                                        <rect width="24" height="24" fill="#fff"></rect>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        @endif
                         <a href="{{ route('user.profile.edit', $user) }}">
                             <button class="edit_profile">
                                 Edit profile
@@ -93,16 +111,16 @@
 
 
                         @if (@auth()->user()->is($user))
-                            <svg data-bs-toggle="modal" data-bs-target="#menuModal" id="menu"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <svg data-bs-toggle="modal" data-bs-target="#menuModal" id="menu" width="24"
+                                height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path
                                     d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
                                     style="fill: white" />
                             </svg>
                         @endif
                         @if (auth()->user()->isNot($user))
-                            <svg data-bs-toggle="modal" data-bs-target="#usermenuModal" id="menu"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                            <svg data-bs-toggle="modal" data-bs-target="#usermenuModal" id="menu" width="24"
+                                height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                                 class="{{ $isDisabled ? 'd-none' : 'btn-light' }}">
                                 <path
                                     d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
@@ -111,13 +129,13 @@
                         @endif
                     </div>
 
-                    <p class="nick_name">{{$user->full_name}}</p>
+                    <p class="nick_name">{{ $user->full_name }}</p>
                     <p class="desc">
                         @if (!@empty($user->website))
                             <a href={{ $user->website }}>{{ $user->website }}</a>
                         @endif
                     </p>
-                    <p class="desc">{{$user->bio}}</p>
+                    <p class="desc">{{ $user->bio }}</p>
                 </div>
             </div>
         </div>
@@ -183,28 +201,89 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                     tabindex="0">
-                    <div id="posts_sec" class="post d-grid gap-3"
-                        style="grid-template-columns: repeat(3, 1fr);">
-                        @foreach ($postInfo as $post)
-                            <div class="item bg-white">
-                                <img class="img-fluid item_img" src={{$post->getImages()->first()->url}}
-                                    alt="">
-                            </div>
+                    <div id="posts_sec" class="post d-grid gap-3" style="grid-template-columns: repeat(3, 1fr);">
+                        @foreach ($posts as $post)
+                            @if ($post->images->isEmpty())
+                                @foreach ($post->videos as $video)
+                                    <div class="video-container">
+                                        <video controls class="w-100 h-100 item_img posts-img test">
+                                            <source src="{{ $video->url }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                @endforeach
+                            @else
+                                @foreach ($post->images as $img)
+                                    <div class="item bg-white">
+                                        <img id="{{ $post->id }}" class="img-fluid item_img posts-img test"
+                                            src={{ $post->images->first()->url }} alt=""
+                                            data-image-url="{{ $post->images->first()->url }}">
+                                        @include('layouts.postModal', ['post' => $post])
+                                        @include('layouts.likes', ['post' => $post])
+                                        @include('layouts.commentsIcon', ['post' => $post])
+                                        <div class="modal fade" id="postMenuModal-{{ $post->id }}-2" tabindex="-1"
+                                            aria-labelledby="postsMenuModalLabel" aria-hidden="true">
+                                            <div
+                                                class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+                                                <div class="modal-content bg-dark text-white">
+                                                    <div class="modal-header d-flex justify-content-center">
+                                                        <form action="{{ route('posts.destroy', $post->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="modal-title fs-2 deletePostBtn"
+                                                                style="color: red;">Delete</button>
+                                                        </form>
+
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-center">
+                                                        <h1 class="modal-title fs-2 myHov" id="menuModalLabel22"
+                                                            data-bs-dismiss="modal" aria-label="Close"
+                                                            aria-hidden="true">Cancel
+                                                        </h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
                         @endforeach
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                     tabindex="0">
-                    <div id="saved_sec" class="post d-grid gap-3"
-                        style="grid-template-columns: repeat(3, 1fr);">
-                        @foreach ($savedPostInfoArr as $savedPost)
+                    <div id="saved_sec" class="post d-grid gap-3" style="grid-template-columns: repeat(3, 1fr);">
+                        @foreach ($savedPosts as $savedPost)
                             <div class="item bg-white">
-                                <img class="img-fluid item_img" src={{$savedPost->getImages()->first()->url}} alt=''>
+                                <img id="{{ $savedPost['pivot']['post_id'] }}"
+                                    class="img-fluid item_img saved-posts-img test"
+                                    src={{ $savedPost->images->first()->url }} alt=""
+                                    data-image-url="{{ $savedPost->images->first()->url }}">
+                                @include('layouts.savedPostModal', ['post' => $savedPost])
+                                @include('layouts.commentsIcon', ['post' => $savedPost])
+                                @include('layouts.deleteMenu', ['post' => $savedPost])
+                                <div class="modal fade" id="likersModal2" tabindex="-1"
+                                    aria-labelledby="likersModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content bg-dark text-white">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="likersModalLabel2">Likes</h1>
+                                                <i class="btn-close fa-2x fa-solid fa-xmark text-white"
+                                                    data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"
+                                                    id="likersClose2"></i>
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         @endforeach
-
                     </div>
                 </div>
+
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
                     tabindex="0">
                     <div id="tagged" class="post">
@@ -216,7 +295,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -234,7 +312,8 @@
                     @foreach ($followers as $follower)
                         <div class="d-flex flex-row justify-content-between align-items-center mb-4">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
+                                    src="{{ $follower->avatar ?? asset('homePage/images/profile_img.jpg') }}"
+                                    width="55">
                                 <div class="d-flex flex-column align-items-start ml-2"><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $follower->full_name }}</span></div>
                             </div>
@@ -283,7 +362,8 @@
                     @foreach ($followings as $following)
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
+                                    src="{{ $following->avatar ?? asset('homePage/images/profile_img.jpg') }}"
+                                    width="55">
                                 <div class="d-flex flex-column align-items-start "><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $following->full_name }}</span></div>
                             </div>
@@ -330,7 +410,8 @@
                     @foreach ($blocked as $blockedUsr)
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ asset('homePage/images/profile_img.jpg') }}" width="55">
+                                    src="{{ $blockedUsr->avatar ?? asset('homePage/images/profile_img.jpg') }}"
+                                    width="55">
                                 <div class="d-flex flex-column align-items-start "><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $blockedUsr->full_name }}</span></div>
                             </div>

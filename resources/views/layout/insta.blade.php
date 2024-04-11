@@ -105,7 +105,6 @@
     <script src="{{ asset('homePage/js/main.js') }}"></script>
     <script src="{{ asset('likes/js/likesSaved.js') }}"></script>
     <script src="{{ asset('tags/js/script.js') }}"></script>
-
 </body>
 
 </html>

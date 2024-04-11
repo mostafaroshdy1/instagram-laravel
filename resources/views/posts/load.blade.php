@@ -110,11 +110,7 @@
                         </button>
                     </div>
                 </form>
-
-
-
             </div>
-
 
             <div class="liked">
                 <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal"
@@ -124,13 +120,8 @@
             </div>
             @include('layouts.likes', ['post' => $post])
 
-
-
-
             <div class="post_desc">
-                <p>
                 <p class="text-white" id = "post-body">{{ $post->body }}
-                </p>
                 </p>
                 <div class="comments-section" data-post-id="{{ $post->id }}">
                     {{-- posts comments --}}
@@ -237,9 +228,8 @@
                     <div class="comment">
                         <input type="text" name="comment" class="comment-input" placeholder="Add a comment...">
                         <input type="hidden" name="post_id" value="{{ $post->id }}">
-                        <button type="submit" class="btn submit-comment"
-                            data-post-id="{{ $post->id }}">
-                            <img src="{{ asset('homePage/images/send.png') }}" alt="send"/>
+                        <button type="submit" class="btn submit-comment" data-post-id="{{ $post->id }}">
+                            <img src="{{ asset('homePage/images/send.png') }}" alt="send" />
                         </button>
                     </div>
                 </form>

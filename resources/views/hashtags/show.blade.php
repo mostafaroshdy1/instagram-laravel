@@ -1,7 +1,7 @@
 @extends('layout.insta')
 @section('content')
-    <div class="second_container d-flex align-items-center justify-content-center">
-        <div class="container">
+    <div class="profile_container mt-0 d-flex">
+        <div class="profile_info">
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h1 class="mb-4 header-text">Posts from #{{ $hashtag }}</h1>
@@ -16,8 +16,9 @@
                         @foreach ($posts as $post)
                             <div class="item bg-white mt-1">
                                 @if ($post->images->isEmpty())
-                                    <div class="video-container">
-                                        <video id="{{ $post->id }}" class="w-100 h-100 posts-video">
+                                    <div class="video-container" style="width: 100%; height: 100%; overflow: hidden;">
+                                        <video id="{{ $post->id }}" class="posts-video"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
                                             <source src="{{ $post->videos->first()->url }}" type="video/mp4"
                                                 autoplay="false">
                                             Your browser does not support the video tag.

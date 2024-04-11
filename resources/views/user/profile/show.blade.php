@@ -33,10 +33,10 @@
 {{--  --}}
 
 
-<div id="successAlert" class="alert successAlert d-none">
-</div>
-<div id="warningAlert" class="alert warningAlert d-none">
-</div>
+    <div id="successAlert" class="alert successAlert d-none">
+    </div>
+    <div id="warningAlert" class="alert warningAlert d-none">
+    </div>
 
 
     <div class="profile_container">
@@ -213,8 +213,9 @@
                         @foreach ($posts as $post)
                             <div class="item bg-white mt-1">
                                 @if ($post->images->isEmpty())
-                                    <div class="video-container">
-                                        <video id="{{ $post->id }}" class="w-100 h-100 posts-video">
+                                    <div class="video-container" style="width: 100%; height: 100%; overflow: hidden;">
+                                        <video id="{{ $post->id }}" class="posts-video"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
                                             <source src="{{ $post->videos->first()->url }}" type="video/mp4"
                                                 autoplay="false">
                                             Your browser does not support the video tag.
@@ -271,68 +272,70 @@
                     <div id="saved_sec" class="post d-grid gap-3" style="grid-template-columns: repeat(3, 1fr);">
                         @foreach ($savedPosts as $savedPost)
                             <div class="item bg-white">
-                                <div style="width: 100%; height: 100%; overflow: hidden;">
-                                    @if ($savedPost->images->count() > 1)
-                                        <div class="multiple-images-icon position-absolute top-3 start-3">
-                                            <svg width="30" height="24">
-                                                <rect x="5" y="5" width="15" height="2" fill="white" />
-                                                <rect x="5" y="10" width="15" height="2" fill="white" />
-                                                <rect x="5" y="15" width="15" height="2" fill="white" />
-                                            </svg>
-                                        </div>
-                                    @endif
-                                    @if($savedPost->images->isEmpty())
-                                        <div class="video-container">
-                                            <video id="{{ $savedPost['pivot']['post_id'] }}" class="w-100 h-100 saved-posts-video">
-                                                <source src="{{ $savedPost->videos->first()->url }}" type="video/mp4"
-                                                    autoplay="false">
-                                                Your browser does not support the video tag.
-                                            </video>
-                                        </div>
-                                    @else
-                                    <img id="{{ $savedPost['pivot']['post_id'] }}"
-                                        class="img-fluid item_img saved-posts-img test"
-                                        src={{ $savedPost->images->first()->url }} alt=""
-                                        data-image-url="{{ $savedPost->images->first()->url }}"
-                                        style="width: 100%; height: 100%; object-fit: cover;">
-                                    @endif
-                                </div>
-                                @include('layouts.savedPostModal', ['post' => $savedPost])
-                                {{-- @include('layouts.commentsIcon', ['post' => $savedPost]) --}}
-                                @include('layouts.deleteMenu', ['post' => $savedPost])
-                                <div class="modal fade" id="likersModal2" tabindex="-1"
-                                    aria-labelledby="likersModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-                                        <div class="modal-content bg-dark text-white">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="likersModalLabel2">Likes</h1>
-                                                <i class="btn-close fa-2x fa-solid fa-xmark text-white"
-                                                    data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"
-                                                    id="likersClose2"></i>
+
+                                @if ($savedPost->images->isEmpty())
+                                    <div class="video-container" style="width: 100%; height: 100%; overflow: hidden;">
+                                        <video id="{{ $post->id }}" class="saved-posts-video"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                            <source src="{{ $savedPost->videos->first()->url }}" type="video/mp4"
+                                                autoplay="false">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                @else
+                                    <div style="width: 100%; height: 100%; overflow: hidden;">
+                                        @if ($savedPost->images->count() > 1)
+                                            <div class="multiple-images-icon position-absolute top-3 start-3">
+                                                <svg width="30" height="24">
+                                                    <rect x="5" y="5" width="15" height="2" fill="white" />
+                                                    <rect x="5" y="10" width="15" height="2" fill="white" />
+                                                    <rect x="5" y="15" width="15" height="2" fill="white" />
+                                                </svg>
                                             </div>
-                                            <div class="modal-body">
-                                            </div>
+                                        @endif
+                                        <img id="{{ $savedPost['pivot']['post_id'] }}"
+                                            class="img-fluid item_img saved-posts-img test"
+                                            src={{ $savedPost->images->first()->url }} alt=""
+                                            data-image-url="{{ $savedPost->images->first()->url }}"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                @endif
+                            </div>
+                            @include('layouts.savedPostModal', ['post' => $savedPost])
+                            {{-- @include('layouts.commentsIcon', ['post' => $savedPost]) --}}
+                            @include('layouts.deleteMenu', ['post' => $savedPost])
+                            <div class="modal fade" id="likersModal2" tabindex="-1" aria-labelledby="likersModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                                    <div class="modal-content bg-dark text-white">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="likersModalLabel2">Likes</h1>
+                                            <i class="btn-close fa-2x fa-solid fa-xmark text-white"
+                                                data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"
+                                                id="likersClose2"></i>
+                                        </div>
+                                        <div class="modal-body">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
                     </div>
+                    @endforeach
                 </div>
+            </div>
 
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
-                    tabindex="0">
-                    <div id="tagged" class="post">
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/Zhc5hHp/account4.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/SPTNbJL/account5.jpg" alt="">
-                        </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
+                tabindex="0">
+                <div id="tagged" class="post">
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/Zhc5hHp/account4.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/SPTNbJL/account5.jpg" alt="">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel"

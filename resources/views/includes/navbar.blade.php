@@ -78,7 +78,7 @@
 
 
 <!--***** nav menu start ****** -->
-<div class="nav_menu sticky-top">
+<div class="nav_menu sticky-top w-100">
     <div class="fix_top">
         <!-- nav for big->medium screen -->
         <div class="nav bg-black border-right" style="border-right-color: rgb(var(--ig-separator));">
@@ -145,9 +145,16 @@
                     </li>
                     <li>
                         <a href="{{ route('user.profile.show', ['id' => Auth::user()->id]) }}">
-                            <img class="circle story w-40 h-40" src="{{ Auth::user()->avatar }}" />
+                            <div style="width: 2rem; height: 2rem; overflow: hidden;"
+                                class="d-flex align-items-center justify-content-center circle-wrapper">
+                                <img style="object-fit: cover; width: 100%; height: 100%;"
+                                    class="circle story img-fluid rounded-circle" src="{{ Auth::user()->avatar }}"
+                                    alt="Profile Picture" />
+                            </div>
                             <span class="d-none d-lg-block text-white fw-semibold">Profile</span>
                         </a>
+
+
                     </li>
                     <li class="d-block d-lg-none ">
                         <form method="POST" action="{{ route('logout') }}">

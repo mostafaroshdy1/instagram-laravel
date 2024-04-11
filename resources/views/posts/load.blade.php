@@ -2,18 +2,41 @@
     <div class="post">
         <div class="info">
             <div class="person">
-                <img src="{{$post->user->avatar}}">
+                <img src="{{ $post->user->avatar }}">
                 <a href="#" class="text-white">{{ $post->user->full_name }}</a>
                 <span class="circle">.</span>
                 <span>{{ $post->created_at->diffForHumans() }}</span>
             </div>
 
-        @if (auth()->id() == $post->user_id)
-            <div class="more delmenu" data-bs-toggle="modal" id="{{ $post->id }}" data-post-id="{{$post->id}}" >
-            <svg fill="#ffffff" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 297 297" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="M42.352,106.148C18.999,106.148,0,125.147,0,148.5c0,23.353,18.999,42.352,42.352,42.352 c23.353,0,42.352-18.999,42.352-42.352C84.704,125.147,65.705,106.148,42.352,106.148z"></path> <path d="M148.5,106.148c-23.353,0-42.352,18.999-42.352,42.352c0,23.353,18.999,42.352,42.352,42.352 s42.352-18.999,42.352-42.352C190.852,125.147,171.853,106.148,148.5,106.148z"></path> <path d="M254.648,106.148c-23.353,0-42.352,18.999-42.352,42.352c0,23.353,18.999,42.352,42.352,42.352S297,171.853,297,148.5 C297,125.147,278.001,106.148,254.648,106.148z"></path> </g> </g> </g> </g></svg>
-            </div>
-            @include('layouts.deleteMenu', ['post' => $post])
-        @endif
+            @if (auth()->id() == $post->user_id)
+                <div class="more delmenu" data-bs-toggle="modal" id="{{ $post->id }}"
+                    data-post-id="{{ $post->id }}">
+                    <svg fill="#ffffff" height="20px" width="20px" version="1.1" id="Layer_1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 297 297" xml:space="preserve">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <g>
+                                <g>
+                                    <g>
+                                        <path
+                                            d="M42.352,106.148C18.999,106.148,0,125.147,0,148.5c0,23.353,18.999,42.352,42.352,42.352 c23.353,0,42.352-18.999,42.352-42.352C84.704,125.147,65.705,106.148,42.352,106.148z">
+                                        </path>
+                                        <path
+                                            d="M148.5,106.148c-23.353,0-42.352,18.999-42.352,42.352c0,23.353,18.999,42.352,42.352,42.352 s42.352-18.999,42.352-42.352C190.852,125.147,171.853,106.148,148.5,106.148z">
+                                        </path>
+                                        <path
+                                            d="M254.648,106.148c-23.353,0-42.352,18.999-42.352,42.352c0,23.353,18.999,42.352,42.352,42.352S297,171.853,297,148.5 C297,125.147,278.001,106.148,254.648,106.148z">
+                                        </path>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                @include('layouts.deleteMenu', ['post' => $post])
+            @endif
 
 
         </div>
@@ -38,7 +61,7 @@
             <div class="icons">
                 <div class="icon_left d-flex">
 
-                  @include('layouts.likesBtn', ['post' => $post])
+                    @include('layouts.likesBtn', ['post' => $post])
 
 
                     <div class="chat">
@@ -78,7 +101,8 @@
 
 
             <div class="liked">
-                <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal" onclick="drawLikersModal({{ $post->likers }})"
+                <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal"
+                    onclick="drawLikersModal({{ $post->likers }})"
                     id="likers-{{ $post->id }}">{{ $post->likes_count }} likes</a>
             </div>
             @include('layouts.likes', ['post' => $post])
@@ -94,15 +118,16 @@
                 <div class="comments-section" data-post-id="{{ $post->id }}">
                     {{-- posts comments --}}
                     @foreach ($post->comments->reverse()->take(3) as $comment)
-                        <div class="comment d-flex justify-content-between align-items-center" data-comment-id="{{ $comment->id }}">
+                        <div class="comment d-flex justify-content-between align-items-center"
+                            data-comment-id="{{ $comment->id }}">
 
                             <p>
                                 <strong class="text-white">{{ $comment->user->full_name }}</strong>
                                 <span class="text-white">{{ $comment->comment }}</span>
                             </p>
-                            
+
                             <div class="like d-flex align-items-center" data-comment-id="{{ $comment->id }}">
-                                @if ($comment->likes->contains(auth()->id()))
+                                @if ($comment->likes->contains('user_id', auth()->id()))
                                     <button id="likeBtn" class="btn btn-link like-button liked"
                                         onclick="toggleLike({{ $comment->id }})">
                                         <img class="not-loved" src="{{ asset('homePage/images/heart.png') }}"
@@ -117,9 +142,10 @@
                                 @endif
                                 <span class="text-white like-count">{{ $comment->likes->count() }}
                                     Likes</span>
-                            @if(auth()->user()->id === $comment->user_id)
-                                <a class="btn text-white fw-bold delete-comment" onclick="deleteComment({{ $comment->id }})">X</a>
-                            @endif
+                                @if (auth()->user()->id === $comment->user_id)
+                                    <a class="btn text-white fw-bold delete-comment"
+                                        onclick="deleteComment({{ $comment->id }})">X</a>
+                                @endif
                             </div>
 
                         </div>
@@ -149,14 +175,14 @@
                                     <div class="comments-list">
                                         {{-- modal comments --}}
                                         @foreach ($post->comments as $comment)
-                                            <div
-                                                class="comment text-white d-flex justify-content-between align-items-center" data-comment-id="{{ $comment->id }}">
+                                            <div class="comment text-white d-flex justify-content-between align-items-center"
+                                                data-comment-id="{{ $comment->id }}">
                                                 <p>
                                                     <strong>{{ $comment->user->full_name }}</strong>
                                                     <span>{{ $comment->comment }}</span>
                                                 </p>
                                                 <div class="like" data-comment-id="{{ $comment->id }}">
-                                                    @if ($comment->likes->contains(auth()->id()))
+                                                    @if ($comment->likes->contains('user_id', auth()->id()))
                                                         <button id="likeBtn" class="btn btn-link like-button liked"
                                                             onclick="toggleLike({{ $comment->id }})">
                                                             <img class="not-loved"
@@ -174,9 +200,10 @@
                                                     <span
                                                         class=" like-count text-white">{{ $comment->likes()->count() }}
                                                         Likes</span>
-                                                        @if(auth()->user()->id === $comment->user_id)
-                                                            <a class="btn text-white fw-bold delete-comment" onclick="deleteComment({{ $comment->id }})">X</a>
-                                                        @endif
+                                                    @if (auth()->user()->id === $comment->user_id)
+                                                        <a class="btn text-white fw-bold delete-comment"
+                                                            onclick="deleteComment({{ $comment->id }})">X</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         @endforeach
@@ -229,7 +256,7 @@
                                     </div>
                                 </div>
                                 <div class="like" data-comment-id="{{ $comment->id }}">
-                                    @if ($comment->likes->contains(auth()->id()))
+                                    @if ($comment->likes->contains('user_id', auth()->id()))
                                         <button id="likeBtn" class="btn btn-link like-button liked"
                                             onclick="toggleLike({{ $comment->id }})">
                                             {{-- <img class="not-loved"

@@ -24,7 +24,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $current_user = User::find(auth()->id());
-        $followersIds = $current_user->followers()->pluck('id')->toArray();
+        $followersIds = $current_user->followings()->pluck('id')->toArray();
         $posts = Post::whereIn('user_id', $followersIds)
             ->orWhere('user_id', auth()->id())
             ->with(['comments.user', 'comments.likes', 'user'])

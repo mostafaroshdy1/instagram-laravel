@@ -114,13 +114,13 @@
                             <svg data-bs-toggle="modal" data-bs-target="#menuModal" id="menu" width="24"
                                 height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path
-                                    d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z" 
+                                    d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
                                     style="fill: white" />
                             </svg>
                         @endif
                         @if (auth()->user()->isNot($user))
-                            <svg data-bs-toggle="modal" data-bs-target="#usermenuModal" id="menu" width="24" height="24"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                            <svg data-bs-toggle="modal" data-bs-target="#usermenuModal" id="menu" width="24"
+                                height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                                 class="{{ $isDisabled ? 'd-none' : 'btn-light' }}">
                                 <path
                                     d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
@@ -203,31 +203,51 @@
                     tabindex="0">
                     <div id="posts_sec" class="post d-grid gap-3" style="grid-template-columns: repeat(3, 1fr);">
                         @foreach ($posts as $post)
-                            <div class="item bg-white">
-                                <img id="{{ $post->id }}" class="img-fluid item_img posts-img test"
-                                    src={{ $post->images->first()->url }} alt=""
-                                    data-image-url="{{ $post->images->first()->url }}">
-                                @include('layouts.postModal', ['post' => $post])
-                                @include('layouts.likes', ['post' => $post])
-                                @include('layouts.commentsIcon', ['post' => $post])
-                                <div class="modal fade" id="postMenuModal-{{ $post->id }}-2" tabindex="-1" aria-labelledby="postsMenuModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
-                                        <div class="modal-content bg-dark text-white">
-                                            <div class="modal-header d-flex justify-content-center"> 
-                                                <form action="{{route('posts.destroy',$post->id)}}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="modal-title fs-2 deletePostBtn" style="color: red;">Delete</button>
-                                                    </form>
-                                            
-                                            </div>
-                                            <div class="modal-footer d-flex justify-content-center"> 
-                                                <h1 class="modal-title fs-2 myHov" id="menuModalLabel22" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true">Cancel</h1>
+                            @if ($post->images->isEmpty())
+                                @foreach ($post->videos as $video)
+                                    <div class="video-container">
+                                        <video controls class="w-100 h-100 item_img posts-img test">
+                                            <source src="{{ $video->url }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                @endforeach
+                            @else
+                                @foreach ($post->images as $img)
+                                    <div class="item bg-white">
+                                        <img id="{{ $post->id }}" class="img-fluid item_img posts-img test"
+                                            src={{ $post->images->first()->url }} alt=""
+                                            data-image-url="{{ $post->images->first()->url }}">
+                                        @include('layouts.postModal', ['post' => $post])
+                                        @include('layouts.likes', ['post' => $post])
+                                        @include('layouts.commentsIcon', ['post' => $post])
+                                        <div class="modal fade" id="postMenuModal-{{ $post->id }}-2" tabindex="-1"
+                                            aria-labelledby="postsMenuModalLabel" aria-hidden="true">
+                                            <div
+                                                class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+                                                <div class="modal-content bg-dark text-white">
+                                                    <div class="modal-header d-flex justify-content-center">
+                                                        <form action="{{ route('posts.destroy', $post->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="modal-title fs-2 deletePostBtn"
+                                                                style="color: red;">Delete</button>
+                                                        </form>
+
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-center">
+                                                        <h1 class="modal-title fs-2 myHov" id="menuModalLabel22"
+                                                            data-bs-dismiss="modal" aria-label="Close"
+                                                            aria-hidden="true">Cancel
+                                                        </h1>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                @endforeach
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -243,14 +263,15 @@
                                 @include('layouts.savedPostModal', ['post' => $savedPost])
                                 @include('layouts.commentsIcon', ['post' => $savedPost])
                                 @include('layouts.deleteMenu', ['post' => $savedPost])
-                                <div class="modal fade" id="likersModal2" tabindex="-1" aria-labelledby="likersModalLabel"  
-                                    aria-hidden="true">
+                                <div class="modal fade" id="likersModal2" tabindex="-1"
+                                    aria-labelledby="likersModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
                                         <div class="modal-content bg-dark text-white">
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="likersModalLabel2">Likes</h1>
-                                                <i class="btn-close fa-2x fa-solid fa-xmark text-white" data-bs-dismiss="modal"
-                                                    aria-label="Close" aria-hidden="true" id="likersClose2"></i>
+                                                <i class="btn-close fa-2x fa-solid fa-xmark text-white"
+                                                    data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"
+                                                    id="likersClose2"></i>
                                             </div>
                                             <div class="modal-body">
                                             </div>
@@ -291,7 +312,8 @@
                     @foreach ($followers as $follower)
                         <div class="d-flex flex-row justify-content-between align-items-center mb-4">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ $follower->avatar ?? asset('homePage/images/profile_img.jpg')  }}" width="55">
+                                    src="{{ $follower->avatar ?? asset('homePage/images/profile_img.jpg') }}"
+                                    width="55">
                                 <div class="d-flex flex-column align-items-start ml-2"><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $follower->full_name }}</span></div>
                             </div>
@@ -340,7 +362,8 @@
                     @foreach ($followings as $following)
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ $following->avatar ?? asset('homePage/images/profile_img.jpg')  }}" width="55">
+                                    src="{{ $following->avatar ?? asset('homePage/images/profile_img.jpg') }}"
+                                    width="55">
                                 <div class="d-flex flex-column align-items-start "><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $following->full_name }}</span></div>
                             </div>
@@ -387,7 +410,8 @@
                     @foreach ($blocked as $blockedUsr)
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center"><img class="rounded-circle me-3"
-                                    src="{{ $blockedUsr->avatar ?? asset('homePage/images/profile_img.jpg')   }}" width="55">
+                                    src="{{ $blockedUsr->avatar ?? asset('homePage/images/profile_img.jpg') }}"
+                                    width="55">
                                 <div class="d-flex flex-column align-items-start "><span class="font-weight-bold"
                                         style="font-size: 1.6em;">{{ $blockedUsr->full_name }}</span></div>
                             </div>

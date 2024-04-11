@@ -104,7 +104,9 @@ class UserProfileController extends Controller
                 'savedPosts' => $savedPosts
             ]);
         } else {
-            return redirect()->route('posts.index');}}
+            return redirect()->route('posts.index');
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      */

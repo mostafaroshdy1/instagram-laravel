@@ -114,12 +114,12 @@
                             <svg data-bs-toggle="modal" data-bs-target="#menuModal" id="menu" width="24"
                                 height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path
-                                    d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                                    d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z" 
                                     style="fill: white" />
                             </svg>
                         @endif
                         @if (auth()->user()->isNot($user))
-                            <svg data-bs-toggle="modal" data-bs-target="#usermenuModal" id="menu"
+                            <svg data-bs-toggle="modal" data-bs-target="#usermenuModal" id="menu" width="24" height="24"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                                 class="{{ $isDisabled ? 'd-none' : 'btn-light' }}">
                                 <path

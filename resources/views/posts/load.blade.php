@@ -2,7 +2,7 @@
     <div class="post">
         <div class="info">
             <div class="person">
-                <img src="${post_data[i][0]}">
+                <img src="{{$post->user->avatar}}">
                 <a href="#" class="text-white">{{ $post->user->full_name }}</a>
                 <span class="circle">.</span>
                 <span>{{ $post->created_at->diffForHumans() }}</span>

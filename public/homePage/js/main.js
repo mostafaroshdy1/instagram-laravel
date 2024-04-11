@@ -9,7 +9,7 @@ if (posts)
         post_div.innerHTML = `
     <div class="info">
       <div class="person">
-          <img src="${post_data[i][0]}">
+          <img src="${post_data.user.avatar}">
           <a href="#">${post_data[i][1]}</a>
           <span class="circle">.</span>
           <span>${post_data[i][2]}m</span>
@@ -583,10 +583,11 @@ const next_btn_post = document.querySelector(".next_btn_post");
 next_btn_post.addEventListener("click", handleNext);
 //add a description + click btn to share post
 function handleNext() {
+    const image_description = document.querySelector("#image_description");
     if (image_description.classList.contains("hide_img")) {
         const next_btn_post = document.querySelector(".next_btn_post");
         const title_create = document.querySelector(".title_create");
-        const image_description = document.querySelector("#image_description");
+        // image_description = document.querySelector("#image_description");
         const modal_dialog = document.querySelector(
             "#create_modal .modal-dialog"
         );

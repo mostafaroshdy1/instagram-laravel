@@ -22,8 +22,8 @@
 }
 
 .avatar {
-    width: 40px !important;
-    height: 40px !important;
+    width: 80px !important;
+    height: 80px !important;
 }
 
 .fixed-top-section {
@@ -52,6 +52,6 @@
     overflow-y: auto;
 }
 
-.image_width{
+.image_width {
     width: 10% !important;
 }

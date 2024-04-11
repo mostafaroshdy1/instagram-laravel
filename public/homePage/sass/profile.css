@@ -4,21 +4,25 @@
     border-radius: 50%;
     object-fit: cover;
 }
-.unblkModalBtn{
+.unblkModalBtn {
     background-color: transparent;
     border: none;
     color: white;
     font-weight: bold;
 }
-.blkModalBtn{
+.blkModalBtn {
     background-color: transparent;
     border: none;
     color: red;
     font-weight: bold;
 }
-.myHov:hover{
+.myHov:hover {
     cursor: pointer;
 }
-.myB{
+.myB {
     font-weight: bold;
+}
+.profile-avatar {
+    width: 150px !important;
+    height: 150px !important;
 }

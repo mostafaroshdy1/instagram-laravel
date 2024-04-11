@@ -145,7 +145,7 @@
                     </li>
                     <li>
                         <a href="{{ route('user.profile.show', ['id' => Auth::user()->id]) }}">
-                            <img class="circle story" src="{{ asset('homePage/images/profile_img.jpg') }}">
+                            <img class="circle story w-40 h-40" src="{{ Auth::user()->avatar }}" />
                             <span class="d-none d-lg-block text-white fw-semibold">Profile</span>
                         </a>
                     </li>

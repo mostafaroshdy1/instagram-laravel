@@ -1,10 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
     const images = document.querySelectorAll(".posts-img");
     const savedImages = document.querySelectorAll(".saved-posts-img");
+    const videos = document.querySelectorAll(".posts-video");
 
     images.forEach((img) => {
         img.addEventListener("click", () => {
             const id = img.getAttribute("id");
+            fetch(`/posts/${id}`)
+                .then((response) => response.text())
+                .then((data) => {
+                    $(`#postModal-${id}`).modal("show");
+                })
+                .catch((error) => console.error("Error:", error));
+        });
+    });
+
+    videos.forEach((vid) => {
+        vid.addEventListener("click", (event) => {
+            event.preventDefault();
+            const id = vid.getAttribute("id");
             fetch(`/posts/${id}`)
                 .then((response) => response.text())
                 .then((data) => {

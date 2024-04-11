@@ -616,6 +616,7 @@ button.log_btn:hover {
   border-right: 1px solid rgb(219, 219, 219);
 }
 
+
 @media screen and (max-width: 768px) {
   .nav {
     display: none;
@@ -2126,4 +2127,18 @@ button.log_btn:hover {
 input::placeholder {
 
   color: #8F8F8F !important;
+}
+.deletePostBtn{
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+.myHov{
+  cursor: pointer;
+}
+
+.search-data{
+    cursor: pointer;
 }

@@ -671,26 +671,27 @@ async function addPost() {
     }
     //likers modal
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const postId = this.closest("form").dataset.postId;
-        console.log("likersss" + document.getElementById(`likers-${postId}`));
-        document
-            .getElementById("likers")
-            .addEventListener("click", function () {
-                $("#likersModal").modal("show");
-            });
-        console.log(document.getElementById("likersClose"));
-        document
-            .getElementById("likersClose")
-            .addEventListener("click", function () {
-                $("#likersModal").modal("hide");
-            });
-    });
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     const postId = this.closest("form").dataset.postId;
+    //     console.log("likersss" + document.getElementById(`likers-${postId}`));
+    //     document
+    //         .getElementById("likers")
+    //         .addEventListener("click", function () {
+    //             $("#likersModal").modal("show");
+    //         });
+    //     console.log(document.getElementById("likersClose"));
+    //     document
+    //         .getElementById("likersClose")
+    //         .addEventListener("click", function () {
+    //             $("#likersModal").modal("hide");
+    //         });
+    // });
 }
 
 $(document).ready(function () {
     $(".alert").fadeIn().delay(2000).fadeOut();
 });
+
 
 function postLikes() {
     document.querySelectorAll(".likeButton").forEach((button) => {
@@ -751,6 +752,7 @@ function drawLikersModal(likers) {
 
     $("#likersModal").modal("show");
 }
+
 
 /* -------------------------------------------------------------------------- */
 /*                                  save post                                 */
@@ -861,23 +863,19 @@ function handleCommentSubmission(event) {
                         "justify-content-between",
                         "align-items-center"
                     );
+                    newComment.setAttribute("data-comment-id", response.comment_id);
                     newComment.innerHTML = `
-                    <p>
-                        <strong class="text-white">${response.user.full_name}</strong>
-                        <span class="text-white">${response.comment}</span>
-                    </p>
-                    <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
-                    <button id="likeBtn"
-                    class="btn btn-link like-button"
-                    onclick="toggleLike(${response.comment_id})">
-                    <img class="not-loved"
-                        src="http://localhost:8000/homePage/images/love.png"
-                        alt="heart image">
-                        </button>
-                        <span
-                            class="text-white like-count">0 Likes
-                        </span>
-                    </div>
+                            <p>
+                                <strong class="text-white">${response.user.full_name}</strong>
+                                <span class="text-white">${response.comment}</span>
+                            </p>
+                            <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
+                                <button id="likeBtn-${response.comment_id}" class="btn btn-link like-button" onclick="toggleLike(${response.comment_id})">
+                                    <img class="not-loved" src="http://localhost:8000/homePage/images/love.png" alt="heart image">
+                                </button>
+                                <span class="text-white like-count">0 Likes</span>
+                                <a class="btn text-white fw-bold delete-comment" onclick="deleteComment(${response.comment_id})">X</a>
+                            </div>
                 `;
 
                     commentsSection.prepend(newComment);
@@ -927,6 +925,7 @@ async function toggleLike(commentId) {
         }
 
         const responseData = await response.json();
+
         updateLikeStatus(
             commentId,
             responseData.liked,
@@ -970,6 +969,9 @@ async function toggleLike(commentId) {
                 ? "http://localhost:8000/homePage/images/heart.png"
                 : "http://localhost:8000/homePage/images/love.png";
         }
+
+        updateLikeStatus(commentId, responseData.liked, responseData.likes_count);
+
     } catch (error) {
         console.error("Error:", error);
     }
@@ -982,10 +984,19 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
     likeButton.classList.toggle("liked", isLiked);
     likeButton.classList.remove("hide_img");
 
-    const likeCountElement = document.querySelector(
-        `.like[data-comment-id="${commentId}"] .like-count`
+    const postLikeCountElement = document.querySelector(
+        `.post_desc .like[data-comment-id="${commentId}"] .like-count`
     );
-    likeCountElement.textContent = likeCount + " Likes";
+    if (postLikeCountElement) {
+        postLikeCountElement.textContent = likeCount + " Likes";
+    }
+
+    const modalLikeCountElement = document.querySelector(
+        `.modal .like[data-comment-id="${commentId}"] .like-count`
+    );
+    if (modalLikeCountElement) {
+        modalLikeCountElement.textContent = likeCount + " Likes";
+    }
 
     const likeImage = document.querySelector(
         `.like[data-comment-id="${commentId}"] .like-button img`
@@ -995,27 +1006,37 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
         : "http://localhost:8000/homePage/images/love.png";
 }
 
+//search
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search-input");
 
     searchInput.addEventListener("keyup", async function (event) {
         const query = event.target.value.trim();
+        console.log("Query:", query);
         try {
+            console.log('try block');
             const response = await fetch(`/search?query=${query}`);
+            console.log(response);
             const data = await response.json();
+
+            console.log(data);
             const searchResults = document.getElementById("search-result");
+            console.log(searchResults);
             searchResults.innerHTML = "";
             data.forEach((user) => {
+                console.log(user);
+
+
                 searchResults.innerHTML += `
                 <div class="account">
                     <div class="cart">
                         <div>
                             <div class="img">
-                                <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                                <img src="${user.profile_image}" alt="">
                             </div>
                             <div class="info">
-                                <p class="name">${user.full_name}</p>
-                                <p class="second_name">${user.username}</p>
+                                <a href="http://127.0.0.1:8000/users/${user.user.id}/profile" class="name text-dark">${user.user.full_name}</a>
+                                <p class="second_name">${user.user.username}</p>
                             </div>
                         </div>
                     </div>
@@ -1029,7 +1050,43 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 // initialize post like and comment feature
 window.addEventListener("DOMContentLoaded", function () {
     postLikes();
 });
+
+
+//delete comment
+function deleteComment(commentId) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    fetch(`/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to delete comment');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Post ID:', data.post_id);
+        console.log('Comment ID:', commentId);
+    
+        const commentElement = document.querySelector(`.comment[data-comment-id="${commentId}"]`);
+        if (commentElement) {
+            // console.log('Comment found:', commentElement);
+            commentElement.remove();
+        } else {
+            console.error('Comment not found');
+        }
+    })         
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}

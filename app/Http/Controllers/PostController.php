@@ -34,7 +34,7 @@ class PostController extends Controller
 
         if ($request->ajax()) {
             $view = view('posts.load', compact('posts'))->render();
-            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user(), 'current_user_id' => auth()->id()]);
+            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user()]);
         }
         return view('posts.index', ['posts' => $posts, 'user' => auth()->user()]);
     }
@@ -121,10 +121,18 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        view('layouts.postModal', compact('post'));
     }
+
+    public function showSaved(string $id)
+    {
+        $post = Post::findOrFail($id);
+        view('layouts.savedPostModal', compact('post'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -145,9 +153,11 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect()->route('posts.index');
     }
     public function toggleLike(Post $post, Request $request)
     {

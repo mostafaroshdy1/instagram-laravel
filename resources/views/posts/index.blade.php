@@ -51,6 +51,7 @@
     </div>
 
 
+
     <div class="post_page">
         <!--***** nav menu start ****** -->
         <div class="nav_menu sticky-top">
@@ -651,7 +652,7 @@
                         </button>
                         <div id="image-container" class="hide_img carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                                <!-- Placeholder for images -->
+                                
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#image-container"
                                 data-bs-slide="prev">
@@ -707,6 +708,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
     <script src="{{ asset('homePage/js/main.js') }}"></script>
     <script src="{{ asset('tags/js/script.js') }}"></script>
+    <script src="{{ asset('likes/js/likes.js') }}"></script>
+    <script src="{{ asset('delete/js/delete.js') }}"></script>
 
     <script>
         $(document).ready(function() {

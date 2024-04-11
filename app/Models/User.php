@@ -7,15 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Post;    
 use app\Models\Comment;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +26,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'full_name',
         'username',
+        'isAdmin',
+        'isVerified',
     ];
 
 
@@ -50,6 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'isAdmin' => 'boolean',
         ];
     }
 
@@ -68,8 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Post::class, 'user_id', 'id');
     }
-    
-  
+
 
 
     public function comments(): HasMany
@@ -98,6 +99,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new ResetPasswordNotification($token));
     }
 
+
     public function blocking()
     {
         return $this->belongsToMany(User::class, 'blocking_users', 'user_id', 'blocking_id');
@@ -107,4 +109,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(User::class, 'blocking_users', 'blocking_id', 'user_id');
     }   
+
 }

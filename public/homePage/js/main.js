@@ -872,7 +872,7 @@ function handleCommentSubmission(event) {
                             </p>
                             <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
                                 <button id="likeBtn-${response.comment_id}" class="btn btn-link like-button" onclick="toggleLike(${response.comment_id})">
-                                    <img class="not-loved" src="http://localhost:8000/homePage/images/love.png" alt="heart image">
+                                    <img class="not-loved" src="https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/love_en9mrj.png" alt="heart image">
                                 </button>
                                 <span class="text-white like-count">0 Likes</span>
                                 <a class="btn text-white fw-bold delete-comment" onclick="deleteComment(${response.comment_id})">X</a>
@@ -948,8 +948,8 @@ async function toggleLike(commentId) {
 
             const modalLikeImage = modalLikeButton.querySelector("img");
             modalLikeImage.src = responseData.liked
-                ? "http://localhost:8000/homePage/images/heart.png"
-                : "http://localhost:8000/homePage/images/love.png";
+                ? "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/heart_c9gabu.png"
+                : "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/love_en9mrj.png";
         }
 
         //post
@@ -967,8 +967,8 @@ async function toggleLike(commentId) {
 
             const postLikeImage = postLikeButton.querySelector("img");
             postLikeImage.src = responseData.liked
-                ? "http://localhost:8000/homePage/images/heart.png"
-                : "http://localhost:8000/homePage/images/love.png";
+                ? "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/heart_c9gabu.png"
+                : "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/love_en9mrj.png";
         }
 
         updateLikeStatus(commentId, responseData.liked, responseData.likes_count);
@@ -1003,8 +1003,8 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
         `.like[data-comment-id="${commentId}"] .like-button img`
     );
     likeImage.src = isLiked
-        ? "http://localhost:8000/homePage/images/heart.png"
-        : "http://localhost:8000/homePage/images/love.png";
+        ? "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/heart_c9gabu.png"
+        : "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/love_en9mrj.png";
 }
 
 //search

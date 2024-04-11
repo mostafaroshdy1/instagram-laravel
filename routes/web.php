@@ -13,6 +13,7 @@ use App\Http\Middleware\BlockCheck;
 use App\Http\Middleware\EditProfileCheck;
 use App\Http\Controllers\HashtagsController;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\checkAdminAccess;
@@ -98,6 +99,7 @@ Route::post('/block/{user}', [FollowController::class, 'block'])->name('block')-
 Route::post('/unblock/{user}', [FollowController::class, 'unblock'])->name('unblock')->middleware('auth')->middleware(checkAdminAccess::class);
 
 // user profile
+
 Route::get('/users/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile.show')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(BlockCheck::class);
 Route::get('/users/{id}/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);
 Route::post('/users/{id}/edit', [UserProfileController::class, 'store'])->name('user.profile.store')->where('id', '[0-9]+')->middleware('auth')->middleware(checkAdminAccess::class)->middleware(EditProfileCheck::class);

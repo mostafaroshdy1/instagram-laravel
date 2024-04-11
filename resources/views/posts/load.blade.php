@@ -19,9 +19,8 @@
         </div>
         @if ($post->images->isEmpty())
             @foreach ($post->videos as $video)
-                <div class="video">
-                    <!-- Display video player here using the video URL -->
-                    <video controls>
+                <div class="video-container">
+                    <video controls class="w-100">
                         <source src="{{ $video->url }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -94,8 +93,9 @@
                 </p>
                 <div class="comments-section" data-post-id="{{ $post->id }}">
                     {{-- posts comments --}}
-                    @foreach ($post->comments()->orderBy('created_at', 'desc')->take(3)->get() as $comment)
+                    @foreach ($post->comments->reverse()->take(3) as $comment)
                         <div class="comment d-flex justify-content-between align-items-center" data-comment-id="{{ $comment->id }}">
+
                             <p>
                                 <strong class="text-white">{{ $comment->user->full_name }}</strong>
                                 <span class="text-white">{{ $comment->comment }}</span>
@@ -115,7 +115,7 @@
                                             alt="love image">
                                     </button>
                                 @endif
-                                <span class="text-white like-count">{{ $comment->likes()->count() }}
+                                <span class="text-white like-count">{{ $comment->likes->count() }}
                                     Likes</span>
                             @if(auth()->user()->id === $comment->user_id)
                                 <a class="btn text-white fw-bold delete-comment" onclick="deleteComment({{ $comment->id }})">X</a>
@@ -125,11 +125,11 @@
                         </div>
                     @endforeach
 
-                    @if ($post->comments()->count() > 3)
+                    @if ($post->comments_count > 3)
                         <div class="view-all-comments" data-bs-toggle="modal"
                             data-bs-target="#commentsModal-{{ $post->id }}" data-post-id="{{ $post->id }}">
                             <a href="#" class="gray">View all
-                                {{ $post->comments()->count() }} comments</a>
+                                {{ $post->comments_count }} comments</a>
                         </div>
                     @endif
 

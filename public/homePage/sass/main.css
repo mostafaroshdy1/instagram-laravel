@@ -753,11 +753,11 @@ button.log_btn:hover {
   }
 }
 
-@media screen and (max-width: 498px) {
+/* @media screen and (max-width: 498px) {
   .nav_sm .content {
     display: none;
   }
-}
+} */
 
 .nav_sm .content .left .search_bar {
   margin-right: 30px;
@@ -2124,6 +2124,10 @@ button.log_btn:hover {
   cursor: pointer;
 }
 
+input::placeholder {
+
+  color: #8F8F8F !important;
+}
 .deletePostBtn{
   background-color: transparent;
   border: none;

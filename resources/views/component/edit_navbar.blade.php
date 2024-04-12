@@ -1,11 +1,14 @@
-<div class="col-3 border-end border-start">
+<div class="col-lg-3 col-md-3 col-4 border-end border-start d-flex flex-column align-items-center">
     <div class="row">
-        <p class="fs-4 fw-bold m-5">Settings</p>
+        <div class="col-3 d-flex flex-column align-items-center mx-auto">
+            <p class="fs-4 fw-bold ">Settings</p>
+        </div>
+
     </div>
-    <div class="row pb-4 ">
-        <div class="col mx-5 rounded link" data-form="edit_profile" data-user-id="{{ $user->id }}">
-            <div class="d-flex m-3">
-                <div class="col-1">
+    <div class="row pb-4 w-100">
+        <div class="col rounded link" data-form="edit_profile" data-user-id="{{ $user->id }}">
+            <div class="d-flex mx-auto my-3 gap-1 justify-content-center align-items-center">
+                <div class="">
                     <svg aria-label="" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24"
                         role="img" viewBox="0 0 24 24" width="24">
                         <title></title>
@@ -19,16 +22,19 @@
                             stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"></circle>
                     </svg>
                 </div>
-                <div class="col ps-3">
+                <div class="col ps-3 d-none d-md-block">
                     <span>Edit Profile</span>
+                </div>
+                <div class="col ps-4 d-block d-md-none">
+                    <span>Edit</span>
                 </div>
             </div>
 
         </div>
     </div>
-    <div class="row pb-4 ">
-        <div class="col mx-5 rounded link" data-form="pass_reset" data-user-id="{{ $user->id }}">
-            <div class="d-flex m-3">
+    <div class="row pb-4 w-100">
+        <div class="col rounded link" data-form="pass_reset" data-user-id="{{ $user->id }}">
+            <div class="d-flex mx-auto my-3 gap-1 justify-content-center align-items-center">
                 <div class="col-1">
                     <svg aria-label="" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24"
                         role="img" viewBox="0 0 24 24" width="24">
@@ -39,28 +45,33 @@
                             stroke-width="2"></path>
                     </svg>
                 </div>
-                <div class="col ps-3">
+                <div class="col ps-3 d-none d-md-block">
                     <span>Change Password</span>
+                </div>
+                <div class="col ps-4 d-block d-md-none">
+                    <span>Reset</span>
                 </div>
             </div>
 
         </div>
     </div>
-    <div class="row pb-4 ">
-        <div class="col mx-5 rounded link" data-form="email_change" data-user-id="{{ $user->id }}">
-            <div class="d-flex m-3">
+    <div class="row pb-4 w-100">
+        <div class="col rounded link" data-form="email_change" data-user-id="{{ $user->id }}">
+            <div class="d-flex mx-auto my-3 gap-1 justify-content-center align-items-center">
                 <div class="col-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="#ffffff"
                             d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z" />
                     </svg>
                 </div>
-                <div class="col ps-3">
+                <div class="col ps-3 d-none d-md-block">
                     <span>Change Mail</span>
+                </div>
+                <div class="col ps-4 d-block d-md-none">
+                    <span>Mail</span>
                 </div>
             </div>
 
         </div>
     </div>
-
 </div>

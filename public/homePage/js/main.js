@@ -1052,6 +1052,58 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input2");
+
+    searchInput.addEventListener("keyup", async function (event) {
+        const query = event.target.value.trim();
+        console.log("Query:", query);
+        try {
+            console.log('try block');
+            const response = await fetch(`/search?query=${query}`);
+            console.log(response);
+            const data = await response.json();
+
+            console.log(data);
+            const searchResults = document.getElementById("search-result2");
+            searchResults.style.display = "block";
+            console.log(searchResults);
+            searchResults.innerHTML = "";
+            data.forEach((user) => {
+                console.log(user);
+
+
+                searchResults.innerHTML += `
+                <div class="account">
+                    <div class="cart">
+                        <div>
+                        <a href="http://127.0.0.1:8000/users/${user.user.id}/profile">
+                            <div class="img">
+                                <img src="${user.profile_image}" alt="">
+                            </div>
+                            
+                            <div class="info">
+                                <a href="http://127.0.0.1:8000/users/${user.user.id}/profile" class="name text-white">${user.user.full_name}</a>
+                                <p class="second_name">${user.user.username}</p>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+            });
+          if(searchInput.value === ""){
+            searchResults.style.display = "none";
+          }
+            console.log(data);
+        } catch (error) {
+            console.log("search error:", error);
+        }
+    });
+});
+
+
 // initialize post like and comment feature
 window.addEventListener("DOMContentLoaded", function () {
     postLikes();

@@ -17,7 +17,7 @@
                     
                     <div class="menu pb-5 mb-5">
                         <ul>
-                            <li>
+                            <li class="mb-5">
                                 <a class="active" href="{{route('admin.dashboard')}}">
                                     <svg class="me-3" aria-label="Home" class="x1lliihq x1n2onr6 x5n08af"
                                         fill="currentColor" style="color: white" height="24" role="img"
@@ -30,7 +30,7 @@
                                     <span class="d-none d-lg-block text-white fw-semibold">Dashboard</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="mb-5">
                                 <a class="active" href="{{route('admin.trashed')}}">
                                
                                     <svg class="me-3" aria-label="Home" class="x1lliihq x1n2onr6 x5n08af"
@@ -43,7 +43,7 @@
                                     <span class="d-none d-lg-block text-white fw-semibold">Trashed</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="mb-5">
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a class="active" :href="route('logout')"

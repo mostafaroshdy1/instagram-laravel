@@ -93,9 +93,9 @@
                     </svg>
                 </a>
             </div>
-            <div class="menu">
+            <div class="menu pb-5 mb-5">
                 <ul>
-                    <li>
+                    <li class="mb-5">
                         <a class="active" href="{{ route('posts.index') }}">
                             <svg class="me-3" aria-label="Home" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
                                 style="color: white" height="24" role="img" viewBox="0 0 24 24" width="24">
@@ -107,7 +107,7 @@
                             <span class="d-none d-lg-block text-white fw-semibold">Home</span>
                         </a>
                     </li>
-                    <li id="search_icon">
+                    <li id="search_icon" class="mb-5">
                         <a href="#">
                             <svg class="me-3" style="color: white" aria-label="Search"
                                 class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img"
@@ -123,7 +123,7 @@
                         </a>
                     </li>
 
-                    <li>
+                    <li class="mb-5">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#create_modal">
                             <svg class="me-3" style="color: white;" aria-label="New post"
                                 class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img"
@@ -143,12 +143,12 @@
                         </a>
 
                     </li>
-                    <li>
+                    <li class="mb-5">
                         <a href="{{ route('user.profile.show', ['id' => Auth::user()->id]) }}">
                             <div style="width: 2rem; height: 2rem; overflow: hidden;"
                                 class="d-flex align-items-center justify-content-center circle-wrapper">
                                 <img style="object-fit: cover; width: 100%; height: 100%;"
-                                    class="circle story img-fluid rounded-circle" src="{{ Auth::user()->avatar }}"
+                                    class="circle story img-fluid rounded-circle" src="{{ Auth::user()->avatar ?? asset('homePage/images/profile_img.jpg') }}"
                                     alt="Profile Picture" />
                             </div>
                             <span class="d-none d-lg-block text-white fw-semibold">Profile</span>
@@ -156,7 +156,7 @@
 
 
                     </li>
-                    <li class="d-block d-lg-none ">
+                    <li class="mb-5">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <a class="active" :href="route('logout')"
@@ -175,7 +175,7 @@
 
                                 </svg>
 
-                                <span class="d-none d-lg-none text-white fw-semibold"> {{ __('Log Out') }}</span>
+                                <span class="d-none d-lg-block text-white fw-semibold"> {{ __('Log Out') }}</span>
                             </a>
                         </form>
                     </li>
@@ -184,29 +184,7 @@
 
                 </ul>
             </div>
-            <div class="more">
-                <div class="btn-group dropup">
-                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <img src="{{ asset('homePage/images/menu.png') }}">
-                        <span class="d-none d-lg-block text-white fw-semibold">More</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                        this.closest('form').submit();">
-                                    <span>{{ __('Log Out') }}</span>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                <!--  -->
-
-            </div>
+         
         </div>
         <!-- nav for small screen  -->
         <div class="nav_sm border-bottom" style="border-color: #363636 !important">
@@ -223,24 +201,12 @@
                 <div class="left">
                     <div class="search_bar">
                         <div class="form-outline" style="border-color: black !important">
-                            <input type="search" id="form1" class="form-control text-white"
+                            <input type="search" id="search-input2" class="form-control text-white"
                                 style="background-color:#262626; border-color:black" placeholder="Search" />
+                                <div class="find  search-results2" id="search-result2">
+                          </div>
                         </div>
-
                     </div>
-                    <div class="notifications notification_icon">
-                        <a href="{{ asset('homePage/notification.html') }}">
-                            <svg aria-label="Notifications" class="x1lliihq x1n2onr6 x5n08af" fill="white"
-                                height="24" role="img" viewBox="0 0 24 24" width="24">
-                                <title>Notifications</title>
-                                <path
-                                    d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z">
-                                </path>
-                            </svg>
-
-                        </a>
-                    </div>
-
                 </div>
             </div>
         </div>

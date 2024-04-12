@@ -306,7 +306,7 @@
 
             function loadMorePosts() {
                 $.ajax({
-                    url: nextPageUrl,
+                    url: ensureHttps(nextPageUrl),
                     type: 'get',
                     beforeSend: function() {
                         nextPageUrl = '';
@@ -317,13 +317,20 @@
                         postLikes();
                         resetCommentEvents();
                     },
-
                     error: function(xhr, status, error) {
                         console.error("Error loading more posts:", error);
                     }
                 });
-
             }
+
+            // Function to ensure the URL starts with HTTPS
+            function ensureHttps(url) {
+                if (url && url.startsWith('http://')) {
+                    return url.replace('http://', 'https://');
+                }
+                return url;
+            }
+
         });
     </script>
 </body>

@@ -24,8 +24,8 @@ class PostController extends Controller
     {
         $current_user = User::find(auth()->id());
         $followersIds = $current_user->followings()->pluck('id')->toArray();
-        $posts
-            =  Post::whereIn('user_id', $followersIds)
+        $posts =
+            Post::whereIn('user_id', $followersIds)
             ->orWhere('user_id', auth()->id())
             ->with(['comments.user', 'comments.likes', 'user'])
             ->withCount('comments') // comments_count

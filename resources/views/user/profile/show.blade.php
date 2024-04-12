@@ -31,11 +31,20 @@
 <p>Number of followings: {{$user->followings()->count()}}</p>
 @endif
 {{--  --}}
+
+
+    <div id="successAlert" class="alert successAlert d-none">
+    </div>
+    <div id="warningAlert" class="alert warningAlert d-none">
+    </div>
+
+
     <div class="profile_container">
         <div class="profile_info">
             <div class="cart">
                 <div class="img">
-                    <img src="{{ $user->avatar ?? asset('homePage/images/profile_img.jpg') }}" alt="">
+                    <img src="{{ $user->avatar ?? asset('homePage/images/profile_img.jpg') }}" alt=""
+                        class="img-fluid rounded-circle me-2 profile-avatar">
                 </div>
                 <div class="info">
                     <p class="name">
@@ -108,7 +117,6 @@
                                 </form>
                             @endif
                         @endif
-
 
                         @if (@auth()->user()->is($user))
                             <svg data-bs-toggle="modal" data-bs-target="#menuModal" id="menu" width="24"
@@ -203,51 +211,59 @@
                     tabindex="0">
                     <div id="posts_sec" class="post d-grid gap-3" style="grid-template-columns: repeat(3, 1fr);">
                         @foreach ($posts as $post)
-                            @if ($post->images->isEmpty())
-                                @foreach ($post->videos as $video)
-                                    <div class="video-container">
-                                        <video controls class="w-100 h-100 item_img posts-img test">
-                                            <source src="{{ $video->url }}" type="video/mp4">
+                            <div class="item bg-white mt-1">
+                                @if ($post->images->isEmpty())
+                                    <div class="video-container" style="width: 100%; height: 100%; overflow: hidden;">
+                                        <video id="{{ $post->id }}" class="posts-video"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                            <source src="{{ $post->videos->first()->url }}" type="video/mp4"
+                                                autoplay="false">
                                             Your browser does not support the video tag.
                                         </video>
                                     </div>
-                                @endforeach
-                            @else
-                                @foreach ($post->images as $img)
-                                    <div class="item bg-white">
+                                @else
+                                    <div style="width: 100%; height: 100%; overflow: hidden;">
+                                        @if ($post->images->count() > 1)
+                                            <div class="multiple-images-icon position-absolute top-3 start-3">
+                                                <svg width="30" height="24">
+                                                    <rect x="5" y="5" width="15" height="2" fill="white" />
+                                                    <rect x="5" y="10" width="15" height="2" fill="white" />
+                                                    <rect x="5" y="15" width="15" height="2" fill="white" />
+                                                </svg>
+                                            </div>
+                                        @endif
                                         <img id="{{ $post->id }}" class="img-fluid item_img posts-img test"
-                                            src={{ $post->images->first()->url }} alt=""
-                                            data-image-url="{{ $post->images->first()->url }}">
-                                        @include('layouts.postModal', ['post' => $post])
-                                        @include('layouts.likes', ['post' => $post])
-                                        @include('layouts.commentsIcon', ['post' => $post])
-                                        <div class="modal fade" id="postMenuModal-{{ $post->id }}-2" tabindex="-1"
-                                            aria-labelledby="postsMenuModalLabel" aria-hidden="true">
-                                            <div
-                                                class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
-                                                <div class="modal-content bg-dark text-white">
-                                                    <div class="modal-header d-flex justify-content-center">
-                                                        <form action="{{ route('posts.destroy', $post->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="modal-title fs-2 deletePostBtn"
-                                                                style="color: red;">Delete</button>
-                                                        </form>
+                                            src="{{ $post->images->first()->url }}" alt=""
+                                            data-image-url="{{ $post->images->first()->url }}"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                @endif
+                                @include('layouts.postModal', ['post' => $post])
+                                @include('layouts.likes', ['post' => $post])
+                                {{-- @include('layouts.commentsIcon', ['post' => $post]) --}}
+                                <div class="modal fade" id="postMenuModal-{{ $post->id }}-2" tabindex="-1"
+                                    aria-labelledby="postsMenuModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+                                        <div class="modal-content bg-dark text-white">
+                                            <div class="modal-header d-flex justify-content-center">
+                                                <form action="{{ route('posts.destroy', $post->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="modal-title fs-2 deletePostBtn"
+                                                        style="color: red;">Delete</button>
+                                                </form>
 
-                                                    </div>
-                                                    <div class="modal-footer d-flex justify-content-center">
-                                                        <h1 class="modal-title fs-2 myHov" id="menuModalLabel22"
-                                                            data-bs-dismiss="modal" aria-label="Close"
-                                                            aria-hidden="true">Cancel
-                                                        </h1>
-                                                    </div>
-                                                </div>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <h1 class="modal-title fs-2 myHov" id="menuModalLabel22"
+                                                    data-bs-dismiss="modal" aria-label="Close" aria-hidden="true">
+                                                    Cancel
+                                                </h1>
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
-                            @endif
+                                </div>
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -256,47 +272,70 @@
                     <div id="saved_sec" class="post d-grid gap-3" style="grid-template-columns: repeat(3, 1fr);">
                         @foreach ($savedPosts as $savedPost)
                             <div class="item bg-white">
-                                <img id="{{ $savedPost['pivot']['post_id'] }}"
-                                    class="img-fluid item_img saved-posts-img test"
-                                    src={{ $savedPost->images->first()->url }} alt=""
-                                    data-image-url="{{ $savedPost->images->first()->url }}">
-                                @include('layouts.savedPostModal', ['post' => $savedPost])
-                                @include('layouts.commentsIcon', ['post' => $savedPost])
-                                @include('layouts.deleteMenu', ['post' => $savedPost])
-                                <div class="modal fade" id="likersModal2" tabindex="-1"
-                                    aria-labelledby="likersModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-                                        <div class="modal-content bg-dark text-white">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="likersModalLabel2">Likes</h1>
-                                                <i class="btn-close fa-2x fa-solid fa-xmark text-white"
-                                                    data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"
-                                                    id="likersClose2"></i>
+
+                                @if ($savedPost->images->isEmpty())
+                                    <div class="video-container" style="width: 100%; height: 100%; overflow: hidden;">
+                                        <video id="{{ $post->id }}" class="saved-posts-video"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                            <source src="{{ $savedPost->videos->first()->url }}" type="video/mp4"
+                                                autoplay="false">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                @else
+                                    <div style="width: 100%; height: 100%; overflow: hidden;">
+                                        @if ($savedPost->images->count() > 1)
+                                            <div class="multiple-images-icon position-absolute top-3 start-3">
+                                                <svg width="30" height="24">
+                                                    <rect x="5" y="5" width="15" height="2" fill="white" />
+                                                    <rect x="5" y="10" width="15" height="2" fill="white" />
+                                                    <rect x="5" y="15" width="15" height="2" fill="white" />
+                                                </svg>
                                             </div>
-                                            <div class="modal-body">
-                                            </div>
+                                        @endif
+                                        <img id="{{ $savedPost['pivot']['post_id'] }}"
+                                            class="img-fluid item_img saved-posts-img test"
+                                            src={{ $savedPost->images->first()->url }} alt=""
+                                            data-image-url="{{ $savedPost->images->first()->url }}"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                @endif
+                            </div>
+                            @include('layouts.savedPostModal', ['post' => $savedPost])
+                            {{-- @include('layouts.commentsIcon', ['post' => $savedPost]) --}}
+                            @include('layouts.deleteMenu', ['post' => $savedPost])
+                            <div class="modal fade" id="likersModal2" tabindex="-1" aria-labelledby="likersModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                                    <div class="modal-content bg-dark text-white">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="likersModalLabel2">Likes</h1>
+                                            <i class="btn-close fa-2x fa-solid fa-xmark text-white"
+                                                data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"
+                                                id="likersClose2"></i>
+                                        </div>
+                                        <div class="modal-body">
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-                        @endforeach
                     </div>
+                    @endforeach
                 </div>
+            </div>
 
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
-                    tabindex="0">
-                    <div id="tagged" class="post">
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/Zhc5hHp/account4.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-fluid item_img" src="https://i.ibb.co/SPTNbJL/account5.jpg" alt="">
-                        </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
+                tabindex="0">
+                <div id="tagged" class="post">
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/Zhc5hHp/account4.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-fluid item_img" src="https://i.ibb.co/SPTNbJL/account5.jpg" alt="">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel"

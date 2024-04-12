@@ -10,7 +10,7 @@
                 <img id="avatar" src="{{ $user->avatar ?? asset('homePage/images/profile_img.jpg') }}"
                     class="profile-picture" alt="">
             </div>
-            <div class="col-7 my-auto py-3">
+            <div class="col-7 my-auto d-flex flex-column align-items-center py-3">
                 <div class="row">
                     <span class="fw-bold h6">{{ $user->username }}</span>
                 </div>

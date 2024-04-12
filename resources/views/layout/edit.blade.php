@@ -26,8 +26,8 @@
                 <div class="col-12">
                     <div class="row vh-100">
                         @include('component.edit_navbar')
-                        <div class="col-5 rounded mx-auto my-auto d-flex flex-column formcontainer">
-                            {{-- @yield('content') --}}
+                        <div class="col-lg-5 col-sm-6 rounded mx-auto my-auto d-flex flex-column formcontainer">
+
                         </div>
                     </div>
                 </div>

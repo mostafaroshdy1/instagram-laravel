@@ -10,13 +10,42 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-6 col-md-12 post-image-column d-flex align-items-center">
-                        <img src={{ $post->images[0]['url'] }} class="img-fluid img-cover" alt="post image">
+                        <div id="postModal-carousel-{{ $post->id }}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @if ($post->images->isEmpty())
+                                    <div class="video-container">
+                                        <video controls class="w-100 h-100">
+                                            <source class="posts-video" id="{{ $post->id }}"
+                                                src="{{ $post->videos->first()->url }}" type="video/mp4">
+                                        </video>
+                                    </div>
+                                @else
+                                    @foreach ($post['images'] as $index => $image)
+                                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                            <img src="{{ $image['url'] }}" class="img-fluid img-cover" alt="post image">
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            @if (count($post['images']) > 1)
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#postModal-carousel-{{ $post->id }}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#postModal-carousel-{{ $post->id }}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="col-lg-6 col-md-12 p-2">
                         <div class="fixed-top-section d-flex align-items-center justify-content-between mb-3">
                             <div class="d-flex align-items-center">
-                                <img src="{{ $post->images[0]['url'] }}" class="img-fluid rounded-circle me-2 avatar"
+                                <img src="{{ $post->user->avatar }}" class="img-fluid rounded-circle me-2 avatar"
                                     alt="user avatar">
                                 <h5 class="mb-0">{{ $post->user->full_name }}</h5>
                             </div>
@@ -53,7 +82,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <p>{{ $post->body }}</p>
+                            <p id="post-body">{{ $post->body }}</p>
                         </div>
 
                         {{-- <div class="scrollable-section mb-3">
@@ -102,7 +131,8 @@
                                 </div>
 
                                 <div class="save">
-                                    <form class="savePostForm" action="{{ route('posts.save-post') }}" method="post">
+                                    <form class="savePostForm" action="{{ route('posts.save-post') }}"
+                                        method="post">
                                         @csrf
                                         <div class="save not_saved">
                                             <input id="hiddenInput" type="hidden" name="post_id"

@@ -63,6 +63,6 @@ class RegisteredUserController extends Controller
 
         // SendEmailJob::dispatch($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('posts.index', absolute: false));
     }
 }

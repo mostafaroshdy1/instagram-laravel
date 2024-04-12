@@ -1,4 +1,5 @@
 let postBodies = document.querySelectorAll("#post-body");
+console.log(postBodies);
 
 postBodies.forEach((body) => {
     let text = body.textContent;

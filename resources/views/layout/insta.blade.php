@@ -89,10 +89,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
         integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
     </script>
+
+    <script src="{{ asset('homePage/sass/vender/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('homePage/owlcarousel/jquery.min.js') }}"></script>
     <script src="{{ asset('homePage/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('homePage/js/carousel.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('homePage/js/main.js') }}"></script>
     <script src="{{ asset('homePage/js/customProfile.js') }}"></script>
     <script src="{{ asset('postModal/js/script.js') }}"></script>
@@ -101,7 +104,7 @@
     <script src="{{ asset('delete/js/deleteProfile.js') }}"></script>
     <script src="{{ asset('homePage/js/main.js') }}"></script>
     <script src="{{ asset('likes/js/likesSaved.js') }}"></script>
-
+    <script src="{{ asset('tags/js/script.js') }}"></script>
 </body>
 
 </html>

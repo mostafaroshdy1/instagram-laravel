@@ -576,7 +576,12 @@ function handleSubmit(event) {
         next_btn_post.innerHTML = "Next";
         title_create.innerHTML = "Crop";
     }
+    document.querySelector(".btn_upload").style.display = "none";
+    document.querySelector(".myTxt").style.display = "none";
+    document.querySelector(".myImg").style.display = "none";
+    
 }
+
 
 /////button submit
 const next_btn_post = document.querySelector(".next_btn_post");
@@ -872,7 +877,7 @@ function handleCommentSubmission(event) {
                             </p>
                             <div class="like d-flex align-items-center" data-comment-id="${response.comment_id}">
                                 <button id="likeBtn-${response.comment_id}" class="btn btn-link like-button" onclick="toggleLike(${response.comment_id})">
-                                    <img class="not-loved" src="http://localhost:8000/homePage/images/love.png" alt="heart image">
+                                    <img class="not-loved" src="https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/love_en9mrj.png" alt="heart image">
                                 </button>
                                 <span class="text-white like-count">0 Likes</span>
                                 <a class="btn text-white fw-bold delete-comment" onclick="deleteComment(${response.comment_id})">X</a>
@@ -948,8 +953,8 @@ async function toggleLike(commentId) {
 
             const modalLikeImage = modalLikeButton.querySelector("img");
             modalLikeImage.src = responseData.liked
-                ? "http://localhost:8000/homePage/images/heart.png"
-                : "http://localhost:8000/homePage/images/love.png";
+                ? "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/heart_c9gabu.png"
+                : "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/love_en9mrj.png";
         }
 
         //post
@@ -967,8 +972,8 @@ async function toggleLike(commentId) {
 
             const postLikeImage = postLikeButton.querySelector("img");
             postLikeImage.src = responseData.liked
-                ? "http://localhost:8000/homePage/images/heart.png"
-                : "http://localhost:8000/homePage/images/love.png";
+                ? "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/heart_c9gabu.png"
+                : "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/love_en9mrj.png";
         }
 
         updateLikeStatus(commentId, responseData.liked, responseData.likes_count);
@@ -1003,8 +1008,8 @@ function updateLikeStatus(commentId, isLiked, likeCount) {
         `.like[data-comment-id="${commentId}"] .like-button img`
     );
     likeImage.src = isLiked
-        ? "http://localhost:8000/homePage/images/heart.png"
-        : "http://localhost:8000/homePage/images/love.png";
+        ? "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/heart_c9gabu.png"
+        : "https://res.cloudinary.com/dlmq1xbtj/image/upload/v1712629982/instagram-clone/love_en9mrj.png";
 }
 
 //search
@@ -1051,6 +1056,58 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input2");
+
+    searchInput.addEventListener("keyup", async function (event) {
+        const query = event.target.value.trim();
+        console.log("Query:", query);
+        try {
+            console.log('try block');
+            const response = await fetch(`/search?query=${query}`);
+            console.log(response);
+            const data = await response.json();
+
+            console.log(data);
+            const searchResults = document.getElementById("search-result2");
+            searchResults.style.display = "block";
+            console.log(searchResults);
+            searchResults.innerHTML = "";
+            data.forEach((user) => {
+                console.log(user);
+
+
+                searchResults.innerHTML += `
+                <div class="account">
+                    <div class="cart">
+                        <div>
+                        <a href="http://127.0.0.1:8000/users/${user.user.id}/profile">
+                            <div class="img">
+                                <img src="${user.profile_image}" alt="">
+                            </div>
+                            
+                            <div class="info">
+                                <a href="http://127.0.0.1:8000/users/${user.user.id}/profile" class="name text-white">${user.user.full_name}</a>
+                                <p class="second_name">${user.user.username}</p>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+            });
+          if(searchInput.value === ""){
+            searchResults.style.display = "none";
+          }
+            console.log(data);
+        } catch (error) {
+            console.log("search error:", error);
+        }
+    });
+});
+
 
 // initialize post like and comment feature
 window.addEventListener("DOMContentLoaded", function () {

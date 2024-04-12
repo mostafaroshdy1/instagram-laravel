@@ -30,7 +30,8 @@ Route::get(
 )->middleware(Authenticate::class);
 
 Route::post(
-    '/logout', function (Request $request) {
+    '/logout',
+    function (Request $request) {
         Auth::logout();
 
         return redirect('/login');
@@ -44,6 +45,11 @@ Route::get(
     }
 )->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/verify-email', function () {
+    return view('auth.verify-email');
+})->middleware(['auth', 'verified'])->name('verify-email');
+
+
 Route::middleware('auth')->group(
     function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -56,7 +62,7 @@ require __DIR__ . '/auth.php';
 
 
 // posts
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth')->middleware(checkAdminAccess::class);
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth', 'verified')->middleware(checkAdminAccess::class);
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->middleware('auth')->middleware(checkAdminAccess::class);
 Route::get('/posts/saved/{id}', [PostController::class, 'showSaved'])->name('posts.saved.show')->middleware('auth')->middleware(checkAdminAccess::class);

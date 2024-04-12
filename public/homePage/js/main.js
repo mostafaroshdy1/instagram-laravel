@@ -576,7 +576,12 @@ function handleSubmit(event) {
         next_btn_post.innerHTML = "Next";
         title_create.innerHTML = "Crop";
     }
+    document.querySelector(".btn_upload").style.display = "none";
+    document.querySelector(".myTxt").style.display = "none";
+    document.querySelector(".myImg").style.display = "none";
+    
 }
+
 
 /////button submit
 const next_btn_post = document.querySelector(".next_btn_post");

@@ -1725,6 +1725,7 @@ button.log_btn:hover {
 #create_modal .modal-body #image_description .img_p img {
   width: 100%;
   height: 100%;
+  display: none;
 }
 
 #create_modal .modal-body #image_description .description {

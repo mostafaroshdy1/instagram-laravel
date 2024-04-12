@@ -10,7 +10,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <svg aria-label="Icon to represent media such as images or videos" class="x1lliihq x1n2onr6 x5n08af"
+                <svg aria-label="Icon to represent media such as images or videos" class="x1lliihq x1n2onr6 x5n08af myImg"
                     fill="currentColor" height="77" role="img" viewBox="0 0 97.6 77.3" width="96">
                     <title>Icon to represent media such as images or videos</title>
                     <path
@@ -23,7 +23,7 @@
                         d="M78.2 41.6 61.3 30.5c-2.1-1.4-4.9-.8-6.2 1.3-.4.7-.7 1.4-.7 2.2l-1.2 20.1c-.1 2.5 1.7 4.6 4.2 4.8h.3c.7 0 1.4-.2 2-.5l18-9c2.2-1.1 3.1-3.8 2-6-.4-.7-.9-1.3-1.5-1.8zm-1.4 6-18 9c-.4.2-.8.3-1.3.3-.4 0-.9-.2-1.2-.4-.7-.5-1.2-1.3-1.1-2.2l1.2-20.1c.1-.9.6-1.7 1.4-2.1.8-.4 1.7-.3 2.5.1L77 43.3c1.2.8 1.5 2.3.7 3.4-.2.4-.5.7-.9.9z"
                         fill="white"></path>
                 </svg>
-                <p class="text-white fs-5">Upload your image or video</p>
+                <p class="text-white fs-5 myTxt">Upload your image or video</p>
                 <button class="btn btn-primary btn_upload">
                     select from your computer
                     <form id="upload-form">

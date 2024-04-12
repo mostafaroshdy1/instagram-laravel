@@ -13,9 +13,10 @@
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/socialite": "^5.12",
+        "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
-        "laravel/telescope": "^5.0"
+        "predis/predis": "^2.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.12",

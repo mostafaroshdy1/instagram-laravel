@@ -115,8 +115,9 @@
             <div class="liked">
                 <a class="bold text-white" data-bs-toggle="modal" data-bs-target="#likersModal"
                     onclick="drawLikersModal({{ $post->likers }})"
-                    id="likers-{{ $post->id }}">{{ $post->likes_count }}
-                    likes</a>
+
+                    id="likers-{{ $post->id }}">{{ $post->likes_count }} likes</a>
+
             </div>
             @include('layouts.likes', ['post' => $post])
 
@@ -135,7 +136,7 @@
                             </p>
 
                             <div class="like d-flex align-items-center" data-comment-id="{{ $comment->id }}">
-                                @if ($comment->likes->contains(auth()->id()))
+                                @if ($comment->likes->contains('user_id', auth()->id()))
                                     <button id="likeBtn" class="btn btn-link like-button liked"
                                         onclick="toggleLike({{ $comment->id }})">
                                         <img class="not-loved" src="{{ asset('homePage/images/heart.png') }}"
@@ -190,7 +191,7 @@
                                                     <span>{{ $comment->comment }}</span>
                                                 </p>
                                                 <div class="like" data-comment-id="{{ $comment->id }}">
-                                                    @if ($comment->likes->contains(auth()->id()))
+                                                    @if ($comment->likes->contains('user_id', auth()->id()))
                                                         <button id="likeBtn" class="btn btn-link like-button liked"
                                                             onclick="toggleLike({{ $comment->id }})">
                                                             <img class="not-loved"
@@ -265,7 +266,7 @@
                                     </div>
                                 </div>
                                 <div class="like" data-comment-id="{{ $comment->id }}">
-                                    @if ($comment->likes->contains(auth()->id()))
+                                    @if ($comment->likes->contains('user_id', auth()->id()))
                                         <button id="likeBtn" class="btn btn-link like-button liked"
                                             onclick="toggleLike({{ $comment->id }})">
                                             {{-- <img class="not-loved"

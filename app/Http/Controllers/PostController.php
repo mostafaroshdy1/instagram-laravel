@@ -36,13 +36,20 @@ class PostController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(3);
         });
+        $current_user = User::find(auth()->id());
+
+        $unfollowedUsers = User::whereNotIn('id', $current_user->followings()->pluck('id'))
+            ->where('id', '!=', auth()->id())
+            ->take(5)
+            ->get();
+
 
         if ($request->ajax()) {
             $view = view('posts.load', compact('posts'))->render();
             return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user()]);
         }
 
-        return view('posts.index', ['posts' => $posts, 'user' => auth()->user()]);
+        return view('posts.index', ['posts' => $posts, 'user' => auth()->user(), "unfollowedUsers" => $unfollowedUsers]);
     }
     /**
      * Show the form for creating a new resource.

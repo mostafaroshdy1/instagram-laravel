@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Hashtag;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
@@ -23,26 +22,21 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        // Generate a unique cache key based on the current page number
-        $cacheKey = 'posts_page_' . $request->page;
 
-        $posts = Cache::remember($cacheKey, 60, function () {
-            $current_user = User::find(auth()->id());
-            $followersIds = $current_user->followings()->pluck('id')->toArray();
-            return  Post::whereIn('user_id', $followersIds)
-                ->orWhere('user_id', auth()->id())
-                ->with(['comments.user', 'comments.likes', 'user'])
-                ->withCount('comments') // comments_count
-                ->orderBy('created_at', 'desc')
-                ->paginate(3);
-        });
         $current_user = User::find(auth()->id());
-
+        $followersIds = $current_user->followings()->pluck('id')->toArray();
+        $posts =
+            Post::whereIn('user_id', $followersIds)
+            ->orWhere('user_id', auth()->id())
+            ->with(['comments.user', 'comments.likes', 'user'])
+            ->withCount('comments') // comments_count
+            ->orderBy('created_at', 'desc')
+            ->paginate(3);
+      
         $unfollowedUsers = User::whereNotIn('id', $current_user->followings()->pluck('id'))
             ->where('id', '!=', auth()->id())
             ->take(5)
             ->get();
-
 
         if ($request->ajax()) {
             $view = view('posts.load', compact('posts'))->render();

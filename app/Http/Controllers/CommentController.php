@@ -100,23 +100,6 @@ class CommentController extends Controller
 
     public function like(Comment $comment, Request $request)
     {
-
-        // return response()->json(['id' => $comment->id]);
-
-        // if ($comment->likes->contains('user_id', auth()->id())) {
-        //     $comment->likes()->where('user_id', auth()->id())->delete();
-        //     $isLiked = false;
-        // } else {
-        //     Comments_like::create(['user_id' => auth()->id(), 'comment_id' => $comment->id]);
-        //     $isLiked = true;
-        // }
-
-        // // $likeCount = Comments_like::where('comment_id', $comment->id)->count();
-        // $likeCount = 0;
-
-        // return response()->json(['liked' => $isLiked, 'likes_count' => $likeCount]);
-        // return response()->json(['post' => $comment]);
-
         if ($comment->likes->contains('user_id', auth()->id())) {
             $comment->likes()->where('user_id', auth()->id())->delete();
             $isLiked = false;

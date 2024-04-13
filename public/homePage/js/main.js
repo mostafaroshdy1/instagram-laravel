@@ -1041,7 +1041,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <img src="${user.profile_image}" alt="">
                             </div>
                             <div class="info">
-                                <a href="http://127.0.0.1:8000/users/${user.user.id}/profile" class="name text-dark">${user.user.full_name}</a>
+                                <a href="https://instagram-laravel-production.up.railway.app/users/${user.user.id}/profile" class="name text-dark">${user.user.full_name}</a>
                                 <p class="second_name">${user.user.username}</p>
                             </div>
                         </div>
@@ -1082,13 +1082,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="account">
                     <div class="cart">
                         <div>
-                        <a href="http://127.0.0.1:8000/users/${user.user.id}/profile">
+                        <a href="https://instagram-laravel-production.up.railway.app/users/${user.user.id}/profile">
                             <div class="img">
                                 <img src="${user.profile_image}" alt="">
                             </div>
                             
                             <div class="info">
-                                <a href="http://127.0.0.1:8000/users/${user.user.id}/profile" class="name text-white">${user.user.full_name}</a>
+                                <a href="https://instagram-laravel-production.up.railway.app/users/${user.user.id}/profile" class="name text-white">${user.user.full_name}</a>
                                 <p class="second_name">${user.user.username}</p>
                             </div>
                             </a>

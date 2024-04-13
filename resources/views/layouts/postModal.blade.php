@@ -85,16 +85,6 @@
                             <p id="post-body">{{ $post->body }}</p>
                         </div>
 
-                        {{-- <div class="scrollable-section mb-3">
-                            <h5>Comments:</h5>
-                            <div class="comment-item d-flex align-items-center mb-2">
-                                <img src="commenter_avatar_url" class="img-fluid rounded-circle me-2"
-                                    alt="commenter avatar" style="width: 30px; height: 30px;">
-                                <p class="mb-0">Comment text goes here</p>
-                            </div>
-
-                        </div> --}}
-
                         <div class="fixed-bottom-section">
                             <div class="icons d-flex align-items-center">
                                 @include('layouts.likesBtn', ['post' => $post])

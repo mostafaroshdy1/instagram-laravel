@@ -106,3 +106,11 @@ Follow the installation steps mentioned below to set up the project locally. Ens
     php artisan serve
     ```
 
+## Video Demo
+
+Check out a video demonstration of the Laravel Instagram Clone:
+
+[![Laravel Instagram Clone Demo](https://img.youtube.com/vi/XGeNxovnWUI/0.jpg)](https://www.youtube.com/watch?v=XGeNxovnWUI)
+
+Click the image above to watch the video.
+

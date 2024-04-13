@@ -240,7 +240,7 @@
                                 @endif
                                 @include('layouts.postModal', ['post' => $post])
                                 @include('layouts.likes', ['post' => $post])
-                                {{-- @include('layouts.commentsIcon', ['post' => $post]) --}}
+                                @include('layouts.commentsIcon', ['post' => $post])
                                 <div class="modal fade" id="postMenuModal-{{ $post->id }}-2" tabindex="-1"
                                     aria-labelledby="postsMenuModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
@@ -301,7 +301,7 @@
                                 @endif
                             </div>
                             @include('layouts.savedPostModal', ['post' => $savedPost])
-                            {{-- @include('layouts.commentsIcon', ['post' => $savedPost]) --}}
+                            @include('layouts.commentsIcon', ['post' => $savedPost])
                             @include('layouts.deleteMenu', ['post' => $savedPost])
                             <div class="modal fade" id="likersModal2" tabindex="-1" aria-labelledby="likersModalLabel"
                                 aria-hidden="true">

@@ -76,54 +76,32 @@
             <!--***** followers_container start ****** -->
             <div class="followers_container">
                 <div>
-
                     <div class="suggestions">
-                        <div class="title">
-                            <h4>Suggestions for you</h4>
-                            <a class="dark" href="#">See All</a>
-                        </div>
-                        <div class="cart">
-                            <div>
-                                <div class="img">
-                                    <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                </div>
-                                <div class="info">
-                                    <p class="name">Zineb_essoussi</p>
-                                    <p class="second_name">Zim Ess</p>
-                                </div>
+                        @if ($unfollowedUsers->isNotEmpty())
+                            <div class="title">
+                                <h4>Suggestions for you</h4>
                             </div>
-                            <div class="switch">
-                                <button class="follow_text" href="#">follow</button>
-                            </div>
-                        </div>
-                        <div class="cart">
-                            <div>
-                                <div class="img">
-                                    <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
+                        @endif
+                        @foreach ($unfollowedUsers as $unfollowedUser)
+                            <div class="cart">
+                                <div>
+                                    <div class="img">
+                                        <img src="{{ $unfollowedUser->avatar }}" alt="">
+                                    </div>
+                                    <div class="info">
+                                        <p class="name text-white">{{ $unfollowedUser->full_name }}</p>
+                                        {{-- <p class="second_name">Zim Ess</p> --}}
+                                    </div>
                                 </div>
-                                <div class="info">
-                                    <p class="name">Zineb_essoussi</p>
-                                    <p class="second_name">Zim Ess</p>
+                                <div class="switch">
+                                    <form method="POST" action="{{ route('follow', $unfollowedUser) }}">
+                                        @csrf
+                                        <button type="submit" class="btn">Follow</button>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="switch">
-                                <button class="follow_text" href="#">follow</button>
-                            </div>
-                        </div>
-                        <div class="cart">
-                            <div>
-                                <div class="img">
-                                    <img src="{{ asset('homePage/images/profile_img.jpg') }}" alt="">
-                                </div>
-                                <div class="info">
-                                    <p class="name">Zineb_essoussi</p>
-                                    <p class="second_name">Zim Ess</p>
-                                </div>
-                            </div>
-                            <div class="switch">
-                                <button class="follow_text" href="#">follow</button>
-                            </div>
-                        </div>
+                        @endforeach
+
                     </div>
                 </div>
             </div>

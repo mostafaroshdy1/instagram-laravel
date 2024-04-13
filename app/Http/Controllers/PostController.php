@@ -22,6 +22,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+
         $current_user = User::find(auth()->id());
         $followersIds = $current_user->followings()->pluck('id')->toArray();
         $posts =
@@ -31,13 +32,18 @@ class PostController extends Controller
             ->withCount('comments') // comments_count
             ->orderBy('created_at', 'desc')
             ->paginate(3);
+      
+        $unfollowedUsers = User::whereNotIn('id', $current_user->followings()->pluck('id'))
+            ->where('id', '!=', auth()->id())
+            ->take(5)
+            ->get();
 
         if ($request->ajax()) {
             $view = view('posts.load', compact('posts'))->render();
             return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl(), 'user' => auth()->user()]);
         }
 
-        return view('posts.index', ['posts' => $posts, 'user' => auth()->user()]);
+        return view('posts.index', ['posts' => $posts, 'user' => auth()->user(), "unfollowedUsers" => $unfollowedUsers]);
     }
     /**
      * Show the form for creating a new resource.

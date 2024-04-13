@@ -10,8 +10,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <svg aria-label="Icon to represent media such as images or videos" class="x1lliihq x1n2onr6 x5n08af myImg"
-                    fill="currentColor" height="77" role="img" viewBox="0 0 97.6 77.3" width="96">
+                <svg aria-label="Icon to represent media such as images or videos"
+                    class="x1lliihq x1n2onr6 x5n08af myImg" fill="currentColor" height="77" role="img"
+                    viewBox="0 0 97.6 77.3" width="96">
                     <title>Icon to represent media such as images or videos</title>
                     <path
                         d="M16.3 24h.3c2.8-.2 4.9-2.6 4.8-5.4-.2-2.8-2.6-4.9-5.4-4.8s-4.9 2.6-4.8 5.4c.1 2.7 2.4 4.8 5.1 4.8zm-2.4-7.2c.5-.6 1.3-1 2.1-1h.2c1.7 0 3.1 1.4 3.1 3.1 0 1.7-1.4 3.1-3.1 3.1-1.7 0-3.1-1.4-3.1-3.1 0-.8.3-1.5.8-2.1z"
@@ -81,9 +82,9 @@
 <div class="nav_menu sticky-top w-100">
     <div class="fix_top">
         <!-- nav for big->medium screen -->
-        <div class="nav bg-black border-right" style="border-right-color: rgb(var(--ig-separator));">
+        <div class="nav bg-black border-right" style="border-right-color: #262626">
             <div class="logo">
-                <a href="">
+                <a href="/posts">
                     <svg style="color: white" aria-label="Instagram" class="x1lliihq x1n2onr6 x5n08af"
                         fill="currentColor" height="29" role="img" viewBox="32 4 113 32" width="103">
                         <title>Instagram</title>
@@ -98,7 +99,8 @@
                     <li class="mb-5">
                         <a class="active" href="{{ route('posts.index') }}">
                             <svg class="me-3" aria-label="Home" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
-                                style="color: white" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                style="color: white" height="24" role="img" viewBox="0 0 24 24"
+                                width="24">
                                 <title>Home</title>
                                 <path
                                     d="M22 23h-6.001a1 1 0 0 1-1-1v-5.455a2.997 2.997 0 1 0-5.993 0V22a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V11.543a1.002 1.002 0 0 1 .31-.724l10-9.543a1.001 1.001 0 0 1 1.38 0l10 9.543a1.002 1.002 0 0 1 .31.724V22a1 1 0 0 1-1 1Z">
@@ -148,7 +150,8 @@
                             <div style="width: 2rem; height: 2rem; overflow: hidden;"
                                 class="d-flex align-items-center justify-content-center circle-wrapper">
                                 <img style="object-fit: cover; width: 100%; height: 100%;"
-                                    class="circle story img-fluid rounded-circle" src="{{ Auth::user()->avatar ?? asset('homePage/images/profile_img.jpg') }}"
+                                    class="circle story img-fluid rounded-circle"
+                                    src="{{ Auth::user()->avatar ?? asset('homePage/images/profile_img.jpg') }}"
                                     alt="Profile Picture" />
                             </div>
                             <span class="d-none d-lg-block text-white fw-semibold">Profile</span>
@@ -184,7 +187,7 @@
 
                 </ul>
             </div>
-         
+
         </div>
         <!-- nav for small screen  -->
         <div class="nav_sm border-bottom" style="border-color: #363636 !important">
@@ -203,8 +206,8 @@
                         <div class="form-outline" style="border-color: black !important">
                             <input type="search" id="search-input2" class="form-control text-white"
                                 style="background-color:#262626; border-color:black" placeholder="Search" />
-                                <div class="find  search-results2" id="search-result2">
-                          </div>
+                            <div class="find  search-results2" id="search-result2">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -262,9 +265,10 @@
     </div>
 </div>
 <!-- search  -->
-<div id="search" class="search_section position-fixed ps-4">
-    <h2>Search</h2>
-    <input id="search-input" name="search" class="form-control" type="text" placeholder="Search">
+<div id="search" class="search_section position-fixed ps-4 bg-black">
+    <h2 class="text-white fw-bold">Search</h2>
+    <input id="search-input" name="search" class="form-control" type="text" placeholder="Search"
+        style="background-color: #232323; border-color:black; color:white">
     <div class="find mt-5" id="search-result">
 
     </div>

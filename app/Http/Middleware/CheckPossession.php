@@ -17,7 +17,7 @@ class CheckPossession
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $post = Post::find($request->id);
+        $post = Post::findOrFail($request->id);
         if ($post->user_id !== Auth::id()) {
             return response('Unauthorized', 401);
         }

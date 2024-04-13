@@ -2198,5 +2198,6 @@ input::placeholder {
 }
 .comment-input{
   background-color: black;
+  outline: none;
 }
 

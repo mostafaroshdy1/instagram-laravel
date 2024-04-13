@@ -20,7 +20,7 @@
 <body class="bg-black text-white">
     <div class="post_page">
         {{-- NavBar --}}
-        @include('component.navbar')
+        @include('includes.navbar')
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">

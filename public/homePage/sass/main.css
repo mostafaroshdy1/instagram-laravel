@@ -2196,4 +2196,7 @@ input::placeholder {
   margin: 0;
   color: #ffffff;
 }
+.comment-input{
+  background-color: black;
+}
 

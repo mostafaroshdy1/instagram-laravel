@@ -227,7 +227,7 @@
                     data-post-id="{{ $post->id }}">
                     @csrf
                     <div class="comment">
-                        <input type="text" name="comment" class="comment-input" placeholder="Add a comment...">
+                        <input type="text" name="comment" class="comment-input" placeholder="Add a comment..." style="width:90%">
                         <input type="hidden" name="post_id" value="{{ $post->id }}">
                         <button type="submit" class="btn submit-comment" data-post-id="{{ $post->id }}">
                             <img src="{{ asset('homePage/images/send.png') }}" alt="send" />
@@ -235,7 +235,7 @@
                     </div>
                 </form>
             </div>
-
+            <hr style="color:white">
         </div>
     </div>
     {{-- add new comment modal --}}

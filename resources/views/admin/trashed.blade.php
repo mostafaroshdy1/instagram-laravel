@@ -26,7 +26,7 @@
 </head>
 
 <body class="bg-black">
-   @if (session('success'))
+    @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
@@ -51,47 +51,47 @@
     </div>
 
 
-    <div class="post_page ">
-        @include('includes.adminNavBar')
-
-        <div class="second_container">
-           
-        </div>
-        <div class="container">
-
-<div class="row justify-content-center">
-    <div class="col-md-12 m-5 text-center">
-        <h1 class="header">All Users</h1>
-    </div>
-    @foreach ($users as $user)
-        @if ($user->id != null && $user->isAdmin == 0)
-            <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-4 text-center">
-                <div class="card d-flex align-content-center">
-                    <div class="card-header">
-                        {{ $user->full_name }}
-                    </div>
-                    <div class="circular-image">
-                        users->id
-                        {{-- <img src="{{ $users->avatars->url }}" class="card-img-top" alt="User Image"> --}}
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">{{ $user->email }}</p>
-                        <form action="{{route('admin.restore.user',$user->id)}}" method="post">
-                                    @csrf
-                                    @method('patch')
-                                    <button type="submit" class="btn btn-light">Restore</button>
-                        </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-12 p-0">
+                @include('includes.adminNavBar')
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-12">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 m-5 text-center">
+                            <h1 class="header">Deleted Users</h1>
+                        </div>
+                        @foreach ($users as $user)
+                            @if ($user->id != null && $user->isAdmin == 0)
+                                <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb-4 text-center">
+                                    <div class="card d-flex align-content-center">
+                                        <div class="card-header">
+                                            {{ $user->full_name }}
+                                        </div>
+                                        <div class="circular-image">
+                                            <img src="{{ $user->avatar }}" class="card-img-top" alt="User Image">
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">{{ $user->email }}</p>
+                                            <form action="{{ route('admin.restore.user', $user->id) }}" method="post">
+                                                @csrf
+                                                @method('patch')
+                                                <button type="submit" class="btn btn-light" id="adminEdit"
+                                                    style="width: 100px;">Restore</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
-        @endif
-    @endforeach
-</div>
-</div>
-
-     
+        </div>
     </div>
-    
+
+
 
 
     <script src="{{ asset('homePage/sass/vender/bootstrap.bundle.js') }}"></script>

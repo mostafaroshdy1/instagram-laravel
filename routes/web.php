@@ -63,6 +63,9 @@ require __DIR__ . '/auth.php';
 Route::get('/', function () {
     return redirect("/posts");
 });
+Route::get('/dashboard', function () {
+    return redirect("/posts");
+});
 
 // posts
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth', 'verified')->middleware(checkAdminAccess::class);

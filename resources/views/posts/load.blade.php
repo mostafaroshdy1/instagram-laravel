@@ -3,7 +3,8 @@
         <div class="info">
             <div class="person">
                 <img src="{{ $post->user->avatar }}">
-                <a href="{{ route('user.profile.show', $user) }}" class="text-white">{{ $post->user->full_name }}</a>
+                <a href="{{ route('user.profile.show', $post->user) }}"
+                    class="text-white">{{ $post->user->full_name }}</a>
                 <span class="circle">.</span>
                 <span>{{ $post->created_at->diffForHumans() }}</span>
             </div>

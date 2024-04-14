@@ -2,6 +2,13 @@
 
 A Laravel-based Instagram clone project for learning and demonstration purposes. This project replicates the core functionalities of Instagram, allowing users to share images and interact with posts.
 
+# Table of Contents
+- [Description](#description)
+- [Technologies Used](#technologies-used)
+- [Main Features](#main-features)
+- [Project Setup](#project-setup)
+- [Video Demo](#video-demo)
+
 ## Description
 
 This Instagram clone project is built using the Laravel framework and incorporates several technologies and tools to provide a robust and feature-rich application.
@@ -22,8 +29,8 @@ This Instagram clone project is built using the Laravel framework and incorporat
    - Leveraged Laravel Breeze for quick setup of user authentication features.
    - Customized authentication views using Tailwind CSS and Blade templates.
 
-2. **Image Posting**:
-   - Utilized Cloudinary for cloud-based image storage, transformations, and delivery.
+2. **Image and video Posting**:
+   - Utilized Cloudinary for cloud-based image and video storage, transformations, and delivery.
    - Implemented Intervention Image for additional image processing tasks within the application.
 
 3. **Interactions**:
@@ -32,7 +39,7 @@ This Instagram clone project is built using the Laravel framework and incorporat
 
 4. **User Profiles**:
    - Developed user profile pages with customizable avatars, bios, and posts listing.
-   - Implemented followers/following functionality for social connections.
+   - Implemented followers/following and blocking functionality for social connections.
 
 5. **Feed and Explore**:
    - Personalized feed based on followed users' posts, utilizing Laravel's Eloquent ORM for efficient data retrieval.
@@ -105,4 +112,12 @@ Follow the installation steps mentioned below to set up the project locally. Ens
     ```bash
     php artisan serve
     ```
+
+## Video Demo
+
+Check out a video demonstration of the Laravel Instagram Clone:
+
+[![Laravel Instagram Clone Demo](https://img.youtube.com/vi/XGeNxovnWUI/0.jpg)](https://www.youtube.com/watch?v=XGeNxovnWUI)
+
+Click the image above to watch the video.
 

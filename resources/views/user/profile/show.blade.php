@@ -67,11 +67,13 @@
                                 </defs>
                             </svg>
                         @endif
-                        <a href="{{ route('user.profile.edit', $user) }}">
-                            <button class="edit_profile">
-                                Edit profile
-                            </button>
-                        </a>
+                        @if (auth()->id() == $user->id)
+                            <a href="{{ route('user.profile.edit', $user) }}">
+                                <button class="edit_profile">
+                                    Edit profile
+                                </button>
+                            </a>
+                        @endif
                     </p>
                     <div class="general_info">
                         <p><span>{{ $user->posts()->count() }}</span> posts</p>
